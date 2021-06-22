@@ -109,33 +109,33 @@ class Register extends Component {
             <div className={RegisterStyle.signupBox}>
               <ul>
                 <li>
-                  <p>ID </p>
+                  <p>아이디</p>
                   <input type="text" id="id_field" onKeyUp={this.lowerCase} onChange={e => this.setState({ id: e.target.value })} />
                   <button className="btn btn-primary .idcheck" type="button"  onClick={this.idCheck} type="button" value="idCheck">중복확인</button>
                 </li>
 
                 <li>
-                  <p> PASSWORD </p>
+                  <p>비밀번호</p>
                   <input type="password" onChange={e => this.setState({ pw: e.target.value })}/>
                 </li>
 
                 <li>
-                  <p>PASSWORD Check </p>
+                  <p>비밀번호 확인</p>
                   <input type="password" onChange={e => this.setState({ re_pw: e.target.value })}/>
                 </li>
               
                 <li>
-                  <p>EMAIL </p>
+                  <p>이메일</p>
                   <input type="text" onChange={e => this.setState({ email: e.target.value })}/>
                 </li>
               
                 <li>
-                  <p>NICKNAME </p>
+                  <p>닉네임</p>
                   <input type="text" onChange={e => this.setState({ nickname: e.target.value })}/>
                 </li>
               
                 <li>
-                  <p>PHONENUMBER </p>
+                  <p>전화번호</p>
                   <input type="tel" onChange={e => this.setState({ phone: e.target.value })}/>
                 </li>
 

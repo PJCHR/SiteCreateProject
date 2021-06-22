@@ -1,17 +1,28 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import axios from 'axios';
 import * as time from '../script/time.js';
+import ToggleButtonExample from '../script/ToggleButtonExample';
 
-import Table from 'react-bootstrap/Table'
 import HomeStyle from '../css/HomeStyle.module.css';
-import Board_WriteStyle from '../css/Board_WriteStyle.css';
+import '../css/Board_WriteStyle.css';
 
 import { TOP, BOTTOM } from './Home';
 
+  // const [checked, setChecked] = useState(false);
+  // const [radioValue, setRadioValue] = useState('1');
+
+  // const radios = [
+  //   { name: '일반', value: '1' },
+  //   { name: '질문', value: '2' },
+  //   { name: '공지', value: '3' },
+  // ];
+
+
 class Board__Write extends Component {
+
     state = {
       cs_boardinfo: [],
       authority: [],
@@ -20,6 +31,8 @@ class Board__Write extends Component {
       content:'',
       hit:0,
       look_post:0,
+
+      
     };
 
     componentDidMount() {
@@ -27,7 +40,7 @@ class Board__Write extends Component {
       this.checkAuthority();
       this.onRadio();
     }
-    
+
     onRadio = async () => {
       console.log(await this.state.subject);
     }
@@ -39,7 +52,7 @@ class Board__Write extends Component {
       })
       .catch((Error)=>{console.log(Error)})
     }
-
+    
     onSendData = async () => {
       const now = new Date();
       this.setState(await{date_created: now});
@@ -85,6 +98,7 @@ class Board__Write extends Component {
     render() {
       const { authority } = this.state;
       const { cs_boardinfo } = this.state;
+
       return (    
         <div className={HomeStyle.body_wrap}>
           <TOP/>
@@ -110,29 +124,24 @@ class Board__Write extends Component {
                 <div className='form-wrapper'>
                   {/* 각 입력 부분에 target으로 값 받아서 서버로 넘겨서 저장 */}
                   <input className="title-input" type='text' placeholder='제목' onChange={e => this.setState({ title: e.target.value })}/>
-                  {/* <div className="btn-group" role="group" aria-label="Basic radio toggle button group" onChange={e => this.setState({ title: e.target.value })}>
-                    
-                    <input type="radio" className="btn-check" name="btnradio" id="btnradio1" autocomplete="off" onChange={e => this.setState({ subject: e.target.value })} value="일반" checked={true}/>
-                    <label className="btn btn-outline-primary" for="btnradio1" >일반</label>
-
-                    <input type="radio" className="btn-check" name="btnradio" id="btnradio2" autocomplete="off" onChange={e => this.setState({ subject: e.target.value })} value="질문" />
-                    <label className="btn btn-outline-primary" for="btnradio2">질문</label>
-
-                    <input type="radio" className="btn-check" name="btnradio" id="btnradio3" autocomplete="off" onChange={e => this.setState({ subject: e.target.value })} value="공지"/>
-                    <label className="btn btn-outline-primary" for="btnradio3">공지</label>
-
-                  </div> */}
                   
-                  {/* <div className="btn-group" role="group" aria-label="Basic radio toggle button group">
-                      <input type="radio" className="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked/>
-                      <label className="btn btn-outline-primary" for="btnradio1">Radio 1</label>
-                    
-                      <input type="radio" className="btn-check" name="btnradio" id="btnradio2" autocomplete="off"/>
-                      <label className="btn btn-outline-primary" for="btnradio2">Radio 2</label>
+                  {/* <ButtonGroup>
+                    {radios.map((radio, idx) => (
+                      <ToggleButton
+                        key={idx}
+                        id={`radio-${idx}`}
+                        type="radio"
+                        variant={idx % 2 ? 'outline-success' : 'outline-danger'}
+                        name="radio"
+                        value={radio.value}
+                        checked={radioValue === radio.value}
+                        onChange={(e) => setRadioValue(e.currentTarget.value)}
+                      >
+                        {radio.name}
+                      </ToggleButton>
+                    ))}
+                  </ButtonGroup> */}
 
-                      <input type="radio" className="btn-check" name="btnradio" id="btnradio3" autocomplete="off"/>
-                      <label className="btn btn-outline-primary" for="btnradio3">Radio 3</label>
-                    </div> */}
                   <CKEditor
                       editor={ ClassicEditor }
                       config={{
