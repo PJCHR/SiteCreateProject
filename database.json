@@ -1,0 +1,7 @@
+{
+    "host": "seafoodshop.cd4veamah0wp.ap-northeast-2.rds.amazonaws.com",
+    "user": "admin",
+    "password": "seafoodshop12!",
+    "port": "3306",
+    "database": "seafoodshop"
+}

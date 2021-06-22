@@ -1,0 +1,188 @@
+.servicecenter_wrap {
+  width: 100%;
+  margin: 0 auto;
+  /* background: #f6f7fb; */
+}
+.content_box {
+  position: relative;
+  min-width: 1240px;
+  height: 200px;
+  margin: 0 auto;
+}
+.left_menu {
+  position: relative;
+  width: 100%;
+  top: 60px;
+  margin-bottom: 50px;
+}
+
+.left_menu .depth_1 {
+  font-size: 30px;
+  font-weight: bold;
+  color: #1c1c1c;
+  line-height: 1;
+  margin-bottom: 25px;
+  text-align: center;
+}
+.left_menu .depth_2 {
+  display: flex;
+  justify-content: center;
+}
+.left_menu .depth_2 > li {
+  margin-right: 10px;
+}
+
+.left_menu .depth_2 > li:hover {
+  font-weight: bold;
+  color: #fff;
+  background-color: #5ca848;
+  border-color: #469731;
+}
+.left_menu .depth_2 > li:hover a {
+  font-weight: bold;
+  color: #fff;
+  background-color: #5ca848;
+  border-color: #469731;
+}
+.left_menu .depth_2 > li:last-child {
+  margin-right: 0;
+}
+.left_menu .depth_2 > li > a {
+  display: inline-block;
+  min-width: 195px;
+  padding: 0 10px;
+  height: 46px;
+  line-height: 46px;
+  border: 1px solid #d5d5d5;
+  text-align: center;
+  font-size: 20px;
+  color: rgb(102, 102, 102);
+  font-weight: normal;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+a {
+  text-decoration: none;
+  color: #555;
+  color: inherit;
+}
+a,
+::after,
+::before {
+  box-sizing: border-box;
+}
+
+.boardlist {
+  position: relative;
+  min-width: 1240px;
+  margin: 0 auto;
+}
+
+.writeboardgo {
+  position: relative;
+  width: 60%;
+  height: 40px;
+  text-align: right;
+  margin: 0 auto;
+}
+.writeboardgo h1 {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  right: 10px;
+  overflow: hidden;
+  line-height: 100px;
+  border-radius: 10px;
+  border: 2px solid #000;
+  background-image: url(/src/img/icon_writepen.png);
+  background-size: cover;
+  cursor: pointer;
+}
+
+.writeboardgo h1 a {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.b_list_table {
+  position: relative;
+  width: 60%;
+  margin: 0 auto;
+}
+.b_list_table table {
+  width: 100%;
+  border-top: 1px solid #444444;
+  border-collapse: collapse;
+  text-align: center;
+  /* border-radius: 4px;
+  box-shadow: 0px 2px 2px -8px rgba(0, 0, 0, 0.12),
+    0px 0px 1px 0px rgba(0, 0, 0, 0.24);
+  box-sizing: border-box; */
+}
+caption {
+  position: relative;
+  width: 0px;
+  height: 0px;
+  font-size: 0;
+  line-height: 0;
+  z-index: -1;
+}
+/* col {
+  display: table-column;
+} */
+th {
+  display: table-cell;
+  height: 37px;
+  border-width: 2px 0px 2px;
+  border-style: solid;
+  border-color: #5ca848;
+  vertical-align: middle;
+  text-align: center;
+  color: #333;
+  font-family: Dotum, '돋움';
+}
+td {
+  padding: 5px 0px;
+  border-bottom: 1px solid #eee;
+  vertical-align: middle;
+  color: #333;
+}
+
+.boardlist .num,
+.subject,
+.creater,
+.date_created,
+.hit {
+  text-align: center;
+}
+.subject {
+  padding: 2px 0px 0 0;
+}
+.subject .icon_img {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  vertical-align: -3px;
+  margin-right: 7px;
+  background-image: url(/src/img/icon_writepen.png);
+  background-size: cover;
+}
+.title {
+  position: relative;
+  text-align: left;
+}
+.title a {
+  padding-top: 1px;
+  line-height: 100%;
+  left: 10px;
+  text-decoration: none;
+  color: #000;
+}
+.title .icon_img {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  margin-right: 7px;
+}
