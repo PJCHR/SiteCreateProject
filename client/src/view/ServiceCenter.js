@@ -16,6 +16,7 @@ class ServiceCenter extends Component {
     state = {
       cs_boardinfo: [],
       authority: [],
+      idx: '',
       date: '',
       time: '',
     };
@@ -55,10 +56,10 @@ class ServiceCenter extends Component {
               <div className="left_menu">
                 <h2 className="depth_1">고객센터</h2>
                 <ul id="lnb" className="depth_2">
-                  <li className="open">
+                  <li>
                     <a href="/cscenter=not_list">공지사항</a>
                   </li>
-                  <li className="">
+                  <li>
                     <a href="/cscenter=faq_list">자주묻는질문</a>
                   </li>
                 </ul>
@@ -69,7 +70,7 @@ class ServiceCenter extends Component {
             <div className="boardlist">
 
               <div className="writeboardgo">
-                {authority.status==="login"?<h1 className="write_icon"><Link to="/cscenter=write_board">글쓰기</Link></h1>:<h1 className="write_icon"><Link to="/user/login">로그인</Link></h1>}
+                {authority.status==="login"?<h1 className="write_icon"><Link to="/cscenter=board_list_write">글쓰기</Link></h1>:<h1 className="write_icon"><Link to="/user/login">로그인</Link></h1>}
               </div>
               <div className="b_list_table">
 
@@ -94,12 +95,13 @@ class ServiceCenter extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                    {cs_boardinfo.map(item => {
+                    {cs_boardinfo.map((item,number) => {
+                      // console.log(this.setState({idx: item.idx}))
                       return(
                     <tr>
                       <td className="num">{item.idx}</td>
                       <td className="subject">{item.subject}</td>
-                      <td className="title" key={item.idx}><Link><em className="icon_img"/>{item.title}</Link></td>
+                      <td className="title" key={item.idx}><Link to={'/cscenter=board_list_read?idx=' + parseInt(number+1)} onChange={e => this.setState({ idx: item.idx })}><em className="icon_img"/>{item.title}</Link></td>
                       <td className="creater">{item.nickname}</td>
                       <td className="date_created">{item.date_created}</td>
                       <td className="hit">{item.hit}</td>

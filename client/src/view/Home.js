@@ -80,7 +80,6 @@ export class TOP extends Component {
   }
   componentDidMount() {
     this.checkAuthority();
-  
   }
   
   logoutApi = () =>{

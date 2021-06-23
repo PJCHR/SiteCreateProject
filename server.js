@@ -70,21 +70,12 @@ app.get('/cscenter=board_list', (req, res) => {
     }
   });
 });
-app.get("/cscenter=write_board", (req, res)=>{
-  const sql = 'SELECT * FROM cs_board_info';
-  connection.query(sql, (err, rows, fields) => {
-    if (err) {
-      console.log('DATA GET FAIL');
-    } else {
-      res.send(rows);
-    }
-  })
-})
+
 app.post("/cscenter=write_board-save", (req, res) =>{
   const id = req.body.id; 
   const nickname = req.body.nickname;
   console.log(nickname);
-  const subject = req.body.subject;  
+  const subject = req.body.radioValue;  
   const title = req.body.title; 
   const content = req.body.content; 
   const date_created = req.body.date_created;
@@ -92,6 +83,36 @@ app.post("/cscenter=write_board-save", (req, res) =>{
   const look_post = req.body.look_post; 
 
   const sql = `INSERT INTO cs_board_info (id, nickname, subject, title, content, date_created, hit, look_post) VALUES ('${id}','${nickname}','${subject}','${title}','${content}','${date_created}','${hit}','${look_post}')`;
+  connection.query(sql, (err, rows, fields) => {
+    if (err) {
+      console.log(err);
+  }
+  else {
+      res.send(rows);
+  }
+  });
+});
+app.get("/cscenter=board_list_read", (req, res)=>{
+  const text = req.query.idx;
+  const sql = `SELECT * FROM cs_board_info WHERE idx LIKE '${text}'`;
+  connection.query(sql, (err, rows, fields) => {
+    if (err) {
+      console.log('DATA GET FAIL');
+    } else {
+      res.send(rows);
+      alert(rows)
+    }
+  })
+})
+app.post("/cscenter=write_board-fix", (req, res) =>{
+  const idx = req.body.idx;
+  const subject = req.body.radioValue;  
+  const title = req.body.title; 
+  const content = req.body.content; 
+  const date_created = req.body.date_created;
+  const look_post = req.body.look_post; 
+
+  const sql = `UPDATE cs_board_info set idx= (idx, subject, title, content, date_created, look_post) VALUES ('${idx}','${subject}','${title}','${content}','${date_created}','${look_post}')`;
   connection.query(sql, (err, rows, fields) => {
     if (err) {
       console.log(err);

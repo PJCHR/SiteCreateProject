@@ -13,7 +13,7 @@ import '../css/Board_WriteStyle.css';
 import { TOP, BOTTOM } from './Home';
 
 
-class Board__Write extends Component {
+class Board__fix extends Component {
 
     state = {
       cs_boardinfo: [],
@@ -35,8 +35,16 @@ class Board__Write extends Component {
       this.checkAuthority();
     }
 
+    onRadio = (data) => {
+    
+      console.log(data);
+    }
+    onRadioHandleChange = () => {
+      
+    }
+
     onView = async () => {
-      axios.get('/cscenter=board_list')
+      axios.get('/cscenter=write_board')
       .then(res=> {
         this.setState({cs_boardinfo: res.data});
       })
@@ -51,7 +59,7 @@ class Board__Write extends Component {
 
       const {id, nickname, radioValue, title, content, hit, look_post} = await this.state;
       if (id !== '' & nickname !== '' & radioValue !== '' & title !== '' & content !== '' & hit !== '' & look_post !== '' ) {
-        return axios.post("/cscenter=write_board-save",this.state)
+        return axios.post("/cscenter=write_board-fix",this.state)
         .then(res=>res)
         .then(() => alert('등록완료.'))
         .then(() => window.location.href = "/cscenter=board_list")
@@ -169,4 +177,4 @@ class Board__Write extends Component {
     }
   }
 
-  export default Board__Write;
+  export default Board__fix;

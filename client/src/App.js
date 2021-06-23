@@ -9,7 +9,7 @@ import Register from './view/Register';
 import CustomerInfo from './view/CustomerInfo';
 import PWcheck from './view/PWcheck';
 import ServiceCenter from './view/ServiceCenter';
-import ReadBoard from './view/ServiceCenter';
+import Board_Read from './view/Board_Read';
 import Board_Write from './view/Board_Write';
 import Product from './view/Product';
 
@@ -24,8 +24,9 @@ class App extends Component {
         <Route path="/customerInfo" component={CustomerInfo} />
         <Route path="/pwcheck" component={PWcheck} />
         <Route path="/cscenter=board_list" component={ServiceCenter} />
-        <Route path="/cscenter=write_board" component={Board_Write} />
-        <Route path="/cscenter=faq_list" component={ReadBoard} />
+        <Route path="/cscenter=board_list_read" component={Board_Read} />
+        <Route path="/cscenter=board_list_write" component={Board_Write} />
+        {/* <Route path="/cscenter=faq_list" component={ReadBoard} /> */}
         <Route path="/product_view" component={Product} />
       </Router>
     );
