@@ -12,6 +12,7 @@ import ServiceCenter from './view/ServiceCenter';
 import Board_Read from './view/Board_Read';
 import Board_Write from './view/Board_Write';
 import Product from './view/Product';
+import Cartbox from './view/Cartbox';
 
 class App extends Component {
   render() {
@@ -21,6 +22,7 @@ class App extends Component {
         <Route path="/item/search" component={Search} />
         <Route path="/user/register" component={Register} />
         <Route path="/user/login" component={Login} />
+        <Route path="/cartbox" component={Cartbox} />
         <Route path="/customerInfo" component={CustomerInfo} />
         <Route path="/pwcheck" component={PWcheck} />
         <Route path="/cscenter=board_list" component={ServiceCenter} />

@@ -19,13 +19,13 @@
 
 .form-wrapper {
   width: 60%;
-  margin: 0 auto;
+  margin: 5px auto;
 }
 
 .title-input {
-  width: 500px;
+  width: 400px;
   height: 40px;
-  margin: 10px;
+  margin: 0 4px;
 }
 
 .submit-button {
@@ -44,4 +44,10 @@
 
 .ck.ck-editor__editable:not(.ck-editor__nested-editable) {
   min-height: 400px;
+}
+.form-wrapper .mb-2 {
+  margin: 4px 3px 5px 3px;
+}
+.form-wrapper .btn-group {
+  margin: 3px 0 7px 0;
 }

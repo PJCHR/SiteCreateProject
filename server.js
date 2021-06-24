@@ -100,7 +100,6 @@ app.get("/cscenter=board_list_read", (req, res)=>{
       console.log('DATA GET FAIL');
     } else {
       res.send(rows);
-      alert(rows)
     }
   })
 })

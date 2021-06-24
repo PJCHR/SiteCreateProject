@@ -20,8 +20,7 @@ class ServiceCenter extends Component {
       date: '',
       time: '',
     };
-
-
+    
     componentDidMount() {
       this.onBoardboard_list();
       this.checkAuthority();
@@ -45,7 +44,7 @@ class ServiceCenter extends Component {
       const { authority } = this.state;
       return (
       <div className={HomeStyle.body_wrap}>
-        
+      
         <TOP/>
 
         <div id="content">
@@ -96,7 +95,6 @@ class ServiceCenter extends Component {
                   </thead>
                   <tbody>
                     {cs_boardinfo.map((item,number) => {
-                      // console.log(this.setState({idx: item.idx}))
                       return(
                     <tr>
                       <td className="num">{item.idx}</td>
@@ -124,16 +122,4 @@ class ServiceCenter extends Component {
       );
     }
 }
-
-//   export class ReadBoard extends Component {
-//     render() {
-//         return (
-//           <div className="App">
-
-//         </div>
-//         );
-//     "
-// "
-
-
   export default ServiceCenter;

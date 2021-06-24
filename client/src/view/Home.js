@@ -148,7 +148,7 @@ export class TOP extends Component {
                   </ul>
                 </li>
               
-                <li className={HeaderStyle.cart}><Link to="장바구니" className={HeaderStyle.mycart}></Link></li>
+                <li className={HeaderStyle.cart}><Link to="/cartbox" className={HeaderStyle.mycart}></Link></li>
               </ul>
             </div>
             

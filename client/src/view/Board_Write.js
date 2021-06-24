@@ -24,6 +24,8 @@ class Board__Write extends Component {
         { name: '공지', value: '공지' },
       ],
       radioValue:'일반',
+      checked: 'false', 
+      setChecked: 'false',
       title:'',
       content:'',
       hit:0,
@@ -90,6 +92,7 @@ class Board__Write extends Component {
       const { cs_boardinfo } = this.state;
       const { radios } = this.state;
       const { radioValue } = this.state;
+      const { checked, setChecked } = this.state;
       
       return (    
         <div className={HomeStyle.body_wrap}>
@@ -99,24 +102,22 @@ class Board__Write extends Component {
             <div className="board_wrap">
               
               <div className="board_write">
-                <h1>Movie Review</h1>
-                <div className='movie-container'>
-                  {this.state.cs_boardinfo.map(list =>{
-                    return(
-                    <div className="title" key={list.idx}>
-                      <h2>{list.title}</h2>
-                      <div className="cont">
-                        {list.content}
-                      </div>
-                    </div>
-                    )})
-                  }
-
-                </div>
+                
                 <div className='form-wrapper'>
                   {/* 각 입력 부분에 target으로 값 받아서 서버로 넘겨서 저장 */}
                   <input className="title-input" type='text' placeholder='제목' onChange={e => this.setState({ title: e.target.value })}/>
                   
+                  <ToggleButton
+                    className="mb-2"
+                    id="toggle-check"
+                    type="checkbox"
+                    variant="outline-primary"
+                    checked={checked}
+                    value="1"
+                    onChange={(e) => setChecked(e.currentTarget.checked)}
+                  >
+                    비공개
+                  </ToggleButton>
                   <ButtonGroup>
                     {radios.map((radio, idx) => (
                       <ToggleButton
