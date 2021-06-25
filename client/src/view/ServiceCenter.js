@@ -17,6 +17,7 @@ class ServiceCenter extends Component {
       cs_boardinfo: [],
       authority: [],
       idx: '',
+      returnUrl:['cscenter=board_list'],
       date: '',
       time: '',
     };
@@ -42,6 +43,7 @@ class ServiceCenter extends Component {
     render() {
       const { cs_boardinfo} = this.state;
       const { authority } = this.state;
+      const { returnUrl} = this.state;
       return (
       <div className={HomeStyle.body_wrap}>
       
@@ -69,7 +71,7 @@ class ServiceCenter extends Component {
             <div className="boardlist">
 
               <div className="writeboardgo">
-                {authority.status==="login"?<h1 className="write_icon"><Link to="/cscenter=board_list_write">글쓰기</Link></h1>:<h1 className="write_icon"><Link to="/user/login">로그인</Link></h1>}
+                {authority.status==="login"?<h1 className="write_icon"><Link to="/cscenter=board_list_write">글쓰기</Link></h1>:<h1 className="write_icon"><Link to={"/user/login?returnUrl=" + returnUrl}>로그인</Link></h1>}
               </div>
               <div className="b_list_table">
 

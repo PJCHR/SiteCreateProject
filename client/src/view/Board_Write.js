@@ -25,11 +25,9 @@ class Board__Write extends Component {
       ],
       radioValue:'일반',
       checked: 'false', 
-      setChecked: 'false',
       title:'',
       content:'',
       hit:0,
-      look_post:0,
     };
 
     componentDidMount() {
@@ -51,13 +49,24 @@ class Board__Write extends Component {
       this.setState({id: this.state.authority.id});
       this.setState({nickname: this.state.authority.name});
 
-      const {id, nickname, radioValue, title, content, hit, look_post} = await this.state;
-      if (id !== '' & nickname !== '' & radioValue !== '' & title !== '' & content !== '' & hit !== '' & look_post !== '' ) {
-        return axios.post("/cscenter=write_board-save",this.state)
-        .then(res=>res)
-        .then(() => alert('등록완료.'))
-        .then(() => window.location.href = "/cscenter=board_list")
-        .catch((Error)=>{console.log(Error)})
+      const {id, nickname, radioValue, title, content, hit, checked} = this.state;
+      console.log(id, nickname, radioValue, title, content, hit, checked)
+      if (id !== '' & nickname !== '' & radioValue !== '' & title !== '' & content !== '' & hit !== '') {
+        // if(checked === 'true'){
+        //   this.setState(await {radioValue: checked})
+        //   return axios.post("/cscenter=write_board-save",this.state)
+        //   .then(res=>res)
+        //   .then(() => alert('등록완료.'))
+        //   .then(() => window.location.href = "/cscenter=board_list")
+        //   .catch((Error)=>{console.log(Error)})
+        // }
+        // if(checked !== 'true'){
+        //   return axios.post("/cscenter=write_board-save",this.state)
+        //   .then(res=>res)
+        //   .then(() => alert('등록완료.'))
+        //   .then(() => window.location.href = "/cscenter=board_list")
+        //   .catch((Error)=>{console.log(Error)})
+        // }
       }
       else {
         if(id ==='' | nickname ===''){
@@ -73,26 +82,21 @@ class Board__Write extends Component {
         else if (content === '') {
           alert('내용을 작성하지않았습니다.');
         }
-        // 체크박스로 디폴트 공개(0) 기본설정되있도록 , look_post = 0 , 만약 체크박스가 논체크라면 look_post는 0 , look_post가 0이면 공개, 아니라면 비공개(운영자만 열람가능 권한 운영자)
-        else if (look_post === '') {
-          alert('비공개여부를 설정하지않았습니다.');
-        }
+        // 체크박스로 디폴트 공개(0) 기본설정되있도록 , checked = false , 만약 체크박스가 논체크라면 checked가 false이면 공개, 아니라면 비공개(운영자만 열람가능 권한 운영자)
       }
     }
-    
-    checkAuthority = () => {
-      axios('/authority')
+
+    checkAuthority = async() => {
+      axios.get('/authority')
       .then(res=>this.setState({authority:res.data}))
       .catch((Error)=>{console.log(Error)})
     }
-      
 
     render() {
       const { authority } = this.state;
       const { cs_boardinfo } = this.state;
       const { radios } = this.state;
       const { radioValue } = this.state;
-      const { checked, setChecked } = this.state;
       
       return (    
         <div className={HomeStyle.body_wrap}>
@@ -112,12 +116,13 @@ class Board__Write extends Component {
                     id="toggle-check"
                     type="checkbox"
                     variant="outline-primary"
-                    checked={checked}
+                    checked={this.checked}
                     value="1"
-                    onChange={(e) => setChecked(e.currentTarget.checked)}
+                    onChange={e => this.setState({ checked: e.currentTarget.checked })}
                   >
                     비공개
                   </ToggleButton>
+
                   <ButtonGroup>
                     {radios.map((radio, idx) => (
                       <ToggleButton

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import queryString from 'query-string';
 
 import HomeStyle from '../css/HomeStyle.module.css';
 import LoginStyle from '../css/LoginStyle.module.css';
@@ -9,46 +10,53 @@ class Login extends Component {
   state = {
     inputId: '',
     inputPs: '',
-    loginCheck: []
+    loginCheck: [],
+    returnUrl: [],
 }
 
   loginApprove = async () => {
-      const options = {
-          method: "post",
-          body: JSON.stringify(this.state),
-          headers: {
-              'Content-Type': 'application/json'
-          }
+    var query = this.getQueryString();
+    const options = {
+      method: "post",
+      body: JSON.stringify(this.state),
+      headers: {
+          'Content-Type': 'application/json'
       }
-      const { inputId, inputPs } = this.state;
-      if (inputId === '') {
-          alert("ID를 입력해주세요");
-      }
-      else if (inputPs === '') {
-          alert("패스워드를 입력해주세요");
-      }
-      else if (inputId !== '' && inputPs !== '') {
-          await fetch('/login', options)
-              .then(response => response.json())
-              .then(response => this.setState({ loginCheck: response }))
-      }
-      const { loginCheck } = this.state;
-      if (loginCheck.success === 'true') {
-          // alert("로그인이 되었습니다.");
-  
-          document.location.href = '/';
-      }
-      else if (loginCheck.success === 'false') {
-          alert("로그인 정보가 일치하지 않습니다");
-      }
-  }
+    }
+    const { inputId, inputPs } = this.state;
+    if (inputId === '') {
+        alert("ID를 입력해주세요");
+    }
+    else if (inputPs === '') {
+        alert("패스워드를 입력해주세요");
+    }
+    else if (inputId !== '' && inputPs !== '') {
+        await fetch('/login?returnUrl=', options)
+            .then(response => response.json())
+            .then(response => this.setState({ loginCheck: response }))
+    }
+    const { loginCheck } = this.state;
+    if (loginCheck.success === 'true') {
+        // alert("로그인이 되었습니다.");
 
+        document.location.href = `/${query}`;
+    }
+    else if (loginCheck.success === 'false') {
+        alert("로그인 정보가 일치하지 않습니다");
+    }
+  }
 
   enterCheck = (event) => {
       if (event.keyCode === 13) {
           this.loginApprove();
       }
   }
+  getQueryString = () => {
+    const result = queryString.parse(this.props.location.search);
+    const rst = result.returnUrl;
+
+    return rst;
+  };
   
   render() {
     return (
