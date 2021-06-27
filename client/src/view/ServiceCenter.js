@@ -8,7 +8,7 @@ import * as time from '../script/time.js';
 
 import Table from 'react-bootstrap/Table'
 import HomeStyle from '../css/HomeStyle.module.css';
-import ServiceCenterStyle from '../css/ServiceCenter.css';
+import '../css/ServiceCenter.css';
 
 import { TOP, BOTTOM } from './Home';
 

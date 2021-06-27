@@ -81,7 +81,7 @@ export class TOP extends Component {
   componentDidMount() {
     this.checkAuthority();
   }
-  
+
   logoutApi = () =>{
     fetch('/logout',{
         method:'delete'
@@ -92,16 +92,13 @@ export class TOP extends Component {
     fetch('/logout',{
         method:'delete'
     });
-    
-    alert('장시간 사용하지않아 로그아웃되었습니다.')
-    window.location.reload();
+    alert("로그아웃됨.")
   }
 
   checkAuthority = () => {
     fetch('/authority')
     .then(response=>response.json())
     .then(response=>this.setState({authority:response}))
-    
   }
 
   render() {
@@ -159,7 +156,7 @@ export class TOP extends Component {
                   <h2 id="gnbCategoryTitle" className={HeaderStyle.skip}>사용자정보/카테고리/주요서비스</h2>
                   <div className={HeaderStyle.categoryUser_info}>
                     <div className={HeaderStyle.user}>
-                      {authority.status==="login"?<Link className={HeaderStyle.login}>【 {authority.name} 님】</Link> :<Link className={HeaderStyle.login} to="/user/login">로그인</Link>}
+                      {authority.status==="login"?<Link className={HeaderStyle.login}>【 {authority.name} 님】</Link> :<Link className={HeaderStyle.login} onChange={this.latelogoutApi} to="/user/login">로그인</Link>}
                     </div>
                   </div>
                   <div className={HeaderStyle.category_group}>

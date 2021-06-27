@@ -14,6 +14,10 @@ import { TOP, BOTTOM } from './Home';
 
 
 class Board__Write extends Component {
+  // constructor(props) {
+  //   super(props)
+  //   this.state = { check: false }
+  // }
 
     state = {
       cs_boardinfo: [],
@@ -24,10 +28,10 @@ class Board__Write extends Component {
         { name: '공지', value: '공지' },
       ],
       radioValue:'일반',
-      checked: 'false', 
+      check: false, 
       title:'',
       content:'',
-      hit:0,
+      hit: 0,
     };
 
     componentDidMount() {
@@ -45,28 +49,27 @@ class Board__Write extends Component {
     
     onSendData = async () => {
       const now = new Date();
-      this.setState(await{date_created: now});
+      this.setState(await{date_created: time.getFormatDate(now) +' '+ time.getFormatTime(now)});
       this.setState({id: this.state.authority.id});
       this.setState({nickname: this.state.authority.name});
-
-      const {id, nickname, radioValue, title, content, hit, checked} = this.state;
-      console.log(id, nickname, radioValue, title, content, hit, checked)
-      if (id !== '' & nickname !== '' & radioValue !== '' & title !== '' & content !== '' & hit !== '') {
-        // if(checked === 'true'){
-        //   this.setState(await {radioValue: checked})
-        //   return axios.post("/cscenter=write_board-save",this.state)
-        //   .then(res=>res)
-        //   .then(() => alert('등록완료.'))
-        //   .then(() => window.location.href = "/cscenter=board_list")
-        //   .catch((Error)=>{console.log(Error)})
-        // }
-        // if(checked !== 'true'){
-        //   return axios.post("/cscenter=write_board-save",this.state)
-        //   .then(res=>res)
-        //   .then(() => alert('등록완료.'))
-        //   .then(() => window.location.href = "/cscenter=board_list")
-        //   .catch((Error)=>{console.log(Error)})
-        // }
+      const {id, nickname, radioValue, title, content, hit, check, date_created} = this.state;
+      console.log(id, nickname, radioValue, title, content, hit, check, date_created)
+      if (id !== '' & nickname !== '' & radioValue !== '' & title !== '' & content !== '' & hit !== '' & check !== '') {
+        if(check === true){
+          this.setState(await {radioValue: '비공개'})
+          return axios.post("/cscenter=write_board-save",this.state)
+          .then(res=>res)
+          .then(() => alert('등록완료.'))
+          .then(() => window.location.href = "/cscenter=board_list")
+          .catch((Error)=>{console.log(Error)})
+        }
+        if(check === false){
+          return axios.post("/cscenter=write_board-save",this.state)
+          .then(res=>res)
+          .then(() => alert('등록완료.'))
+          .then(() => window.location.href = "/cscenter=board_list")
+          .catch((Error)=>{console.log(Error)})
+        }
       }
       else {
         if(id ==='' | nickname ===''){
@@ -96,7 +99,6 @@ class Board__Write extends Component {
       const { authority } = this.state;
       const { cs_boardinfo } = this.state;
       const { radios } = this.state;
-      const { radioValue } = this.state;
       
       return (    
         <div className={HomeStyle.body_wrap}>
@@ -110,15 +112,14 @@ class Board__Write extends Component {
                 <div className='form-wrapper'>
                   {/* 각 입력 부분에 target으로 값 받아서 서버로 넘겨서 저장 */}
                   <input className="title-input" type='text' placeholder='제목' onChange={e => this.setState({ title: e.target.value })}/>
-                  
                   <ToggleButton
                     className="mb-2"
                     id="toggle-check"
                     type="checkbox"
                     variant="outline-primary"
-                    checked={this.checked}
-                    value="1"
-                    onChange={e => this.setState({ checked: e.currentTarget.checked })}
+                    checked={this.state.check}
+                    value="0"
+                    onChange={e => this.setState({ check: e.target.checked })}
                   >
                     비공개
                   </ToggleButton>
@@ -132,7 +133,7 @@ class Board__Write extends Component {
                         variant={idx % 2 ? 'outline-success' : 'outline-danger'}
                         name="radio"
                         value={radio.value}
-                        checked={radioValue=== radio.value}
+                        checked={this.state.radioValue=== radio.value}
                         onChange={e => this.setState({ radioValue: e.target.value })}
                       >
                         {radio.name}

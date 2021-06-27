@@ -15,7 +15,7 @@ class Register extends Component {
     re_pw: "",
     phone: "",
     registerActive:"",
-    datetime: "",
+    date_created: "",
   };
 
 
@@ -49,6 +49,8 @@ class Register extends Component {
   
 
   sendData = async () => {
+    const now = new Date();
+    this.setState(await{date_created: time.getFormatDate(now) +' '+ time.getFormatTime(now)});
     const options = {
         method: 'post',
         body: JSON.stringify(this.state),
@@ -57,7 +59,6 @@ class Register extends Component {
         }
     }
     await this.idCheck;
-    await this.setState({datetime: new Date()});
     const {id, pw, re_pw, email, nickname, phone, registerActive} = this.state;
     if (id !== '' & pw === re_pw & pw !== '' & re_pw !== '' & email !== '' & nickname !== '' & phone !== '' &registerActive==='active' ) {
       if(pw === re_pw){

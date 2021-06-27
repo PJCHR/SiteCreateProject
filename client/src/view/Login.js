@@ -11,7 +11,7 @@ class Login extends Component {
     inputId: '',
     inputPs: '',
     loginCheck: [],
-    returnUrl: [],
+    // returnUrl: [],
 }
 
   loginApprove = async () => {
@@ -38,8 +38,10 @@ class Login extends Component {
     const { loginCheck } = this.state;
     if (loginCheck.success === 'true') {
         // alert("로그인이 되었습니다.");
-
-        document.location.href = `/${query}`;
+        if (query === 'cscenter=board_list'){
+          document.location.href = '/cscenter=board_list';
+        }
+        document.location.href = '/';
     }
     else if (loginCheck.success === 'false') {
         alert("로그인 정보가 일치하지 않습니다");

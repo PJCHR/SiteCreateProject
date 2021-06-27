@@ -139,7 +139,7 @@ app.post('/register', (req, res) => {
   const Email = req.body.email;
   const NICKNAME = req.body.nickname;
   const PHONE = req.body.phone;
-  const DATE = req.body.datetime;
+  const DATE = req.body.date_created;
   const sql = `INSERT INTO customer_info (id, pw, nickname, email, phone, date_created) VALUES ('${Id}', '${Pw}', '${NICKNAME}', '${Email}', '${PHONE}', '${DATE}')`;
   connection.query(sql, (err, rows, fields) => {
     if (err) {
@@ -188,7 +188,7 @@ app.post('/login', (req, res) => {
   const sql = `SELECT * FROM customer_info WHERE id='${Id}' AND pw='${Pw}'`;
   connection.query(sql, (err, rows, fields) => {
     if (err) {
-      console.log(err);
+      // console.log(err);
   }
   else {
       customerInfo = rows;
@@ -199,12 +199,11 @@ app.post('/login', (req, res) => {
           },
               jwtJSON.secret,    // 비밀 키
               {
-                  expiresIn: '10m'    // 유효 시간은 5분 /1시간
+                  expiresIn: '5s'    // 유효 시간은 5분 /1시간
               })
 
           res.cookie("user", token);
           res.send({ success: "true" });
-          console.log(token);
       }
       else if (customerInfo.length != 1) {
           res.send({ success: "false" })
@@ -234,8 +233,10 @@ app.delete('/logout',(req,res)=>{
          res.send(
              {
                  status:'logout'
+                 
              }
          )
+        //  res.clearCookie('user').send(req.cookies.name);
      }
  }); // => 권한확인
  
