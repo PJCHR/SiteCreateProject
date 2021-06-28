@@ -199,7 +199,7 @@ app.post('/login', (req, res) => {
           },
               jwtJSON.secret,    // 비밀 키
               {
-                  expiresIn: '5s'    // 유효 시간은 5분 /1시간
+                  expiresIn: '10m'    // 유효 시간은 5분 /1시간
               })
 
           res.cookie("user", token);

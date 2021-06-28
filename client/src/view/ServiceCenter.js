@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import axios from 'axios';
-import * as time from '../script/time.js';
-
+import Pagination from "react-js-pagination";
 
 import Table from 'react-bootstrap/Table'
 import HomeStyle from '../css/HomeStyle.module.css';
@@ -15,6 +12,7 @@ import { TOP, BOTTOM } from './Home';
 class ServiceCenter extends Component {
     state = {
       cs_boardinfo: [],
+      cs_boardinfo2: [],
       authority: [],
       idx: '',
       returnUrl:['cscenter=board_list'],
@@ -26,20 +24,28 @@ class ServiceCenter extends Component {
       this.onBoardboard_list();
       this.checkAuthority();
     }
-    
+    checkAuthority = () => {
+      axios.get('/authority')
+      .then(res=>this.setState({authority:res.data}))
+      .catch((Error)=>{console.log(Error)})
+    }
+
     // 게시판 쓰기, 읽기, 목록
     onBoardboard_list = () => {
       axios.get('/cscenter=board_list')
       .then(res=> {this.setState({cs_boardinfo: res.data})})
       .catch((Error)=>{console.log(Error)})
     }
-    
-    checkAuthority = async() => {
-      axios.get('/authority')
-      .then(res=>this.setState({authority:res.data}))
-      .catch((Error)=>{console.log(Error)})
-    }
 
+    oncheckLook_post = () => {
+      this.state.cs_boardinfo.map((item, number) => {
+      if(item.subject === "비공개" && this.state.authority.id !== "admin"){
+        alert("비공개글입니다. 운영자만 열람가능합니다.")
+        window.location.reload()
+      }
+      })
+    }
+    
     render() {
       const { cs_boardinfo} = this.state;
       const { authority } = this.state;
@@ -99,9 +105,11 @@ class ServiceCenter extends Component {
                     {cs_boardinfo.map((item,number) => {
                       return(
                     <tr>
-                      <td className="num">{item.idx}</td>
+                      <td className="num" key={item.idx}>{item.idx}</td>
                       <td className="subject">{item.subject}</td>
-                      <td className="title" key={item.idx}><Link to={'/cscenter=board_list_read?idx=' + parseInt(number+1)} onChange={e => this.setState({ idx: item.idx })}><em className="icon_img"/>{item.title}</Link></td>
+                      <td className="title"><Link
+                      to={'/cscenter=board_list_read?idx=' + parseInt(number+1)} 
+                      onClick={this.oncheckLook_post} onChange={e => this.setState({ idx: item.idx })}><em className="icon_img"/>{item.title}</Link></td>
                       <td className="creater">{item.nickname}</td>
                       <td className="date_created">{item.date_created}</td>
                       <td className="hit">{item.hit}</td>
@@ -111,6 +119,8 @@ class ServiceCenter extends Component {
                 </Table>
                 
               </div>
+              {/* 페이징 작업을 위한 코드 */}
+              {/* <Pagination activePage={page} itemsCountPerPage={10} totalItemsCount={450} pageRangeDisplayed={5} prevPageText={"‹"} nextPageText={"›"} onChange={handlePageChange} /> */}
               
             </div>
 
