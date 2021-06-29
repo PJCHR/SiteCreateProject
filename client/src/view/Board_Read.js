@@ -20,16 +20,32 @@ class Board__Read extends Component {
     componentDidMount() {
       this.onView();
       this.checkAuthority();
+      this.onbtnSty();
     }
 
     onView = async () => {
       var query = this.getQueryString();
-      console.log(query);
       axios.get(`/cscenter=board_list_read?idx=${query}`)
       .then(res=> {
         this.setState({cs_boardinfo: res.data});
       })
       .catch((Error)=>{console.log(Error)})
+    }
+    // 로그인한 아이디. 쿠키에 저장된 id와 게시글을 작성한 id가 같다면 삭제 버튼이 표시되도록할 것임.
+    onbtnSty = async () => {
+      console.log("생성")
+      await this.state.cs_boardinfo.map((item, number) => {
+        if(this.state.authority.id === item.id){
+          const delStyle ={
+            display: 'none',
+            background: 'black',
+          }
+          return delStyle
+        }
+        // if(this.state.authority.id === item.id){
+          <span><input className="btn btn-primary" type="button" value="aa"></input></span>
+        // }
+      })
     }
     
     getQueryString = () => {
@@ -58,6 +74,8 @@ class Board__Read extends Component {
               
               <div className="board_write">
                 <h1>게시판</h1>
+                {/* <span><input className="btn btn-primary" type="button" value="aa"></input></span> */}
+                {this.onbtnSty}
                 <div className='movie-container'>
                   {this.state.cs_boardinfo.map(list =>{
                     return(

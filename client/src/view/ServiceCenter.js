@@ -39,10 +39,10 @@ class ServiceCenter extends Component {
 
     oncheckLook_post = () => {
       this.state.cs_boardinfo.map((item, number) => {
-      if(item.subject === "비공개" && this.state.authority.id !== "admin"){
+        if(item.subject === "비공개" && this.state.authority.id !== "admin"){
         alert("비공개글입니다. 운영자만 열람가능합니다.")
         window.location.reload()
-      }
+        }
       })
     }
     
