@@ -5,6 +5,7 @@ import HeaderStyle from '../css/HeaderStyle.module.css';
 import MenuStyle from '../css/MenuStyle.module.css';
 import HomeStyle from '../css/HomeStyle.module.css';
 import ContentsStyle from '../css/ContentsStyle.module.css';
+import axios from 'axios';
 
 class Home extends Component {
   state = {
@@ -96,9 +97,8 @@ export class TOP extends Component {
   }
 
   checkAuthority = () => {
-    fetch('/authority')
-    .then(response=>response.json())
-    .then(response=>this.setState({authority:response}))
+    axios.get('/authority')
+    .then(res=> {this.setState({authority: res.data});})
   }
 
   render() {

@@ -181,7 +181,7 @@ app.post('/register', (req, res) => {
 //     }
 //   })
 // });
-app.post('/login', (req, res) => {
+app.post('/logincheck', (req, res) => {
   const Id = req.body.inputId;
   const Pw = crypto.createHmac('sha256', key.secret).update(req.body.inputPs).digest('base64'); //암호화,
   let customerInfo = [];
@@ -189,24 +189,25 @@ app.post('/login', (req, res) => {
   connection.query(sql, (err, rows, fields) => {
     if (err) {
       // console.log(err);
-  }
-  else {
+    }
+    else {
       customerInfo = rows;
       if (customerInfo.length == 1) {
-          let token = jwt.sign({
-              id: customerInfo[0].id,
-              name: customerInfo[0].nickname   // 토큰의 내용(payload)
-          },
-              jwtJSON.secret,    // 비밀 키
-              {
-                  expiresIn: '10m'    // 유효 시간은 5분 /1시간
-              })
+        let token = jwt.sign({
+          id: customerInfo[0].id,
+          name: customerInfo[0].nickname   // 토큰의 내용(payload)
+        },
+        jwtJSON.secret,    // 비밀 키
+        {
+            expiresIn: '60m'    // 유효 시간은 5분 /1시간
+        })
 
-          res.cookie("user", token);
-          res.send({ success: "true" });
+        res.cookie("user", token);
+        res.send({ success: "true" });
       }
       else if (customerInfo.length != 1) {
-          res.send({ success: "false" })
+        res.clearCookie('user').send(req.cookies.name);
+        res.send({ success: "false" })
       }
     }
   })
@@ -215,39 +216,58 @@ app.post('/login', (req, res) => {
 app.delete('/logout',(req,res)=>{
   res.clearCookie('user').send(req.cookies.name);
  });
+
+app.get('/authority', (req, res) => {
+    let token = req.cookies.user;
+    let decoded = jwt.verify(token, jwtJSON.secret);
+    if (decoded) {
+        res.send(
+            {
+              status: 'login',
+              id: decoded.id,
+              name: decoded.name
+            }
+        )
+    }
+    else {
+        res.send(
+            {
+              status:'logout',
+            }
+        )
+      //  res.clearCookie('user').send(req.cookies.name); // 정보 삭제해야하는데;;
+    }
+}); // => 권한확인
+app.post('/authority', (req, res) => {
+  let token = req.cookies.user;
+  let decoded = jwt.verify(token, jwtJSON.secret);
+  if (decoded) {
+      res.send(
+          {
+            status: 'login',
+            id: decoded.id,
+            name: decoded.name
+          }
+      )
+  }
+  else {
+      res.send(
+          {
+            status:'logout',
+          }
+      )
+    //  res.clearCookie('user').send(req.cookies.name); // 정보 삭제해야하는데;;
+  }
+}); // => 권한확인
  
- app.get("/authority", (req, res) => {
-     let token = req.cookies.user;
-     let decoded = jwt.verify(token, jwtJSON.secret);
-     if (decoded) {
-         res.send(
-             {
-                status: 'login',
-                id: decoded.id,
-                name: decoded.name
-             }
-             
-         )
-     }
-     else {
-         res.send(
-             {
-                 status:'logout'
-                 
-             }
-         )
-        //  res.clearCookie('user').send(req.cookies.name);
-     }
- }); // => 권한확인
- 
- if (process.env.NODE_ENV === 'production') {
-   // Serve any static files
-  app.use(express.static(path.join(__dirname, 'client/build')));
-  // Handle React routing, return all request to React app
-  app.get('*', function(req, res) {
-    res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
-  });
- }
+if (process.env.NODE_ENV === 'production') {
+  // Serve any static files
+app.use(express.static(path.join(__dirname, 'client/build')));
+// Handle React routing, return all request to React app
+app.get('*', function(req, res) {
+  res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
+});
+}
  
 const PORT = process.env.PORT || 5000;
 app.listen(PORT);

@@ -31,7 +31,7 @@ class Login extends Component {
         alert("패스워드를 입력해주세요");
     }
     else if (inputId !== '' && inputPs !== '') {
-        await fetch('/login?returnUrl=', options)
+        await fetch('/logincheck?returnUrl=', options)
             .then(response => response.json())
             .then(response => this.setState({ loginCheck: response }))
     }
