@@ -56,9 +56,10 @@
 }
 
 /* board read style */
-.board_write .btn {
+.board_write span > .btn {
   /* display: none; */
   width: 70px;
   height: 40px;
   text-align: center;
+  visibility: hidden;
 }
