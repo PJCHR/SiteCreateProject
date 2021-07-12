@@ -1,20 +1,12 @@
 .board_wrap {
   width: 100%;
   margin: 0 auto;
-  background: #f6f7fb;
+  /* background: #f6f7fb; */
 }
 .board_write {
   width: 1240px;
   text-align: center;
-  margin: 0 auto;
-}
-.movie-container {
-  margin: 0 auto;
-  width: 80%;
-  border: 1px solid #333;
-  padding: 0px 0 30px 0;
-  border-radius: 5px;
-  margin-bottom: 50px;
+  margin: 40px auto;
 }
 
 .form-wrapper {
@@ -53,13 +45,4 @@
 }
 .form-wrapper .btn-group {
   margin: 3px 0 7px 0;
-}
-
-/* board read style */
-.board_write span > .btn {
-  /* display: none; */
-  width: 70px;
-  height: 40px;
-  text-align: center;
-  visibility: hidden;
 }

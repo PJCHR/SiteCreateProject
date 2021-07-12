@@ -11,6 +11,7 @@ import PWcheck from './view/PWcheck';
 import ServiceCenter from './view/ServiceCenter';
 import Board_Read from './view/Board_Read';
 import Board_Write from './view/Board_Write';
+import Board_Fix from './view/Board_Fix';
 import Product from './view/Product';
 import Cartbox from './view/Cartbox';
 
@@ -28,6 +29,7 @@ class App extends Component {
         <Route path="/cscenter=board_list" component={ServiceCenter} />
         <Route path="/cscenter=board_list_read" component={Board_Read} />
         <Route path="/cscenter=board_list_write" component={Board_Write} />
+        <Route path="/cscenter=board_list_fix" component={Board_Fix} />
         {/* <Route path="/cscenter=faq_list" component={ReadBoard} /> */}
         <Route path="/product_view" component={Product} />
       </Router>

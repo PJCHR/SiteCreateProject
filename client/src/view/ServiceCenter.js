@@ -85,7 +85,7 @@ class ServiceCenter extends Component {
                   <caption>문의사항 리스트</caption>
                   <colgroup>
                     <col width="7%"/>
-                    <col width="51px"/>
+                    <col width="62px"/>
                     <col/>
                     <col width="18%"/>
                     <col width="16%"/>

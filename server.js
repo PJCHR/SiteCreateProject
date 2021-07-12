@@ -74,7 +74,6 @@ app.get('/cscenter=board_list', (req, res) => {
 app.post("/cscenter=write_board-save", (req, res) =>{
   const id = req.body.id; 
   const nickname = req.body.nickname;
-  console.log(nickname);
   const subject = req.body.radioValue;  
   const title = req.body.title; 
   const content = req.body.content; 
@@ -92,7 +91,7 @@ app.post("/cscenter=write_board-save", (req, res) =>{
   }
   });
 });
-app.get("/cscenter=board_list_read", (req, res)=>{
+app.post("/cscenter=board_list_read", (req, res)=>{
   const text = req.query.idx;
   const sql = `SELECT * FROM cs_board_info WHERE idx LIKE ${text}`;
   connection.query(sql, (err, rows, fields) => {
@@ -230,7 +229,7 @@ app.post('/logincheck', (req, res) => {
         res.send({ success: "true" });
       }
       else if (customerInfo.length != 1) {
-        res.clearCookie('user').send(req.cookies.name);
+        res.clearCookie('user').send(req.cookies.name); // 삭제안됨
         res.send({ success: "false" })
       }
     }

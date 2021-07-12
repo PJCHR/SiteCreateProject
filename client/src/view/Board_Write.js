@@ -35,16 +35,7 @@ class Board__Write extends Component {
     };
 
     componentDidMount() {
-      this.onView();
       this.checkAuthority();
-    }
-
-    onView = async () => {
-      axios.get('/cscenter=board_list')
-      .then(res=> {
-        this.setState({cs_boardinfo: res.data});
-      })
-      .catch((Error)=>{console.log(Error)})
     }
     
     onSendData = async () => {
@@ -91,7 +82,17 @@ class Board__Write extends Component {
 
     checkAuthority = async() => {
       axios.get('/authority')
-      .then(res=>this.setState({authority:res.data}))
+      .then(
+        res=>{this.setState({authority:res.data})
+      
+        if(this.state.authority.id !== 'admin'){
+          console.log(this.state.authority.id)
+          this.setState({radios: [
+            { name: '일반', value: '일반' },
+            { name: '질문', value: '질문' },
+          ]})
+        }
+      })
       .catch((Error)=>{console.log(Error)})
     }
 

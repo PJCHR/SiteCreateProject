@@ -1,5 +1,6 @@
 .servicecenter_wrap {
   width: 100%;
+  min-height: 580px;
   margin: 0 auto;
   /* background: #f6f7fb; */
 }
@@ -80,7 +81,7 @@ a,
 
 .writeboardgo {
   position: relative;
-  width: 60%;
+  width: 1240px;
   height: 40px;
   text-align: right;
   margin: 0 auto;
@@ -108,7 +109,7 @@ a,
 
 .b_list_table {
   position: relative;
-  width: 60%;
+  width: 1240px;
   margin: 0 auto;
 }
 .b_list_table table {
