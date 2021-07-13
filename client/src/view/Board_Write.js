@@ -142,7 +142,8 @@ class Board__Write extends Component {
                     ))}
                   </ButtonGroup>
                   
-
+                  {/* CKEDITOR.editorConfig = function(config){ config.enterMode = CKEDITOR.ENTER_BR}; */}
+                  
                   <CKEditor
                       editor={ ClassicEditor }
                       config={{

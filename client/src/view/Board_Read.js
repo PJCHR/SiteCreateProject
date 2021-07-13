@@ -95,7 +95,7 @@ class Board__Read extends Component {
                       <h1>{list.nickname}   |   {list.date_created}</h1>
                     </div>
 
-                    <div className="cont">{list.content}</div>
+                    <body><div className="cont">{list.content}</div></body>
                     
                   </div>
                 )})
