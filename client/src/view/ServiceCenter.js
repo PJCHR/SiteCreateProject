@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component, useState} from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Pagination from "react-js-pagination";
+import ReactPaginate from "react-paginate";
 
 import Table from 'react-bootstrap/Table'
 import HomeStyle from '../css/HomeStyle.module.css';
@@ -18,16 +19,20 @@ class ServiceCenter extends Component {
       returnUrl:['cscenter=board_list'],
       date: '',
       time: '',
+      page: 1,
+      setPage: '',
     };
     
     componentDidMount() {
       this.onBoardboard_list();
       this.checkAuthority();
+      
     }
     checkAuthority = () => {
       axios.get('/authority')
       .then(res=>this.setState({authority:res.data}))
       .catch((Error)=>{console.log(Error)})
+      
     }
 
     // 게시판 쓰기, 읽기, 목록
@@ -42,14 +47,21 @@ class ServiceCenter extends Component {
         if(item.subject === "비공개" && this.state.authority.id !== "admin"){
         alert("비공개글입니다. 운영자만 열람가능합니다.")
         window.location.reload()
+
+        
         }
       })
     }
     
+    handlePageChange = (page) => { 
+      this.setState({page: page }); console.log(page); };
+
     render() {
       const { cs_boardinfo} = this.state;
       const { authority } = this.state;
-      const { returnUrl} = this.state;
+
+      // const { returnUrl} = this.state;const Paging = () => { const [page, setPage] = useState(1);
+        
       return (
       <div className={HomeStyle.body_wrap}>
       
@@ -77,7 +89,7 @@ class ServiceCenter extends Component {
             <div className="boardlist">
 
               <div className="writeboardgo">
-                {authority.status==="login"?<h1 className="write_icon"><Link to="/cscenter=board_list_write">글쓰기</Link></h1>:<h1 className="write_icon"><Link to={"/user/login?returnUrl=" + returnUrl}>로그인</Link></h1>}
+                {authority.status==="login"?<h1 className="write_icon"><Link to="/cscenter=board_list_write">글쓰기</Link></h1>:<h1 className="write_icon"><Link to={"/user/login?returnUrl=" + this.state.returnUrl}>로그인</Link></h1>}
               </div>
               <div className="b_list_table">
 
@@ -119,8 +131,25 @@ class ServiceCenter extends Component {
                 </Table>
                 
               </div>
+              {/* <ReactPaginate 
+                pageCount={Math.ceil(totalRecords / 10)}
+                pageRangeDisplayed={10}
+                marginPagesDisplayed={0}
+                breakLabel={""}
+                previousLabel={"이전"}
+                nextLabel={"다음"}
+                onPageChange={changePage}
+                containerClassName={"pagination-ul"}
+                activeClassName={"currentPage"}
+                previousClassName={"pageLabel-btn"}
+                nextClassName={"pageLabel-btn"}
+              />  */}
+
+              
               {/* 페이징 작업을 위한 코드 */}
               {/* <Pagination activePage={page} itemsCountPerPage={10} totalItemsCount={450} pageRangeDisplayed={5} prevPageText={"‹"} nextPageText={"›"} onChange={handlePageChange} /> */}
+              
+              <Pagination activePage={this.state.page} itemsCountPerPage={1} totalItemsCount={450} pageRangeDisplayed={5} prevPageText={"‹"} nextPageText={"›"} onChange={this.handlePageChange} />
               
             </div>
 
