@@ -31,21 +31,24 @@ class Login extends Component {
         alert("패스워드를 입력해주세요");
     }
     else if (inputId !== '' && inputPs !== '') {
-        await fetch('/logincheck?returnUrl=', options)
-            .then(response => response.json())
-            .then(response => this.setState({ loginCheck: response }))
-    }
-    const { loginCheck } = this.state;
-    if (loginCheck.success === 'true') {
+      await fetch('/logincheck?returnUrl=', options)
+      .then(response => response.json())
+      .then(response => this.setState({ loginCheck: response }))
+
+      const { loginCheck } = this.state;
+      if (loginCheck.success === 'true') {
         // alert("로그인이 되었습니다.");
         if (query === 'cscenter=board_list'){
           document.location.href = '/cscenter=board_list';
         }
         document.location.href = '/';
-    }
-    else if (loginCheck.success === 'false') {
+      }
+      else if (loginCheck.success === 'false') {
         alert("로그인 정보가 일치하지 않습니다");
+        // document.location.reload();
+      }
     }
+    
   }
 
   enterCheck = (event) => {
