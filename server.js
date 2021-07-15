@@ -60,7 +60,9 @@ app.get('/search', (req, res) => {
 // title 글 길이가 일정선을 넘으면 ... 또는 없도록 만들 것.
 // look_post /공개여부/ 1이면 비밀글, 0이면 일반 글.
 // subject /말머리/ 일반 공지 질문나눔. 운영자 아이디라면 말머리 추가에 공지가 나오게.
-app.get('/cscenter=board_list', (req, res) => {
+app.post('/cscenter=board_list', (req, res) => {
+  const pagenumber = req.query.page;
+  console.log(pagenumber);
   const sql = 'SELECT * FROM cs_board_info';
   connection.query(sql, (err, rows, fields) => {
     if (err) {
@@ -211,7 +213,7 @@ app.post('/logincheck', (req, res) => {
   const sql = `SELECT * FROM customer_info WHERE id='${Id}' AND pw='${Pw}'`;
   connection.query(sql, (err, rows, fields) => {
     if (err) {
-      // console.log(err);
+      console.log(err);
     }
     else {
       customerInfo = rows;
@@ -229,7 +231,6 @@ app.post('/logincheck', (req, res) => {
         res.send({ success: "true" });
       }
       else if (customerInfo.length != 1) {
-        res.clearCookie('user').send(req.cookies.name); // 삭제안됨
         res.send({ success: "false" })
       }
     }

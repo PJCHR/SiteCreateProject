@@ -259,7 +259,7 @@ export class TOP extends Component {
                   {authority.status==="login"?<Link onClick={this.logoutApi}>로그아웃</Link>:<Link to="/user/login">로그인</Link>}
                   {/* {authority.status==="login"?console.log("로그인 됨"):console.log("로그아웃됨")} */}
                   <Link to='/user/register'> 회원가입 </Link>
-                  <Link to='/cscenter=board_list'> 고객센터 </Link>
+                  <Link to='/cscenter=board_list?page=1'> 고객센터 </Link>
                 </span>
               </div>
 
