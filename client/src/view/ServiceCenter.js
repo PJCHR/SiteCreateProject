@@ -2,7 +2,6 @@ import React, { Component, useState} from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Pagination from "react-js-pagination";
-import ReactPaginate from "react-paginate";
 import queryString from 'query-string';
 import Table from 'react-bootstrap/Table'
 import HomeStyle from '../css/HomeStyle.module.css';
@@ -19,6 +18,7 @@ class ServiceCenter extends Component {
       returnUrl:['cscenter=board_list'],
       date: '',
       time: '',
+      page: 3,
       setPage: '',
     };
 
@@ -42,7 +42,6 @@ class ServiceCenter extends Component {
       axios.post(`/cscenter=board_list?page=${query}`)
       .then(res=> {this.setState({cs_boardinfo: res.data})})
       .catch((Error)=>{console.log(Error)})
-      
     }
 
     oncheckLook_post = () => {
@@ -59,16 +58,23 @@ class ServiceCenter extends Component {
     getQueryString = () => {
       const result = queryString.parse(this.props.location.search);
       const rst = result.page;
-      
-      console.log(rst)
 
+      parseInt(rst)
+      
       return rst;
     };
 
     handlePageChange = async (page) => {
-      var query = this.getQueryString();
-      this.setState({page: query})
-      document.location.href = "?page=" + page;
+      page = this.getQueryString();
+      // var color = document.getElementByClassName('ul.pagination li');
+      // if(page === query){
+      //   color.style.color('blue')
+      // }
+
+      
+      this.setState({page: page})
+      console.log(page)
+      // document.location.href = "?page=" + page;
     };
 
     render() {
@@ -149,7 +155,7 @@ class ServiceCenter extends Component {
               {/* 페이징 작업을 위한 코드 */}
               {/* <Pagination activePage={page} itemsCountPerPage={10} totalItemsCount={450} pageRangeDisplayed={5} prevPageText={"‹"} nextPageText={"›"} onChange={handlePageChange} /> */}
               
-              <Pagination activePage={this.state.page} itemsCountPerPage={1} totalItemsCount={450} pageRangeDisplayed={5} prevPageText={"‹"} nextPageText={"›"} onChange={this.handlePageChange} />
+              <Pagination onPageChange activePage={this.state.page} itemsCountPerPage={1} totalItemsCount={450} pageRangeDisplayed={5} prevPageText={"‹"} nextPageText={"›"} onChange={this.handlePageChange} />
               
             </div>
 
