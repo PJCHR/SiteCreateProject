@@ -78,12 +78,13 @@ app.post("/cscenter=write_board-save", (req, res) =>{
   const nickname = req.body.nickname;
   const subject = req.body.radioValue;  
   const title = req.body.title; 
-  const content = req.body.content; 
+  const content = req.body.content;
+  const con = content.slice(3, -4);
   const date_created = req.body.date_created;
   const hit = req.body.hit;
   const look_post = req.body.look_post; 
 
-  const sql = `INSERT INTO cs_board_info (id, nickname, subject, title, content, date_created, hit, look_post) VALUES ('${id}','${nickname}','${subject}','${title}','${content}','${date_created}','${hit}','${look_post}')`;
+  const sql = `INSERT INTO cs_board_info (id, nickname, subject, title, content, date_created, hit, look_post) VALUES ('${id}','${nickname}','${subject}','${title}','${con}','${date_created}','${hit}','${look_post}')`;
   connection.query(sql, (err, rows, fields) => {
     if (err) {
       console.log(err);

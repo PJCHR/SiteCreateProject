@@ -8,17 +8,16 @@ import HomeStyle from '../css/HomeStyle.module.css';
 import '../css/ServiceCenter.css';
 
 import { TOP, BOTTOM } from './Home';
+import { permittedCrossDomainPolicies } from 'helmet';
 
 class ServiceCenter extends Component {
     state = {
       cs_boardinfo: [],
-      cs_boardinfo2: [],
       authority: [],
       idx: '',
       returnUrl:['cscenter=board_list'],
       date: '',
       time: '',
-      page: 3,
       setPage: '',
     };
 
@@ -38,7 +37,6 @@ class ServiceCenter extends Component {
     // 게시판 쓰기, 읽기, 목록
     onBoardboard_list = () => {
       let query = this.getQueryString();
-      console.log(query);
       axios.post(`/cscenter=board_list?page=${query}`)
       .then(res=> {this.setState({cs_boardinfo: res.data})})
       .catch((Error)=>{console.log(Error)})
@@ -46,11 +44,17 @@ class ServiceCenter extends Component {
 
     oncheckLook_post = () => {
       this.state.cs_boardinfo.map((item, number) => {
-        if(item.subject === "비공개" && this.state.authority.id !== "admin" | item.id !== this.state.authority.id){
-        alert("비공개글입니다. 운영자만 열람가능합니다.")
-        window.location.reload()
-
+        // if(item.subject === "비공개" && this.state.authority.id !== "admin"){
+        // console.log(item.subject)
+        // alert("비공개글입니다. 운영자 및 작성자만 열람가능합니다.")
         
+        // window.location.reload()
+        // }
+        if(item.id !== this.state.authority.id){
+          console.log("저장된 subject" + item.subject)
+          console.log("저장된 id" + item.id)
+          alert("비공개글입니다. 운영자 및 작성자만 열람가능합니다.")
+          window.location.reload()
         }
       })
     }
@@ -58,30 +62,20 @@ class ServiceCenter extends Component {
     getQueryString = () => {
       const result = queryString.parse(this.props.location.search);
       const rst = result.page;
-
-      parseInt(rst)
       
+      parseInt(rst)
       return rst;
     };
 
-    handlePageChange = async (page) => {
-      page = this.getQueryString();
-      // var color = document.getElementByClassName('ul.pagination li');
-      // if(page === query){
-      //   color.style.color('blue')
-      // }
-
-      
-      this.setState({page: page})
-      console.log(page)
-      // document.location.href = "?page=" + page;
+    handlePageChange = (page) => {
+      document.location.href = "?page=" + page;
     };
 
     render() {
       const { cs_boardinfo} = this.state;
       const { authority } = this.state;
       const { returnUrl} = this.state;
-        
+      const pageNum = this.getQueryString();
       return (
       <div className={HomeStyle.body_wrap}>
       
@@ -155,7 +149,7 @@ class ServiceCenter extends Component {
               {/* 페이징 작업을 위한 코드 */}
               {/* <Pagination activePage={page} itemsCountPerPage={10} totalItemsCount={450} pageRangeDisplayed={5} prevPageText={"‹"} nextPageText={"›"} onChange={handlePageChange} /> */}
               
-              <Pagination onPageChange activePage={this.state.page} itemsCountPerPage={1} totalItemsCount={450} pageRangeDisplayed={5} prevPageText={"‹"} nextPageText={"›"} onChange={this.handlePageChange} />
+              <Pagination activePage={parseInt(pageNum)} totalItemsCount={450} pageRangeDisplayed={5} prevPageText={"‹"} nextPageText={"›"} onChange={this.handlePageChange} />
               
             </div>
 
