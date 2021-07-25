@@ -161,15 +161,7 @@ td {
 .subject {
   padding: 2px 0px 0 0;
 }
-.subject .icon_img {
-  display: inline-block;
-  width: 15px;
-  height: 15px;
-  vertical-align: -3px;
-  margin-right: 7px;
-  background-image: url(/src/img/icon_writepen.png);
-  background-size: cover;
-}
+
 .title {
   position: relative;
   text-align: left;
@@ -185,7 +177,7 @@ td {
   display: inline-block;
   width: 15px;
   height: 15px;
-  margin-right: 7px;
+  margin: 0 10px 0 0;
 }
 
 .pagination {

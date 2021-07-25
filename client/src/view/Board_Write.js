@@ -28,7 +28,7 @@ class Board__Write extends Component {
         { name: '공지', value: '공지' },
       ],
       radioValue:'일반',
-      check: false, 
+      check: false,
       title:'',
       content:'',
       hit: 0,
@@ -43,21 +43,24 @@ class Board__Write extends Component {
       this.setState(await{date_created: time.getFormatDate(now) +' '+ time.getFormatTime(now)});
       this.setState({id: this.state.authority.id});
       this.setState({nickname: this.state.authority.name});
+      if(this.state.check === true){this.setState({check: 1})} else{this.setState({check: 0})}
       const {id, nickname, radioValue, title, content, hit, check, date_created} = this.state;
       console.log(id, nickname, radioValue, title, content, hit, check, date_created)
       if (id !== '' & nickname !== '' & radioValue !== '' & title !== '' & content !== '' & hit !== '' & check !== '') {
         if(check === true){
-          this.setState(await {radioValue: '비공개'})
-          return axios.post("/cscenter=write_board-save",this.state)
-          .then(res=>res)
-          .then(() => alert('등록완료.'))
-          .then(() => window.location.href = "/cscenter=board_list")
-          .catch((Error)=>{console.log(Error)})
+          // alert(radioValue + check)
+          // radioValue = "비공개"
+          // alert(radioValue)
+          // axios.post("/cscenter=write_board-save",this.state)
+          // .then(res=>res)
+          // .then(() => alert('등록완료.' + radioValue))
+          // .then(() => window.location.href = "/cscenter=board_list")
+          // .catch((Error)=>{console.log(Error)})
         }
         if(check === false){
-          return axios.post("/cscenter=write_board-save",this.state)
+          axios.post("/cscenter=write_board-save",this.state)
           .then(res=>res)
-          .then(() => alert('등록완료.'))
+          .then(() => alert('등록완료.' + radioValue))
           .then(() => window.location.href = "/cscenter=board_list")
           .catch((Error)=>{console.log(Error)})
         }
