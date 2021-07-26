@@ -41,7 +41,6 @@ class ServiceCenter extends Component {
     .then(res=> {this.setState({cs_boardinfo: res.data})})
     .catch((Error)=>{console.log(Error)})
 
-    
   }
 
   oncheckLook_post = () => {
@@ -87,6 +86,7 @@ class ServiceCenter extends Component {
   };
 
   handlePageChange = (page) => {
+ 
     document.location.href = "?page=" + page;
   };
 

@@ -62,8 +62,13 @@ app.get('/search', (req, res) => {
 // subject /말머리/ 일반 공지 질문나눔. 운영자 아이디라면 말머리 추가에 공지가 나오게.
 app.post('/cscenter=board_list', (req, res) => {
   const pagenumber = req.query.page;
-  console.log(pagenumber);
-  const sql = 'SELECT * FROM cs_board_info';
+
+  const last = pagenumber*10;
+  const first = last-9;
+  
+  console.log(last+"라스트")
+  console.log(first+"퍼스트")
+  const sql = `SELECT * FROM cs_board_info WHERE idx>=${first} AND idx<=${last}`; // 여기에서 1~10불러오는 ㅇㅇ => 
   connection.query(sql, (err, rows, fields) => {
     if (err) {
       console.log('DATA GET FAIL');
