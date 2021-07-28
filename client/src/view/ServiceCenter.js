@@ -19,6 +19,7 @@ class ServiceCenter extends Component {
     date: '',
     time: '',
     setPage: '',
+    cnt: 5,
   };
 
  
@@ -37,10 +38,37 @@ class ServiceCenter extends Component {
   // 게시판 쓰기, 읽기, 목록
   onBoardboard_list = () => {
     let query = this.getQueryString();
-    axios.post(`/cscenter=board_list?page=${query}`)
-    .then(res=> {this.setState({cs_boardinfo: res.data})})
+
+    const last = query*this.state.cnt;
+    const first = last-last+1;
+    
+    // 배열 값 가져오고 count_length 값 정함
+    axios.post(`/cscenter=board_list?page=${query}`,this.state)
+    .then(res=> {this.setState({cs_boardinfo: res.data }); console.log(this.state.cs_boardinfo);})
+    .then(res=> {const count_length = this.state.cs_boardinfo.length/this.state.cnt; console.log('count_length : ' + count_length); this.setState({count_length: count_length})})
+    .then(res=> {
+      const count = this.state.cs_boardinfo;
+      console.log(count[0]);
+      
+      // const count_length = count/this.state.cnt;
+      // console.log(count_length);
+      // this.setState({count_length: count_length});})
+    })
     .catch((Error)=>{console.log(Error)})
 
+    // 배열 값 항목 지정해서 가져옴
+    // axios.post(`/cscenter=board_list-count?page=${query}`,this.state)
+    // .then(res=> {this.setState({cs_boardinfo: res.data }); console.log(this.state.cs_boardinfo);})
+    // // .then(res=> {const count_length = this.state.cs_boardinfo/this.state.cnt; console.log(count_length);})
+    // .then(res=> {
+    //   const count = this.state.cs_boardinfo;
+    //   // console.log('항목 수' + count);
+      
+    //   // const count_length = count/this.state.cnt;
+    //   // console.log(count_length);
+    //   // this.setState({count_length: count_length});})
+    // })
+    // .catch((Error)=>{console.log(Error)})
   }
 
   oncheckLook_post = () => {
@@ -95,6 +123,7 @@ class ServiceCenter extends Component {
     const { authority } = this.state;
     const { returnUrl} = this.state;
     const pageNum = this.getQueryString();
+
     return (
     <div className={HomeStyle.body_wrap}>
     
@@ -170,7 +199,7 @@ class ServiceCenter extends Component {
             {/* 페이징 작업을 위한 코드 */}
             {/* <Pagination activePage={page} itemsCountPerPage={10} totalItemsCount={450} pageRangeDisplayed={5} prevPageText={"‹"} nextPageText={"›"} onChange={handlePageChange} /> */}
             
-            <Pagination activePage={parseInt(pageNum)} itemsCountPerPage={1} totalItemsCount={450} pageRangeDisplayed={5} prevPageText={"‹"} nextPageText={"›"} onChange={this.handlePageChange} />
+            <Pagination activePage={parseInt(pageNum)} itemsCountPerPage={this.state.count} totalItemsCount={this.state.count_length} pageRangeDisplayed={5} prevPageText={"‹"} nextPageText={"›"} onChange={this.handlePageChange} />
             
           </div>
 
