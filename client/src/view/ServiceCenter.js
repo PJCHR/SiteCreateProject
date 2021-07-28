@@ -19,7 +19,7 @@ class ServiceCenter extends Component {
     date: '',
     time: '',
     setPage: '',
-    cnt: 5,
+    cnt: 10,
   };
 
  
@@ -39,51 +39,42 @@ class ServiceCenter extends Component {
   onBoardboard_list = () => {
     let query = this.getQueryString();
 
-    const last = query*this.state.cnt;
-    const first = last-last+1;
-    
     // 배열 값 가져오고 count_length 값 정함
     axios.post(`/cscenter=board_list?page=${query}`,this.state)
-    .then(res=> {this.setState({cs_boardinfo: res.data }); console.log(this.state.cs_boardinfo);})
-    .then(res=> {const count_length = this.state.cs_boardinfo.length/this.state.cnt; console.log('count_length : ' + count_length); this.setState({count_length: count_length})})
+    .then(res=> {this.setState({cs_boardinfo: res.data });})
     .then(res=> {
-      const count = this.state.cs_boardinfo;
-      console.log(count[0]);
+
       
-      // const count_length = count/this.state.cnt;
-      // console.log(count_length);
-      // this.setState({count_length: count_length});})
+      let last = query*this.state.cnt;
+      let first =  last - 9 - query;
+      const count = this.state.cs_boardinfo;
+      const count_length = Math.ceil(count.length/this.state.cnt);
+
+      this.setState({pageCount: parseInt(count_length)*10});
+      this.setState({pageRange: parseInt(count_length)});
+
+      this.setState({cs_boardinfo: count.slice(first,last)})
     })
     .catch((Error)=>{console.log(Error)})
-
-    // 배열 값 항목 지정해서 가져옴
-    // axios.post(`/cscenter=board_list-count?page=${query}`,this.state)
-    // .then(res=> {this.setState({cs_boardinfo: res.data }); console.log(this.state.cs_boardinfo);})
-    // // .then(res=> {const count_length = this.state.cs_boardinfo/this.state.cnt; console.log(count_length);})
-    // .then(res=> {
-    //   const count = this.state.cs_boardinfo;
-    //   // console.log('항목 수' + count);
-      
-    //   // const count_length = count/this.state.cnt;
-    //   // console.log(count_length);
-    //   // this.setState({count_length: count_length});})
-    // })
-    // .catch((Error)=>{console.log(Error)})
   }
 
   oncheckLook_post = () => {
     this.state.cs_boardinfo.map((item, number) => {
-      if(item.look_post === 1 && this.state.authority.id !== "admin"){
-      console.log(item.subject)
-      alert("비공개글입니다. 운영자 및 작성자만 열람가능합니다.")
-      
-      window.location.reload()
-      }
-      // if(item.id[number] !== this.state.authority.id){
-      //   console.log("저장된 subject" + item.subject)
-      //   console.log("저장된 id" + item.id)
-      //   alert("비공개글입니다. 운영자 및 작성자만 열람가능합니다.")
-      //   window.location.reload()
+      alert(item.look_post);
+      // if(item.look_post === 1){
+      //   alert(this.state.authority.id);
+      //   if(this.state.authority.id === 'admin'){
+      //     if(this.state.authority.id !== item.id){
+      //       console.log(item.subject);
+            
+      //       alert("비공개글입니다. 운영자 또는 작성자만 열람가능합니다.");
+            
+      //       window.location.reload();
+      //     }
+      //   }
+      // }
+      // if(item.look_post !== 1){
+      //   alert("공개글")
       // }
     })
   }
@@ -123,7 +114,6 @@ class ServiceCenter extends Component {
     const { authority } = this.state;
     const { returnUrl} = this.state;
     const pageNum = this.getQueryString();
-
     return (
     <div className={HomeStyle.body_wrap}>
     
@@ -199,7 +189,7 @@ class ServiceCenter extends Component {
             {/* 페이징 작업을 위한 코드 */}
             {/* <Pagination activePage={page} itemsCountPerPage={10} totalItemsCount={450} pageRangeDisplayed={5} prevPageText={"‹"} nextPageText={"›"} onChange={handlePageChange} /> */}
             
-            <Pagination activePage={parseInt(pageNum)} itemsCountPerPage={this.state.count} totalItemsCount={this.state.count_length} pageRangeDisplayed={5} prevPageText={"‹"} nextPageText={"›"} onChange={this.handlePageChange} />
+            <Pagination activePage={parseInt(pageNum)} itemsCountPerPage={this.state.cnt} totalItemsCount={this.state.pageCount} pageRangeDisplayed={this.state.pageRange} prevPageText={"‹"} nextPageText={"›"} onChange={this.handlePageChange} />
             
           </div>
 

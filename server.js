@@ -71,25 +71,6 @@ app.post('/cscenter=board_list', (req, res) => {
   });
 });
 
-app.post('/cscenter=board_list-count', (req, res) => {
-  const pagenumber = req.query.page;
-  const count = req.body.count;
-  const last = pagenumber*count;
-  const first = last-last+1;
-  
-  console.log(last+"라스트")
-  console.log(first+"퍼스트")
-  // const sql = `SELECT * FROM cs_board_info WHERE idx>=${first} AND idx<=${last}`;
-  const sql = `SELECT * FROM cs_board_info`;
-  connection.query(sql, (err, rows, fields) => {
-    if (err) {
-      console.log('DATA GET FAIL');
-    } else {
-      res.send(rows);
-    }
-  });
-});
-
 app.post("/cscenter=write_board-save", (req, res) =>{
   const id = req.body.id; 
   const nickname = req.body.nickname;
