@@ -14,7 +14,6 @@ class ServiceCenter extends Component {
   state = {
     cs_boardinfo: [],
     authority: [],
-    idx: '',
     returnUrl:['cscenter=board_list'],
     date: '',
     time: '',
@@ -59,8 +58,9 @@ class ServiceCenter extends Component {
   }
 
   oncheckLook_post = () => {
-    this.state.cs_boardinfo.map((item, number) => {
-      alert(item.look_post);
+    // this.state.cs_boardinfo.map((item, number) => {
+      console.log(this.state.cs_boardinfo);
+      // console.log(this.state.cs_boardinfo[0].look_post); 배열 안에 클릭한 값이 속하는 배열 값을 줘야함.
       // if(item.look_post === 1){
       //   alert(this.state.authority.id);
       //   if(this.state.authority.id === 'admin'){
@@ -76,23 +76,6 @@ class ServiceCenter extends Component {
       // if(item.look_post !== 1){
       //   alert("공개글")
       // }
-    })
-  }
-  onSetLook_post = () => {
-    // this.state.cs_boardinfo.map((item, number) => {
-    //   // if(item.look_post === 1){
-    //     var lock = document.getElementsByClassName("icon_img")
-        
-    //     lock.style.img = "../src/img/locker_icon.png";
-    //     lock.style.backgroundsize = "cover";
-        
-    //   // }
-    //   if(item.look_post !== 1){
-    //     var lock = document.getElementsByClassName("icon_img")
-        
-    //     lock.style.backgroundimage = "/src/img/locker_icon.png";
-    //     lock.style.backgroundsize = "cover";
-    //   }
     // })
   }
 
@@ -128,10 +111,10 @@ class ServiceCenter extends Component {
               <h2 className="depth_1">고객센터</h2>
               <ul id="lnb" className="depth_2">
                 <li>
-                  <a href="/cscenter=not_list">공지사항</a>
+                  <a>공지사항</a>{/* href="/cscenter=not_list" */}
                 </li>
                 <li>
-                  <a href="/cscenter=faq_list">자주묻는질문</a>
+                  <a>자주묻는질문</a>{/* href="/cscenter=faq_list" */}
                 </li>
               </ul>
             </div>
@@ -169,10 +152,10 @@ class ServiceCenter extends Component {
                   {cs_boardinfo.map((item,number) => {
                     return(
                   <tr>
-                    <td className="num" key={item.idx}>{item.idx}</td>
+                    <td className="num" key={item.number}>{item.idx}</td>
                     <td className="subject">{item.subject}</td>
-                    <td className="title"><em className="icon_img"/>
-                      <Link to={'/cscenter=board_list_read?idx=' + parseInt(number+1)} onClick={this.oncheckLook_post}>
+                    <td className="title" onClick={this.oncheckLook_post}><em className="icon_img"/>
+                      <Link to={'/cscenter=board_list_read?idx=' + parseInt(number+1)} >
                         {item.title}
                       </Link>
                     </td>
