@@ -162,18 +162,22 @@ td {
   padding: 2px 0px 0 0;
 }
 
-.title {
+.title_1 {
   position: relative;
   text-align: left;
+  cursor: pointer;
 }
-.title a {
+.title_1 a {
   padding-top: 1px;
   line-height: 100%;
   left: 10px;
   text-decoration: none;
   color: #000;
 }
-.title .icon_img {
+.title_1 a:hover {
+  background: #337ab7;
+}
+.title_1 .icon_img {
   display: inline-block;
   width: 15px;
   height: 15px;

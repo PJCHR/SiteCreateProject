@@ -57,26 +57,29 @@ class ServiceCenter extends Component {
     .catch((Error)=>{console.log(Error)})
   }
   // 어떻게 클릭한 부분의 배열을 가져올 수 있을까? 가져올 수 있다면 이것은 해결되는 문제인걸
-  oncheckLook_post = () => {
+  onCheckLook_post = (lookpost,inner_id,number) => {
+    number= parseInt(number+1)
     // this.state.cs_boardinfo.map((item, number) => {
-      console.log(this.state.lookPoint);
-      // console.log(this.state.cs_boardinfo[0].look_post); 배열 안에 클릭한 값이 속하는 배열 값을 줘야함.
-      // if(item.look_post === 1){
-      //   alert(this.state.authority.id);
-      //   if(this.state.authority.id === 'admin'){
-      //     if(this.state.authority.id !== item.id){
-      //       console.log(item.subject);
-            
-      //       alert("비공개글입니다. 운영자 또는 작성자만 열람가능합니다.");
-            
-      //       window.location.reload();
-      //     }
-      //   }
-      // }
-      // if(item.look_post !== 1){
-      //   alert("공개글")
-      // }
-    // })
+    let {id} = this.state.authority;
+    if(lookpost === 1){
+      if(id !== inner_id){
+        alert('회원님은 열람할 수 없는 게시글입니다.')
+      }
+      else{
+        document.location.href="/cscenter=board_list_read?idx="+number;
+      }
+    }
+    else{
+      document.location.href="/cscenter=board_list_read?idx="+number;
+    }
+  }
+  onLockImg = (lookpost) =>{
+    var img = document.getElementsByClassName("icon_img")
+    if(lookpost === 1){
+      console.log(lookpost);
+      img.style.backgroundImage = "/src/img/locker_icon.png";
+      img.style.backgroundSize = "cover";
+    }
   }
 
   getQueryString = () => {
@@ -153,12 +156,12 @@ class ServiceCenter extends Component {
                     return(
                   <tr>
                     {/* onChange={e => this.setState({ lookPoint: e.target.value })} */}
+                    {/* to={'/cscenter=board_list_read?idx=' + parseInt(number+1)} */}
                     <td className="num" key={item.number}>{item.idx}</td>
                     <td className="subject">{item.subject}</td>
-                    <td className="title" onClick={this.oncheckLook_post}><em className="icon_img" onChange={e => this.setState({ lookPoint: e.target.value })}> {item.look_post} </em> 
-                      <Link to={'/cscenter=board_list_read?idx=' + parseInt(number+1)} >
-                        {item.title}
-                      </Link>
+                    <td className="title_1" onClick={()=>this.onCheckLook_post(item.look_post,item.id,number)}>
+                    <em className="icon_img" onChange={()=>this.onLockImg(item.look_post)}>{item.look_post}</em>
+                      {item.title}
                     </td>
                     <td className="creater">{item.nickname}</td>
                     <td className="date_created">{item.date_created}</td>

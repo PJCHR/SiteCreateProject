@@ -41,7 +41,6 @@ class Board__Read extends Component {
 
       this.state.cs_boardinfo.map((item) => {
         if(this.state.authority.id === item.id){
-          console.log("일치") // ok
 
           btn.style.visibility = "visible";
           btn2.style.visibility = "visible";
