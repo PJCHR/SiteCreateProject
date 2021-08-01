@@ -56,10 +56,10 @@ class ServiceCenter extends Component {
     })
     .catch((Error)=>{console.log(Error)})
   }
-
+  // 어떻게 클릭한 부분의 배열을 가져올 수 있을까? 가져올 수 있다면 이것은 해결되는 문제인걸
   oncheckLook_post = () => {
     // this.state.cs_boardinfo.map((item, number) => {
-      console.log(this.state.cs_boardinfo);
+      console.log(this.state.lookPoint);
       // console.log(this.state.cs_boardinfo[0].look_post); 배열 안에 클릭한 값이 속하는 배열 값을 줘야함.
       // if(item.look_post === 1){
       //   alert(this.state.authority.id);
@@ -152,9 +152,10 @@ class ServiceCenter extends Component {
                   {cs_boardinfo.map((item,number) => {
                     return(
                   <tr>
+                    {/* onChange={e => this.setState({ lookPoint: e.target.value })} */}
                     <td className="num" key={item.number}>{item.idx}</td>
                     <td className="subject">{item.subject}</td>
-                    <td className="title" onClick={this.oncheckLook_post}><em className="icon_img"/>
+                    <td className="title" onClick={this.oncheckLook_post}><em className="icon_img" onChange={e => this.setState({ lookPoint: e.target.value })}> {item.look_post} </em> 
                       <Link to={'/cscenter=board_list_read?idx=' + parseInt(number+1)} >
                         {item.title}
                       </Link>
