@@ -182,6 +182,10 @@ td {
   width: 15px;
   height: 15px;
   margin: 0 10px 0 0;
+  line-height: 10px;
+  visibility: hidden;
+  background-image: url(/src/img/locker_icon.png);
+  background-size: cover;
 }
 
 .pagination {

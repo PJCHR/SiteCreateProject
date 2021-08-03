@@ -34,10 +34,8 @@ class Board__Read extends Component {
     .then(res=> {
       this.setState({cs_boardinfo: res.data});
 
-
-      // 로그인한 아이디. 쿠키에 저장된 id와 게시글을 작성한 id가 같다면 삭제 버튼이 표시되도록할 것임. // display를 none으로 할지, visibility를 hidden으로 할지 선택이 필요.
-      var btn = document.getElementById("delBtn")
-      var btn2 = document.getElementById("fixBtn")
+      var btn = document.getElementById("delBtn");
+      var btn2 = document.getElementById("fixBtn");
 
       this.state.cs_boardinfo.map((item) => {
         if(this.state.authority.id === item.id){

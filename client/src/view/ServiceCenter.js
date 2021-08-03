@@ -31,7 +31,6 @@ class ServiceCenter extends Component {
     axios.get('/authority')
     .then(res=>this.setState({authority:res.data}))
     .catch((Error)=>{console.log(Error)})
-    
   }
 
   // 게시판 쓰기, 읽기, 목록
@@ -53,13 +52,15 @@ class ServiceCenter extends Component {
       this.setState({pageRange: parseInt(count_length)});
 
       this.setState({cs_boardinfo: count.slice(first,last)})
+      
+      this.onLockImg(this.state.cs_boardinfo.look_post);
     })
     .catch((Error)=>{console.log(Error)})
   }
   // 어떻게 클릭한 부분의 배열을 가져올 수 있을까? 가져올 수 있다면 이것은 해결되는 문제인걸
   onCheckLook_post = (lookpost,inner_id,number) => {
-    number= parseInt(number+1)
-    // this.state.cs_boardinfo.map((item, number) => {
+    number= parseInt(number)
+    
     let {id} = this.state.authority;
     if(lookpost === 1){
       if(id !== inner_id){
@@ -74,12 +75,10 @@ class ServiceCenter extends Component {
     }
   }
   onLockImg = (lookpost) =>{
-    var img = document.getElementsByClassName("icon_img")
-    if(lookpost === 1){
-      console.log(lookpost);
-      img.style.backgroundImage = "/src/img/locker_icon.png";
-      img.style.backgroundSize = "cover";
-    }
+      var img = document.getElementById("icon_img");
+      // if(lookpost === 1){
+        img.style.visibility = "visible";
+      // }
   }
 
   getQueryString = () => {
@@ -155,12 +154,9 @@ class ServiceCenter extends Component {
                   {cs_boardinfo.map((item,number) => {
                     return(
                   <tr>
-                    {/* onChange={e => this.setState({ lookPoint: e.target.value })} */}
-                    {/* to={'/cscenter=board_list_read?idx=' + parseInt(number+1)} */}
                     <td className="num" key={item.number}>{item.idx}</td>
                     <td className="subject">{item.subject}</td>
-                    <td className="title_1" onClick={()=>this.onCheckLook_post(item.look_post,item.id,number)}>
-                    <em className="icon_img" onChange={()=>this.onLockImg(item.look_post)}>{item.look_post}</em>
+                    <td className="title_1" onClick={()=>this.onCheckLook_post(item.look_post,item.id,item.idx)}> <em className="icon_img" id="icon_img"/>
                       {item.title}
                     </td>
                     <td className="creater">{item.nickname}</td>
@@ -172,10 +168,7 @@ class ServiceCenter extends Component {
               </Table>
               
             </div>
-            
-            {/* 페이징 작업을 위한 코드 */}
-            {/* <Pagination activePage={page} itemsCountPerPage={10} totalItemsCount={450} pageRangeDisplayed={5} prevPageText={"‹"} nextPageText={"›"} onChange={handlePageChange} /> */}
-            
+
             <Pagination activePage={parseInt(pageNum)} itemsCountPerPage={this.state.cnt} totalItemsCount={this.state.pageCount} pageRangeDisplayed={this.state.pageRange} prevPageText={"‹"} nextPageText={"›"} onChange={this.handlePageChange} />
             
           </div>
