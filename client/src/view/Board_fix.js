@@ -36,7 +36,7 @@ class Board__Fix extends Component {
     this.onGetData();
   }
   onGetData = () =>{
-    let query = this.getQueryString();
+    var query = this.getQueryString();
     axios.post(`/cscenter=board_list_fix?idx=${query}`)
     .then(res=> {
         this.setState({cs_boardinfo: res.data});
@@ -45,6 +45,7 @@ class Board__Fix extends Component {
   }
 
   onSendData = async () => {
+    var query = this.getQueryString();
     const now = new Date();
     this.setState(await{date_created: time.getFormatDate(now) +' '+ time.getFormatTime(now)});
     this.setState({id: this.state.authority.id});
@@ -56,17 +57,16 @@ class Board__Fix extends Component {
       this.setState({check: 0})
     }
     const {id, nickname, radioValue, title, content, hit, check, date_created} = this.state;
-    console.log(id, nickname, radioValue, title, content, hit, check, date_created)
     if (id !== '' & nickname !== '' & radioValue !== '' & title !== '' & content !== '' & hit !== '' & check !== '') {
       if(check === 1){
-        axios.post("/cscenter=write_board-fix",this.state)
+        axios.post(`/cscenter=write_board-fix?idx=${query}`,this.state)
         .then(res=>res)
         .then(() => alert('등록완료.'))
         .then(() => window.location.href = "/cscenter=board_list")
         .catch((Error)=>{console.log(Error)})
       }
       if(check === 0){
-        axios.post("/cscenter=write_board-fix",this.state)
+        axios.post(`/cscenter=write_board-fix?idx=${query}`,this.state)
         .then(res=>res)
         .then(() => alert('등록완료.'))
         .then(() => window.location.href = "/cscenter=board_list")
@@ -87,15 +87,25 @@ class Board__Fix extends Component {
       else if (content === '') {
         alert('내용을 작성하지않았습니다.');
       }
-      // 체크박스로 디폴트 공개(0) 기본설정되있도록 , checked = false , 만약 체크박스가 논체크라면 checked가 false이면 공개, 아니라면 비공개(운영자만 열람가능 권한 운영자)
     }
   }
 
   checkAuthority = async() => {
     axios.get('/authority')
-    .then(res=>this.setState({authority:res.data}))
+    .then(
+      res=>{this.setState({authority:res.data})
+    
+      if(this.state.authority.id !== 'admin'){
+        console.log(this.state.authority.id)
+        this.setState({radios: [
+          { name: '일반', value: '일반' },
+          { name: '질문', value: '질문' },
+        ]})
+      }
+    })
     .catch((Error)=>{console.log(Error)})
   }
+
 
   getQueryString = () => {
     const result = queryString.parse(this.props.location.search);
@@ -111,79 +121,80 @@ class Board__Fix extends Component {
     
     return (    
       <div className={HomeStyle.body_wrap}>
-        <TOP/>
+      <TOP/>
 
-        <div id="content">
-          <div className="board_wrap">
+      <div id="content">
+        <div className="board_wrap">
+          
+          <div className="board_write">
             
-            <div className="board_write">
+            <div className='form-wrapper'>
+              {cs_boardinfo.map((item, idx) => ( 
+                <input className="title-input" type='text' placeholder='제목' onChange={e => this.setState({ title: e.target.value })}></input>
+              ))}
+              <ToggleButton
+                className="mb-2"
+                id="toggle-check"
+                type="checkbox"
+                variant="outline-primary"
+                checked={this.state.check}
+                value="0"
+                onChange={e => this.setState({ check: e.target.checked })}
+              >
+                비공개
+              </ToggleButton>
+
+              <ButtonGroup>
+                {radios.map((radio, idx) => (
+                  <ToggleButton
+                    key={idx}
+                    id={`radio-${idx}`}
+                    type="radio"
+                    variant={idx % 2 ? 'outline-success' : 'outline-danger'}
+                    name="radio"
+                    value={radio.value}
+                    checked={this.state.radioValue=== radio.value}
+                    onChange={e => this.setState({ radioValue: e.target.value })}
+                  >
+                    {radio.name}
+                  </ToggleButton>
+                ))}
+              </ButtonGroup>
               
-              <div className='form-wrapper'>
-                {/* 각 입력 부분에 target으로 값 받아서 서버로 넘겨서 저장 */}
-                {cs_boardinfo.map((item, idx) => (
-                    <input className="title-input" type='text' placeholder='제목' onChange={e => this.setState({ title: e.target.value })}>{item.title}</input>
-                ))}
-                <ToggleButton
-                  className="mb-2"
-                  id="toggle-check"
-                  type="checkbox"
-                  variant="outline-primary"
-                  checked={this.state.check}
-                  value="0"
-                  onChange={e => this.setState({ check: e.target.checked })}
-                >
-                  비공개
-                </ToggleButton>
-                
-                <ButtonGroup>
-                  {radios.map((radio, idx) => (
-                    <ToggleButton
-                      key={idx}
-                      id={`radio-${idx}`}
-                      type="radio"
-                      variant={idx % 2 ? 'outline-success' : 'outline-danger'}
-                      name="radio"
-                      value={radio.value}
-                      checked={this.state.radioValue=== radio.value}
-                      onChange={e => this.setState({ radioValue: e.target.value })}
-                    >
-                      {radio.name}
-                    </ToggleButton>
-                  ))}
-                </ButtonGroup>
-                
-                {cs_boardinfo.map((item, idx) => (
-                <CKEditor
-                    editor={ ClassicEditor }
-                    config={{
-                      placeholder: "글을 입력하십시오."
+              {/* CKEDITOR.editorConfig = function(config){ config.enterMode = CKEDITOR.ENTER_BR}; */}
+              
+              {cs_boardinfo.map((item, idx) => (
+              <CKEditor
+                  editor={ ClassicEditor }
+                  config={{
+                    placeholder: "글을 입력하십시오."
+                  }}
+                  // data={item.content}
+                  onReady={ editor => {
+                      // You can store the "editor" and use when it is needed.
+                      // console.log( 'Editor is ready to use!', editor );
+                  } }
+                  onChange={ ( event, editor ) => {
+                      const data = editor.getData();
+                      // console.log( { event, editor, data } );
+                      this.setState({content: data})
                     }}
-                    data={item.content}
-                    onReady={ editor => {
-                        // You can store the "editor" and use when it is needed.
-                        // console.log( 'Editor is ready to use!', editor );
-                    } }
-                    onChange={ ( event, editor ) => {
-                        const data = editor.getData();
-                        // console.log( { event, editor, data } );
-                        this.setState({content: data})
-                      }}
-                    onBlur={ ( event, editor ) => {
-                        // console.log( 'Blur.', editor );
-                    } }
-                    onFocus={ ( event, editor ) => {
-                        // console.log( 'Focus.', editor );
-                    } }
-                />
-                ))}
-              </div>
-              <button className="submit-button" onClick={this.onSendData}>입력</button>
+                  onBlur={ ( event, editor ) => {
+                      // console.log( 'Blur.', editor );
+                  } }
+                  onFocus={ ( event, editor ) => {
+                      // console.log( 'Focus.', editor );
+                  } }
+              />
+              ))}
             </div>
+            <button className="submit-button" onClick={this.onSendData}>입력</button>
           </div>
         </div>
-
-        <BOTTOM/>
       </div>
+
+      <BOTTOM/>
+    </div>
     );
   }
 }

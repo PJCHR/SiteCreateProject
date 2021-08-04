@@ -45,7 +45,6 @@ class Board__Write extends Component {
       this.setState({check: 0})
     }
     const {id, nickname, radioValue, title, content, hit, check, date_created} = this.state;
-    console.log(id, nickname, radioValue, title, content, hit, check, date_created)
     if (id !== '' & nickname !== '' & radioValue !== '' & title !== '' & content !== '' & hit !== '' & check !== '') {
       if(check === 1){
         axios.post("/cscenter=write_board-save",this.state)

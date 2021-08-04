@@ -141,14 +141,13 @@ app.post("/cscenter=board_list_read-delete", (req, res) =>{
 });
 app.post("/cscenter=write_board-fix", (req, res) =>{
   const text = req.query.idx;
-  const idx = req.body.idx;
   const subject = req.body.radioValue;  
   const title = req.body.title; 
   const content = req.body.content; 
+  const con = content.slice(3, -4);
   const date_created = req.body.date_created;
-  const look_post = req.body.look_post; 
-
-  const sql = `UPDATE cs_board_info set idx = (idx, subject, title, content, date_created, look_post) VALUES ('${idx}','${subject}','${title}','${content}','${date_created}','${look_post}') WHERE idx= ${text}`;
+  const look_post = req.body.check; 
+  const sql = `UPDATE cs_board_info SET subject = '${subject}', title = '${title}', content = '${con}', date_created = '${date_created}', look_post = '${look_post}' WHERE idx= ${text}`;
   connection.query(sql, (err, rows, fields) => {
     if (err) {
       console.log(err);
