@@ -40,6 +40,9 @@ class Board__Fix extends Component {
     axios.post(`/cscenter=board_list_fix?idx=${query}`)
     .then(res=> {
         this.setState({cs_boardinfo: res.data});
+
+        this.setState({title: this.state.cs_boardinfo[0].title});
+        this.setState({content: this.state.cs_boardinfo[0].content});
       })
     .catch((Error)=>{console.log(Error)})
   }
@@ -62,6 +65,7 @@ class Board__Fix extends Component {
         axios.post(`/cscenter=write_board-fix?idx=${query}`,this.state)
         .then(res=>res)
         .then(() => alert('등록완료.'))
+        .then(() => window.location.href = "/")
         .then(() => window.location.href = "/cscenter=board_list")
         .catch((Error)=>{console.log(Error)})
       }
@@ -69,6 +73,7 @@ class Board__Fix extends Component {
         axios.post(`/cscenter=write_board-fix?idx=${query}`,this.state)
         .then(res=>res)
         .then(() => alert('등록완료.'))
+        .then(() => window.location.href = "/")
         .then(() => window.location.href = "/cscenter=board_list")
         .catch((Error)=>{console.log(Error)})
       }
@@ -118,7 +123,6 @@ class Board__Fix extends Component {
     const { authority } = this.state;
     const { cs_boardinfo } = this.state;
     const { radios } = this.state;
-    
     return (    
       <div className={HomeStyle.body_wrap}>
       <TOP/>
@@ -129,9 +133,8 @@ class Board__Fix extends Component {
           <div className="board_write">
             
             <div className='form-wrapper'>
-              {cs_boardinfo.map((item, idx) => ( 
-                <input className="title-input" type='text' placeholder='제목' onChange={e => this.setState({ title: e.target.value })}></input>
-              ))}
+              <input className="title-input" type='text' placeholder='제목' onChange={e => this.setState({ title: e.target.value })} value={this.state.title}></input>
+
               <ToggleButton
                 className="mb-2"
                 id="toggle-check"
@@ -163,19 +166,19 @@ class Board__Fix extends Component {
               
               {/* CKEDITOR.editorConfig = function(config){ config.enterMode = CKEDITOR.ENTER_BR}; */}
               
-              {cs_boardinfo.map((item, idx) => (
               <CKEditor
                   editor={ ClassicEditor }
                   config={{
                     placeholder: "글을 입력하십시오."
                   }}
-                  // data={item.content}
+                  data={this.state.content}
                   onReady={ editor => {
                       // You can store the "editor" and use when it is needed.
                       // console.log( 'Editor is ready to use!', editor );
                   } }
                   onChange={ ( event, editor ) => {
                       const data = editor.getData();
+                      
                       // console.log( { event, editor, data } );
                       this.setState({content: data})
                     }}
@@ -186,7 +189,6 @@ class Board__Fix extends Component {
                       // console.log( 'Focus.', editor );
                   } }
               />
-              ))}
             </div>
             <button className="submit-button" onClick={this.onSendData}>입력</button>
           </div>

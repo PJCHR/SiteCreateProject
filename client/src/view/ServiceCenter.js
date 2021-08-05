@@ -52,8 +52,8 @@ class ServiceCenter extends Component {
       this.setState({pageRange: parseInt(count_length)});
 
       this.setState({cs_boardinfo: count.slice(first,last)})
-      
-      this.onLockImg(this.state.cs_boardinfo.look_post);
+      // console.log(this.state.cs_boardinfo[0].look_post);
+      // this.onLockImg(this.state.cs_boardinfo[0].look_post);
     })
     .catch((Error)=>{console.log(Error)})
   }
@@ -76,6 +76,8 @@ class ServiceCenter extends Component {
   }
   onLockImg = (lookpost) =>{
       var img = document.getElementById("icon_img");
+      console.log(lookpost);
+      console.log(this.state.cs_boardinfo);
       // if(lookpost === 1){
         img.style.visibility = "visible";
       // }
@@ -113,7 +115,7 @@ class ServiceCenter extends Component {
               <h2 className="depth_1">고객센터</h2>
               <ul id="lnb" className="depth_2">
                 <li>
-                  <a>공지사항</a>{/* href="/cscenter=not_list" */}
+                  <a onClick={this.onLockImg}>공지사항</a>{/* href="/cscenter=not_list" */}
                 </li>
                 <li>
                   <a>자주묻는질문</a>{/* href="/cscenter=faq_list" */}
@@ -156,7 +158,7 @@ class ServiceCenter extends Component {
                   <tr>
                     <td className="num" key={item.number}>{item.idx}</td>
                     <td className="subject">{item.subject}</td>
-                    <td className="title_1" onClick={()=>this.onCheckLook_post(item.look_post,item.id,item.idx)}> <em className="icon_img" id="icon_img"/>
+                    <td className="title_1" onClick={()=>this.onCheckLook_post(item.look_post,item.id,item.idx)}> <em className="icon_img" id="icon_img" onChange={()=>this.onLockImg(item.look_post)}/>
                       {item.title}
                     </td>
                     <td className="creater">{item.nickname}</td>
