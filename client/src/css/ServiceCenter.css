@@ -151,7 +151,7 @@ td {
   color: #333;
 }
 
-.boardlist .num,
+.boardlist .idx,
 .subject,
 .creater,
 .date_created,
@@ -183,9 +183,9 @@ td {
   height: 15px;
   margin: 0 10px 0 0;
   line-height: 10px;
-  visibility: hidden;
-  background-image: url(/src/img/locker_icon.png);
-  background-size: cover;
+  visibility: visible;
+  /* background-image: url(/src/img/locker_icon.png);
+  background-size: cover; */
 }
 
 .pagination {
@@ -223,6 +223,9 @@ ul.pagination li.active a {
 }
 ul.pagination li.active {
   background-color: #337ab7;
+}
+ul.pagination li:hover {
+  background-color: #d8d8d8;
 }
 ul.pagination li a:hover,
 ul.pagination li a.active {

@@ -87,18 +87,26 @@ export class TOP extends Component {
     fetch('/logout',{
         method:'delete'
     });
-    window.location.replace("/");
+    document.location.reload();
   }
   latelogoutApi = async () =>{
-    fetch('/logout',{
-        method:'delete'
-    });
-    alert("로그아웃됨.")
+    if(this.authority.status === 'logout'){
+
+      alert("로그아웃됨.");
+      this.logoutApi();
+    }
+  }
+  onLogin = () =>{
+    document.location.href = "/user/login?returnUrl" + document.location.href;
   }
 
   checkAuthority = () => {
     axios.get('/authority')
-    .then(res=> {this.setState({authority: res.data});})
+    .then(res=> {
+      this.setState({authority: res.data});
+
+      
+  })
   }
 
   render() {
@@ -156,7 +164,7 @@ export class TOP extends Component {
                   <h2 id="gnbCategoryTitle" className={HeaderStyle.skip}>사용자정보/카테고리/주요서비스</h2>
                   <div className={HeaderStyle.categoryUser_info}>
                     <div className={HeaderStyle.user}>
-                      {authority.status==="login"?<Link className={HeaderStyle.login}>【 {authority.name} 님】</Link> :<Link className={HeaderStyle.login} onChange={this.latelogoutApi} to="/user/login">로그인</Link>}
+                      {authority.status==="login"?<Link className={HeaderStyle.login}>【 {authority.name} 님】</Link> : <Link className={HeaderStyle.login} onClick={this.onLogin} onChange={this.latelogoutApi}>로그인</Link>}
                     </div>
                   </div>
                   <div className={HeaderStyle.category_group}>
@@ -202,7 +210,7 @@ export class TOP extends Component {
                 </div>
                 <div className={HeaderStyle.c_category_banner}>
                   <span className={HeaderStyle.skip}>광고배너</span>
-                  <a href="https://www.11st.co.kr/plan/front/exhibitions/2040394/detail" data-log-actionid-area="sidemenu" data-log-actionid-label="banner" data-log-body="{&quot;content_type&quot;:&quot;BANNER&quot;,&quot;content_no&quot;:11039491}" data-is-send-log="true">
+                  <a>
                     {/* <img class="" src="//cdn.011st.com/11dims/resize/300x94/quality/75/11src/browsing/banner/2020/09/24/17770/2020092417512426755_11039491_1.jpg" alt="SKpay머니"> */}
                   </a>
                 </div>

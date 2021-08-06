@@ -46,19 +46,41 @@ class Board__Write extends Component {
     }
     const {id, nickname, radioValue, title, content, hit, check, date_created} = this.state;
     if (id !== '' & nickname !== '' & radioValue !== '' & title !== '' & content !== '' & hit !== '' & check !== '') {
-      if(check === 1){
-        axios.post("/cscenter=write_board-save",this.state)
-        .then(res=>res)
-        .then(() => alert('등록완료.'))
-        .then(() => window.location.href = "/cscenter=board_list")
-        .catch((Error)=>{console.log(Error)})
+      if(check === 1){radioValue = '비공개';
+        if(check === 1){
+          axios.post(`/cscenter=write_board-save`,this.state)
+          .then(res=>res)
+          .then(() => alert('등록완료.'))
+          .then(() => window.location.href = "/")
+          .then(() => window.location.href = "/cscenter=board_list")
+          .catch((Error)=>{console.log(Error)})
+        }
+        if(check === 0){
+          axios.post(`/cscenter=write_board-save`,this.state)
+          .then(res=>res)
+          .then(() => alert('등록완료.'))
+          .then(() => window.location.href = "/")
+          .then(() => window.location.href = "/cscenter=board_list")
+          .catch((Error)=>{console.log(Error)})
+        }
       }
-      if(check === 0){
-        axios.post("/cscenter=write_board-save",this.state)
-        .then(res=>res)
-        .then(() => alert('등록완료.'))
-        .then(() => window.location.href = "/cscenter=board_list")
-        .catch((Error)=>{console.log(Error)})
+      else{
+        if(check === 1){
+          axios.post(`/cscenter=write_board-save`,this.state)
+          .then(res=>res)
+          .then(() => alert('등록완료.'))
+          .then(() => window.location.href = "/")
+          .then(() => window.location.href = "/cscenter=board_list")
+          .catch((Error)=>{console.log(Error)})
+        }
+        if(check === 0){
+          axios.post(`/cscenter=write_board-save`,this.state)
+          .then(res=>res)
+          .then(() => alert('등록완료.'))
+          .then(() => window.location.href = "/")
+          .then(() => window.location.href = "/cscenter=board_list")
+          .catch((Error)=>{console.log(Error)})
+        }
       }
     }
     else {

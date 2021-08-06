@@ -115,18 +115,6 @@ app.post("/cscenter=board_list_fix", (req, res)=>{
     }
   })
 })
-// app.get('/cscenter=board_list_read-content_check', (req, res) => {
-//   const { idx } = req.query;
-//   const sql = `SELECT 'exits' FROM cs_board_info  WHERE idx="${idx}"`;
-//   connection.query(sql, (err, rows, field) => {
-//     if (err) {
-//         console.log(err);
-//     }
-//     else {
-//         res.send(rows);
-//     }
-//   });
-// });
 app.post("/cscenter=board_list_read-delete", (req, res) =>{
   const text = req.query.idx;
   const sql = `DELETE FROM cs_board_info WHERE idx = ${text}`;

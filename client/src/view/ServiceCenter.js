@@ -52,15 +52,19 @@ class ServiceCenter extends Component {
       this.setState({pageRange: parseInt(count_length)});
 
       this.setState({cs_boardinfo: count.slice(first,last)})
-      // console.log(this.state.cs_boardinfo[0].look_post);
-      // this.onLockImg(this.state.cs_boardinfo[0].look_post);
+      console.log(this.state.cs_boardinfo);
+      // for(let i=0; i<this.state.cs_boardinfo.length; i++){
+      //   this.onLockImg(this.state.cs_boardinfo[i].look_post);
+      // }
+      document.getElementById("icon_img").style.backgroundImage = "url(/src/img/locker_icon.png)";
+      document.getElementById("icon_img").style.backgroundSize = "cover";
+      document.getElementById("icon_img").style.visibility = "visible";
     })
     .catch((Error)=>{console.log(Error)})
   }
-  // 어떻게 클릭한 부분의 배열을 가져올 수 있을까? 가져올 수 있다면 이것은 해결되는 문제인걸
+
   onCheckLook_post = (lookpost,inner_id,number) => {
-    number= parseInt(number)
-    
+    number = parseInt(number);
     let {id} = this.state.authority;
     if(lookpost === 1){
       if(id !== inner_id){
@@ -75,12 +79,17 @@ class ServiceCenter extends Component {
     }
   }
   onLockImg = (lookpost) =>{
-      var img = document.getElementById("icon_img");
-      console.log(lookpost);
-      console.log(this.state.cs_boardinfo);
-      // if(lookpost === 1){
-        img.style.visibility = "visible";
-      // }
+
+    if(lookpost === 1){
+      // const style = {visibility : 'hidden',}
+      document.getElementById("icon_img").style.visibility = "hidden";
+    }
+
+    // console.log(number);
+    // document.getElementById("icon_img").style.visibility = "hidden";
+    // console.log(this.state.cs_boardinfo);
+    // if(lookpost === 1){
+    // }
   }
 
   getQueryString = () => {
@@ -99,7 +108,6 @@ class ServiceCenter extends Component {
   render() {
     const { cs_boardinfo} = this.state;
     const { authority } = this.state;
-    const { returnUrl} = this.state;
     const pageNum = this.getQueryString();
     return (
     <div className={HomeStyle.body_wrap}>
@@ -115,7 +123,7 @@ class ServiceCenter extends Component {
               <h2 className="depth_1">고객센터</h2>
               <ul id="lnb" className="depth_2">
                 <li>
-                  <a onClick={this.onLockImg}>공지사항</a>{/* href="/cscenter=not_list" */}
+                  <a>공지사항</a>{/* href="/cscenter=not_list" */}
                 </li>
                 <li>
                   <a>자주묻는질문</a>{/* href="/cscenter=faq_list" */}
@@ -153,12 +161,12 @@ class ServiceCenter extends Component {
                   </tr>
                 </thead>
                 <tbody>
-                  {cs_boardinfo.map((item,number) => {
+                  {cs_boardinfo.map((item) => {
                     return(
                   <tr>
-                    <td className="num" key={item.number}>{item.idx}</td>
+                    <td className="idx" key={item.idx}>{item.idx}</td>
                     <td className="subject">{item.subject}</td>
-                    <td className="title_1" onClick={()=>this.onCheckLook_post(item.look_post,item.id,item.idx)}> <em className="icon_img" id="icon_img" onChange={()=>this.onLockImg(item.look_post)}/>
+                    <td className="title_1" onClick={()=>this.onCheckLook_post(item.look_post,item.id,item.idx)} > <em className="icon_img" id="icon_img"/>
                       {item.title}
                     </td>
                     <td className="creater">{item.nickname}</td>
