@@ -5,24 +5,19 @@ import queryString from 'query-string';
 import HomeStyle from '../css/HomeStyle.module.css';
 import LoginStyle from '../css/LoginStyle.module.css';
 import { TOP, BOTTOM } from './Home';
+import axios from 'axios';
 
 class Login extends Component {
   state = {
     inputId: '',
     inputPs: '',
     loginCheck: [],
-    // returnUrl: [],
 }
+  componentDidMount(){
+    this.getQueryString();
+    }
 
   loginApprove = async () => {
-    var query = this.getQueryString();
-    const options = {
-      method: "post",
-      body: JSON.stringify(this.state),
-      headers: {
-          'Content-Type': 'application/json'
-      }
-    }
     const { inputId, inputPs } = this.state;
     if (inputId === '') {
         alert("ID를 입력해주세요");
@@ -31,17 +26,15 @@ class Login extends Component {
         alert("패스워드를 입력해주세요");
     }
     else if (inputId !== '' && inputPs !== '') {
-      await fetch('/logincheck?returnUrl=', options)
+      await axios.post('/login', this.state)
       .then(response => response.json())
       .then(response => this.setState({ loginCheck: response }))
 
       const { loginCheck } = this.state;
       if (loginCheck.success === 'true') {
         // alert("로그인이 되었습니다.");
-        if (query === 'cscenter=board_list'){
-          document.location.href = '/cscenter=board_list';
-        }
-        document.location.href = '/';
+        // var page = this.getQueryString();
+        //     document.location.href=page;
       }
       else if (loginCheck.success === 'false') {
         alert("로그인 정보가 일치하지 않습니다");
@@ -58,7 +51,7 @@ class Login extends Component {
   }
   getQueryString = () => {
     const result = queryString.parse(this.props.location.search);
-    const rst = result.returnUrl;
+    const rst = result.ReturnUrl;
 
     return rst;
   };

@@ -205,7 +205,7 @@ app.post('/register', (req, res) => {
 //     }
 //   })
 // });
-app.post('/logincheck', (req, res) => {
+app.post('/login', (req, res) => {
   const Id = req.body.inputId;
   const Pw = crypto.createHmac('sha256', key.secret).update(req.body.inputPs).digest('base64'); //암호화,
   let customerInfo = [];
@@ -217,20 +217,21 @@ app.post('/logincheck', (req, res) => {
     else {
       customerInfo = rows;
       if (customerInfo.length == 1) {
-        let token = jwt.sign({
-          id: customerInfo[0].id,
-          name: customerInfo[0].nickname   // 토큰의 내용(payload)
-        },
-        jwtJSON.secret,    // 비밀 키
-        {
-            expiresIn: '60m'    // 유효 시간은 5분 /1시간
-        })
+          let token = jwt.sign({
+              id: customerInfo[0].id,
+              name: customerInfo[0].nickname,
+              // 토큰의 내용(payload)
+          },
+              jwtJSON.secret,    // 비밀 키
+              {
+                  expiresIn: '5m'    // 유효 시간은 5분
+              })
 
-        res.cookie("user", token);
-        res.send({ success: "true" });
+          res.cookie("user", token);
+          res.send({ success: "true" });
       }
       else if (customerInfo.length != 1) {
-        res.send({ success: "false" })
+          res.send({ success: "false" })
       }
     }
   })
@@ -241,45 +242,20 @@ app.delete('/logout',(req,res)=>{
  });
 
 app.get('/authority', (req, res) => {
-    let token = req.cookies.user;
-    let decoded = jwt.verify(token, jwtJSON.secret);
-    if (decoded) {
-        res.send(
-            {
-              status: 'login',
-              id: decoded.id,
-              name: decoded.name
-            }
-        )
-    }
-    else {
-        res.send(
-            {
-              status:'logout',
-            }
-        )
-      //  res.clearCookie('user').send(req.cookies.name); // 정보 삭제해야하는데;;
-    }
-}); // => 권한확인
-app.post('/authority', (req, res) => {
   let token = req.cookies.user;
-  let decoded = jwt.verify(token, jwtJSON.secret);
-  if (decoded) {
-      res.send(
-          {
-            status: 'login',
-            id: decoded.id,
-            name: decoded.name
-          }
-      )
+
+  try{
+    let decoded = jwt.verify(token, jwtJSON.secret);
+    res.send(
+      {
+        status: 'login',
+        id: decoded.id,
+        name: decoded.nickname,
+      }
+    )
   }
-  else {
-      res.send(
-          {
-            status:'logout',
-          }
-      )
-    //  res.clearCookie('user').send(req.cookies.name); // 정보 삭제해야하는데;;
+  catch(err){
+    res.send({status:'logout'})
   }
 }); // => 권한확인
  

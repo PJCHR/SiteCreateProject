@@ -67,6 +67,9 @@ export class TOP extends Component {
     keyword: '',
     authority: [],
   };
+  componentDidMount() {
+    this.checkAuthority();
+  }
 
   comma = (price) => {
     var regexp = /\B(?=(\d{3})+(?!\d))/g;
@@ -79,16 +82,12 @@ export class TOP extends Component {
        document.location.href="/item/search?name="+this.state.keyword;
     }
   }
-  componentDidMount() {
-    this.checkAuthority();
-  }
-
+  
   logoutApi = () =>{
-    fetch('/logout',{
-        method:'delete'
-    });
-    document.location.reload();
+    axios.delete('/logout');
+    document.location.href= this.props.ReturnUrl;
   }
+  
   latelogoutApi = async () =>{
     if(this.authority.status === 'logout'){
 
@@ -96,9 +95,21 @@ export class TOP extends Component {
       this.logoutApi();
     }
   }
-  onLogin = () =>{
-    document.location.href = "/user/login?returnUrl" + document.location.href;
-  }
+  checklogin = (menu) => {
+    if (this.state.authority.id) {
+        if (menu === "2") {
+            document.location.href = "/Account";
+        }
+    }
+
+    else {
+        alert('로그인 후 이용 가능합니다.');
+        document.location.href = "/login?ReturnUrl="+this.props.ReturnUrl;
+    }
+}
+  // onLogin = () =>{
+  //   document.location.href = "/user/login?returnUrl" + document.location.href;
+  // }
 
   checkAuthority = () => {
     axios.get('/authority')
@@ -145,11 +156,11 @@ export class TOP extends Component {
             
             <div className={HeaderStyle.img_menu}>
               <ul className={HeaderStyle.menu}>
-                <li className={HeaderStyle.my}> {authority.status==="login"?<Link className={HeaderStyle.mymenu}/>:<Link to="/user/login" className={HeaderStyle.mymenu}/>}
+                <li className={HeaderStyle.my}> {authority.status==="login"?<Link className={HeaderStyle.mymenu}/>:<Link to={"/login?ReturnUrl="+this.props.ReturnUrl} className={HeaderStyle.mymenu}/>}
                   <ul className={HeaderStyle.menu_sub}>
                     <li> <Link >주문/배송조회</Link> </li>
                     <li> <Link >취소/반품/교환</Link> </li>
-                    <li> {authority.status==="login"?<Link to="pwcheck">회원정보</Link>:<Link to="/user/login">회원정보</Link>} </li>
+                    <li> {authority.status==="login"?<Link to="pwcheck">회원정보</Link>:<Link to={"/login?ReturnUrl="+this.props.ReturnUrl}>회원정보</Link>} </li>
                   </ul>
                 </li>
               
@@ -164,7 +175,7 @@ export class TOP extends Component {
                   <h2 id="gnbCategoryTitle" className={HeaderStyle.skip}>사용자정보/카테고리/주요서비스</h2>
                   <div className={HeaderStyle.categoryUser_info}>
                     <div className={HeaderStyle.user}>
-                      {authority.status==="login"?<Link className={HeaderStyle.login}>【 {authority.name} 님】</Link> : <Link className={HeaderStyle.login} onClick={this.onLogin} onChange={this.latelogoutApi}>로그인</Link>}
+                      {authority.status==="login"?<Link className={HeaderStyle.login}>【 {authority.name} 님】</Link> : <Link className={HeaderStyle.login} to={"/login?ReturnUrl="+this.props.ReturnUrl} onChange={this.latelogoutApi}>로그인</Link>}
                     </div>
                   </div>
                   <div className={HeaderStyle.category_group}>
@@ -264,9 +275,8 @@ export class TOP extends Component {
               <div className={MenuStyle.top_menu}>
                 <span className={MenuStyle.profile_display}>{authority.status==="login"?<Link to=""><strong className={MenuStyle.profile_display}>【 {authority.name} 님 】</strong></Link>:''}</span>
                 <span className={MenuStyle.text_link}>
-                  {authority.status==="login"?<Link onClick={this.logoutApi}>로그아웃</Link>:<Link to="/user/login">로그인</Link>}
-                  {/* {authority.status==="login"?console.log("로그인 됨"):console.log("로그아웃됨")} */}
-                  <Link to='/user/register'> 회원가입 </Link>
+                  {authority.status==="login"?<Link onClick={this.logoutApi}>로그아웃</Link>:<Link to={"/login?ReturnUrl="+this.props.ReturnUrl}>로그인</Link>}
+                  <Link to='/register'> 회원가입 </Link>
                   <Link to='/cscenter=board_list?page=1'> 고객센터 </Link>
                 </span>
               </div>
