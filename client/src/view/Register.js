@@ -103,7 +103,7 @@ class Register extends Component {
   render() {
     return (
       <div className={HomeStyle.body_wrap}>
-        <TOP/>
+        <TOP ReturnUrl={document.location.href}/>
         
         <div id="content">
           <div className={RegisterStyle.signup_wrap}>

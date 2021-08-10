@@ -17,7 +17,7 @@ class CustomerInfo extends Component {
     render() {
       return (
         <div className={HomeStyle.Home_wrap}>
-           <TOP/>
+           <TOP ReturnUrl={document.location.href}/>
   
           <div className={CustomerInfoStyle.CustomerInfo_wrap}>
             

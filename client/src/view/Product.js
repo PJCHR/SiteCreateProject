@@ -10,7 +10,7 @@ import ProductStyle from '../css/ProductStyle.css';
 class Product extends Component {
     render(){
         return(
-            <div className={HomeStyle.body_wrap}>
+            <div className={HomeStyle.body_wrap} ReturnUrl={document.location.href}>
                 <div id="product_ctnt">
 
                     <div className={ProductStyle.pdt_view}> 

@@ -145,7 +145,7 @@ class Board__Fix extends Component {
     const { radios } = this.state;
     return (    
       <div className={HomeStyle.body_wrap}>
-      <TOP/>
+      <TOP ReturnUrl={document.location.href}/>
 
       <div id="content">
         <div className="board_wrap">

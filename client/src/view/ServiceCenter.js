@@ -51,8 +51,7 @@ class ServiceCenter extends Component {
       this.setState({pageCount: parseInt(count_length)*10});
       this.setState({pageRange: parseInt(count_length)});
 
-      this.setState({cs_boardinfo: count.slice(first,last)})
-      console.log(this.state.cs_boardinfo);
+      this.setState({cs_boardinfo: count.slice(first,last)});
       // for(let i=0; i<this.state.cs_boardinfo.length; i++){
       //   this.onLockImg(this.state.cs_boardinfo[i].look_post);
       // }
@@ -112,7 +111,7 @@ class ServiceCenter extends Component {
     return (
     <div className={HomeStyle.body_wrap}>
     
-      <TOP/>
+      <TOP ReturnUrl={document.location.href}/>
 
       <div id="content">
         <div className="servicecenter_wrap">

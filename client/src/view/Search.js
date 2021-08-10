@@ -57,7 +57,7 @@ class Search extends Component {
     const { result } = this.state;
     return (
       <div className={HomeStyle.body_wrap}>
-        <TOP/>
+        <TOP ReturnUrl={document.location.href}/>
 
         <div className={ContentsStyle.content_wrap}>
           <ul className={ContentsStyle.goods_trap}>

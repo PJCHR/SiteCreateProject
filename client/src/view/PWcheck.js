@@ -48,7 +48,7 @@ class PWcheck extends Component {
       return (
         <div className={PWcheckStyle.member_wrap}>
 
-            <header className={PWcheckStyle.member_header}>
+            <header className={PWcheckStyle.member_header} ReturnUrl={document.location.href}>
                 <h1 className={PWcheckStyle.tit}>
                     <a href="/" className={PWcheckStyle.sp_login_logo_11st_s}>나의쇼핑사이트</a>
                     <span>비밀번호 확인</span>

@@ -34,7 +34,7 @@ class Home extends Component {
     const { products } = this.state;
     return (
     <div className={HomeStyle.body_wrap}>
-      <TOP/>
+      <TOP ReturnUrl={document.location.href}/>
       <div id="content">
         <div className={ContentsStyle.content_wrap}>
           <ul className={ContentsStyle.goods_trap}>
@@ -85,6 +85,7 @@ export class TOP extends Component {
   
   logoutApi = () =>{
     axios.delete('/logout');
+    
     document.location.href= this.props.ReturnUrl;
   }
   
@@ -106,10 +107,7 @@ export class TOP extends Component {
         alert('로그인 후 이용 가능합니다.');
         document.location.href = "/login?ReturnUrl="+this.props.ReturnUrl;
     }
-}
-  // onLogin = () =>{
-  //   document.location.href = "/user/login?returnUrl" + document.location.href;
-  // }
+  }
 
   checkAuthority = () => {
     axios.get('/authority')
@@ -189,19 +187,10 @@ export class TOP extends Component {
                           <div className={HeaderStyle.category_sub_group}>
                             <nav className={HeaderStyle.category_sub_list}>
                               <ul> 
-                                <li>
-                                  {/* div 하나씩 만들어서 서브 메뉴 추가해서 만들어야함. 각 li 안에 div가 있으며 서브 메뉴로 사용.*/}
-                                  <a href="javascript:void(0)" data-log-actionid-area="sidemenu" data-log-actionid-label="meta_category" data-log-body="{&quot;content_type&quot;:&quot;CATEGORY&quot;,&quot;content_no&quot;:165397}">1</a>
-                                </li>
-                                <li>
-                                  <a href="javascript:void(0)" data-log-actionid-area="sidemenu" data-log-actionid-label="meta_category" data-log-body="{&quot;content_type&quot;:&quot;CATEGORY&quot;,&quot;content_no&quot;:165397}">2</a>
-                                </li>
-                                <li>
-                                  <a href="javascript:void(0)" data-log-actionid-area="sidemenu" data-log-actionid-label="meta_category" data-log-body="{&quot;content_type&quot;:&quot;CATEGORY&quot;,&quot;content_no&quot;:165397}">3</a>
-                                </li>
-                                <li>
-                                  <a href="javascript:void(0)" data-log-actionid-area="sidemenu" data-log-actionid-label="meta_category" data-log-body="{&quot;content_type&quot;:&quot;CATEGORY&quot;,&quot;content_no&quot;:165397}">4</a>
-                                </li>
+                                <li><a value="1"></a></li>
+                                <li><a value="2"></a></li>
+                                <li><a value="3"></a></li>
+                                <li><a value="4"></a></li>
                               </ul>
                             </nav>
                           </div>

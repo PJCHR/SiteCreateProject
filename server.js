@@ -205,38 +205,71 @@ app.post('/register', (req, res) => {
 //     }
 //   })
 // });
+// app.post('/login', (req, res) => {
+//   const Id = req.body.inputId;
+//   const Pw = crypto.createHmac('sha256', key.secret).update(req.body.inputPs).digest('base64'); //암호화,
+//   let customerInfo = [];
+//   const sql = `SELECT * FROM customer_info WHERE id='${Id}' AND pw='${Pw}'`;
+//   connection.query(sql, (err, rows, fields) => {
+//     if (err) {
+//       console.log(err);
+//     }
+//     else {
+//       customerInfo = rows;
+//       console.log(rosw);
+//       if (customerInfo.length == 1) {
+//           let token = jwt.sign({
+//               id: customerInfo[0].id,
+//               name: customerInfo[0].nickname,
+//               // 토큰의 내용(payload)
+//           },
+//               jwtJSON.secret,    // 비밀 키
+//               {
+//                   expiresIn: '5m'    // 유효 시간은 5분
+//               })
+
+//           res.cookie("user", token);
+//           res.send({ success: "true" });
+//       }
+//       else if (customerInfo.length != 1) {
+//           res.send({ success: "false" })
+//       }
+//     }
+//   })
+// }); // => 로그인 
 app.post('/login', (req, res) => {
-  const Id = req.body.inputId;
-  const Pw = crypto.createHmac('sha256', key.secret).update(req.body.inputPs).digest('base64'); //암호화,
+  const id = req.body.inputId;
+  const password = crypto.createHmac('sha256', key.secret).update(req.body.inputPs).digest('base64'); //암호화
+  const params = [id, password];
   let customerInfo = [];
-  const sql = `SELECT * FROM customer_info WHERE id='${Id}' AND pw='${Pw}'`;
-  connection.query(sql, (err, rows, fields) => {
-    if (err) {
-      console.log(err);
-    }
-    else {
-      customerInfo = rows;
-      if (customerInfo.length == 1) {
-          let token = jwt.sign({
-              id: customerInfo[0].id,
-              name: customerInfo[0].nickname,
-              // 토큰의 내용(payload)
-          },
-              jwtJSON.secret,    // 비밀 키
-              {
-                  expiresIn: '5m'    // 유효 시간은 5분
-              })
+  connection.query('select * from customer_info where id=? and pw=?', params,
+      (err, result, field) => {
+          if (err) {
+              console.log(err);
+          }
+          else {
+              customerInfo = result;
+              if (customerInfo.length == 1) {
+                  let token = jwt.sign({
+                      id: customerInfo[0].id,
+                      nickname: customerInfo[0].nickname,
+                      // 토큰의 내용(payload)
+                  },
+                      jwtJSON.secret,    // 비밀 키
+                      {
+                          expiresIn: '5m'    // 유효 시간은 5분
+                      })
 
-          res.cookie("user", token);
-          res.send({ success: "true" });
+                  res.cookie("user", token);
+                  res.send({ success: "true" });
+              }
+              else if (customerInfo.length != 1) {
+                  res.send({ success: "false" })
+              }
+          }
       }
-      else if (customerInfo.length != 1) {
-          res.send({ success: "false" })
-      }
-    }
-  })
+  )
 }); // => 로그인 
-
 app.delete('/logout',(req,res)=>{
   res.clearCookie('user').send(req.cookies.name);
  });

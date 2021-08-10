@@ -26,22 +26,25 @@ class Login extends Component {
         alert("패스워드를 입력해주세요");
     }
     else if (inputId !== '' && inputPs !== '') {
-      await axios.post('/login', this.state)
-      .then(response => response.json())
-      .then(response => this.setState({ loginCheck: response }))
-
-      const { loginCheck } = this.state;
-      if (loginCheck.success === 'true') {
-        // alert("로그인이 되었습니다.");
-        // var page = this.getQueryString();
-        //     document.location.href=page;
-      }
-      else if (loginCheck.success === 'false') {
-        alert("로그인 정보가 일치하지 않습니다");
-        // document.location.reload();
-      }
+      axios.post('/login', this.state)
+      
+      .then(res=> {
+        this.setState({ loginCheck: res.data })
+      
+        const { loginCheck } = this.state;
+        
+        if (loginCheck.success === 'true') {
+          // alert("로그인이 되었습니다.");
+          var page = this.getQueryString();
+          document.location.href = page;
+        }
+        else if (loginCheck.success === 'false') {
+          alert("로그인 정보가 일치하지 않습니다");
+          // document.location.reload();
+        }
+    })
+      .catch((Error)=>{console.log(Error)})
     }
-    
   }
 
   enterCheck = (event) => {
@@ -52,7 +55,6 @@ class Login extends Component {
   getQueryString = () => {
     const result = queryString.parse(this.props.location.search);
     const rst = result.ReturnUrl;
-
     return rst;
   };
   
