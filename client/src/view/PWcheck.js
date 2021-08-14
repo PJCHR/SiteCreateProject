@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -6,45 +7,55 @@ import PWcheckStyle from '../css/PWcheckStyle.module.css';
 
 class PWcheck extends Component {
     state = {
-        
-        inputPs: '',
-        pwcheck:[],
+        authority: [],
+        logined_ID:'',
     };
 
-    checkApprove = async () => {
-        const options = {
-            method: "post",
-            body: JSON.stringify(this.state),
-            headers: {
-                'Content-Type': 'application/json'
-            }
+    componentDidMount() {
+        this.checkAuthority();
+    }
+
+    checkPwcheck = async () => {
+        const { inputPs } = this.state;
+        if (this.state.authority.id === '') {
+            alert("로그인 되어있지않습니다.");
+            document.location.href="/login?ReturnUrl=" + document.location.href;
         }
-        const { inputId, inputPs } = this.state;
-        if (inputPs === '') {
+        else if (inputPs === '') {
             alert("패스워드를 입력해주세요");
         }
-        else if ( inputPs !== '') {
-            await fetch('/pwcheck', options)
-                .then(response => response.json())
-                .then(response => this.setState({ pwcheck: response }))
-        }
-        const { pwcheck } = this.state;
-        if (pwcheck.success === 'true') {
-            document.location.href = '/customerInfo';
-        }
-        else if (pwcheck.success === 'false') {
-            alert("비밀번호가 맞지않습니다.");
+        if ( inputPs !== '') {
+            this.setState({logined_ID: this.state.authority.id})
+            await axios.post('/pwcheck', this.state)
+            .then(res => {
+                
+                this.setState({ pwcheck: res.data })
+        
+                const { pwcheck } = this.state;
+                if (pwcheck.success === 'true') {
+                    document.location.href = '/customerInfo';
+                }
+                else if (pwcheck.success === 'false') {
+                    alert("비밀번호가 맞지않습니다.");
+                }
+            })
         }
     }
-  
+
+    checkAuthority = () => {
+        axios.get('/authority')
+        .then(res=>this.setState({authority:res.data}))
+        .catch((Error)=>{console.log(Error)})
+    }
   
     enterCheck = (event) => {
         if (event.keyCode === 13) {
-            this.checkApprove();
+            this.checkPwcheck();
         }
     }
     
     render() {
+        const { authority } = this.state;
       return (
         <div className={PWcheckStyle.member_wrap}>
 
@@ -56,27 +67,24 @@ class PWcheck extends Component {
             </header>
 
             <div className={PWcheckStyle.password_recheck}>
-                <form name="pwchkform" id="pwchkform" onsubmit="return false;">
+                {/* <h2 class="sr_only">비밀번호 재확인</h2> */}
+                <p className={PWcheckStyle.password_info}>회원님의 개인정보를 안전하게 보호하기 위해<em className={PWcheckStyle.fc_red}> 인증 후 변경이 가능 </em>합니다.</p>
+                
+                <div className={PWcheckStyle.password_recheck_inner_open}>
+                        
+                    <p className={PWcheckStyle.connect_id_st11}><span className={PWcheckStyle.in_btn}>아이디 : <strong>{authority.id}</strong></span></p>
 
-                    {/* <h2 class="sr_only">비밀번호 재확인</h2> */}
-                    <p className={PWcheckStyle.password_info}>회원님의 개인정보를 안전하게 보호하기 위해<em className={PWcheckStyle.fc_red}> 인증 후 변경이 가능 </em>합니다.</p>
-                    
-                    <div className={PWcheckStyle.password_recheck_inner_open}>
-                            
-                        <p className={PWcheckStyle.connect_id_st11}><span className={PWcheckStyle.in_btn}>아이디 : <strong>admin@gmail.com</strong></span></p>
-
-                        <div className={PWcheckStyle.password_box}>
-                            <div className="inp_box">
-                                <input type="password" id="memScrtNo" className={PWcheckStyle.password_inp} title="비밀번호 입력" placeholder="비밀번호를 입력하세요." name="memScrtNo" maxlength="20" onclick="rakeLog.sendRakeLog(this);" onkeypress=""/>
-                            </div>
-                            <button type="button" className={PWcheckStyle.btn_ok} onclick="chkConfirmPassword()"><span className={PWcheckStyle.in_btn}>확인</span></button>
-                            <p id="messageArea" className={PWcheckStyle.err_msg}></p>
+                    <div className={PWcheckStyle.password_box}>
+                        <div className="inp_box">
+                            <input type="password" className={PWcheckStyle.password_inp} title="비밀번호 입력" placeholder="비밀번호를 입력하세요." onKeyUp={this.enterCheck} onChange={e => this.setState({ inputPs: e.target.value })}/>
                         </div>
+                        <button className={PWcheckStyle.btn_ok} onClick={this.checkPwcheck}>확인</button>
+                        <p id="messageArea" className={PWcheckStyle.err_msg}></p>
                     </div>
+                </div>
+                
+                <div id="divCaptcha" className={PWcheckStyle.g_recaptcha}></div>
                     
-                    <div id="divCaptcha" className={PWcheckStyle.g_recaptcha} data-sitekey="6LfEzIUUAAAAAK4Im2iMemIwqJFMM6eDeFosHE1n" ></div>
-                    
-                </form>
 
                 <ul className={PWcheckStyle.password_recheck_guide}>
                     <li>회원님의 개인정보를 신중히 취급하며, 회원님의 동의 없이는 기재하신 회원정보가 공개되지 않습니다. </li>

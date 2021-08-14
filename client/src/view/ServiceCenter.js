@@ -14,7 +14,6 @@ class ServiceCenter extends Component {
   state = {
     cs_boardinfo: [],
     authority: [],
-    returnUrl:['cscenter=board_list'],
     date: '',
     time: '',
     setPage: '',
@@ -95,7 +94,7 @@ class ServiceCenter extends Component {
     const result = queryString.parse(this.props.location.search);
     const rst = result.page;
     
-    parseInt(rst)
+    parseInt(rst);
     return rst;
   };
 
@@ -135,7 +134,7 @@ class ServiceCenter extends Component {
           <div className="boardlist">
 
             <div className="writeboardgo">
-              {authority.status==="login"?<h1 className="write_icon"><Link to="/cscenter=board_list_write">글쓰기</Link></h1>:<h1 className="write_icon"><Link to={"/user/login?returnUrl=" + this.state.returnUrl}>로그인</Link></h1>}
+              {authority.status==="login"?<h1 className="write_icon"><Link to="/cscenter=board_list_write">글쓰기</Link></h1>:<h1 className="write_icon"><Link to={"/login?ReturnUrl=" + document.location.href}>로그인</Link></h1>}
             </div>
             <div className="b_list_table">
 

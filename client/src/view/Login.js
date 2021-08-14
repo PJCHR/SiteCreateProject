@@ -74,7 +74,7 @@ class Login extends Component {
                   <button className="btn btn-primary" type="button" onClick={this.loginApprove} value="로그인">로그인</button>
 
                   <div className={LoginStyle.gotextbox}>
-                  <Link to="/user/register">회원가입</Link>
+                  <Link to="/register">회원가입</Link>
                   <Link to="/infoSearch">아이디/비밀번호 찾기</Link>
                 </div>
                 </form>

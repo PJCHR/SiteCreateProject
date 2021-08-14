@@ -18,16 +18,9 @@ class Home extends Component {
   }
   
   onCall = () => {
-    fetch('/home', {
-      method: 'get',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then(res => res.json())
-      .then(res => this.setState({ products: res }))
-      .catch(err => console.log(err));
-      
+    axios.get('home')
+    .then(res => this.setState({ products: res.data }))
+    .catch(err => console.log(err));
   };
 
   render() {
@@ -111,11 +104,7 @@ export class TOP extends Component {
 
   checkAuthority = () => {
     axios.get('/authority')
-    .then(res=> {
-      this.setState({authority: res.data});
-
-      
-  })
+    .then(res=> {this.setState({authority: res.data});})
   }
 
   render() {
@@ -173,7 +162,7 @@ export class TOP extends Component {
                   <h2 id="gnbCategoryTitle" className={HeaderStyle.skip}>사용자정보/카테고리/주요서비스</h2>
                   <div className={HeaderStyle.categoryUser_info}>
                     <div className={HeaderStyle.user}>
-                      {authority.status==="login"?<Link className={HeaderStyle.login}>【 {authority.name} 님】</Link> : <Link className={HeaderStyle.login} to={"/login?ReturnUrl="+this.props.ReturnUrl} onChange={this.latelogoutApi}>로그인</Link>}
+                      {authority.status==="login"?<Link className={HeaderStyle.login}>【 {authority.name} 님】</Link> : <Link className={HeaderStyle.login} to={"/login?ReturnUrl="+this.props.ReturnUrl}>로그인</Link>}
                     </div>
                   </div>
                   <div className={HeaderStyle.category_group}>
