@@ -1,8 +1,39 @@
 .CustomerInfo_wrap {
-  display: block;
+  width: 100%;
+  height: 100%;
+  background: #f6f7fb;
+}
+.userBox {
+  display: flex;
+  min-width: 1240px;
   position: relative;
+  margin: 0 auto;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  height: 980px;
+}
+.userBox > ul {
+  position: relative;
+  width: 315px;
+  margin: 50px auto;
+}
+.userBox ul > li {
+  padding: 5px;
+}
+.userBox p {
+  height: 25px;
+  margin: 5px auto;
+}
+.userBox input {
+  width: 200px;
+  height: 45px;
+}
+.userBox button {
+  display: inline-block;
+  margin: 0 5px 5px 5px;
+  width: 90px;
+  height: 40px;
+  cursor: pointer;
+}
+.userBox button:disabled {
+  background-color: rgb(151, 151, 151);
 }

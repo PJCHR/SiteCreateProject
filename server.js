@@ -177,7 +177,8 @@ app.post('/register', (req, res) => {
 app.post('/pwcheck', (req, res) => {
   const Id = req.body.logined_ID;
   const Pw = crypto.createHmac('sha256', key.secret).update(req.body.inputPs).digest('base64'); //암호화,
-  let customerInfo = [];
+  let customerInfo = '';
+  console.log(Id);console.log(Pw);
   const sql = `SELECT * FROM customer_info WHERE id='${Id}' AND pw='${Pw}'`;
   connection.query(sql, (err, rows, fields) => {
     if (err) {
@@ -185,6 +186,7 @@ app.post('/pwcheck', (req, res) => {
     }
     else {
       customerInfo = rows;
+      console.log(customerInfo);
       if (customerInfo.length == 1) {
         res.send({ success: "true" });
       }
@@ -245,6 +247,9 @@ app.get('/authority', (req, res) => {
   }
   catch(err){
     res.send({status:'logout'})
+    if(status == 'logout'){
+      res.clearCookie('user').send(req.cookies.name);
+    }
   }
 }); // => 권한확인
  

@@ -112,7 +112,7 @@ class Register extends Component {
                 <li>
                   <p>아이디</p>
                   <input type="text" id="id_field" onKeyUp={this.lowerCase} onChange={e => this.setState({ id: e.target.value })} />
-                  <button className="btn btn-primary .idcheck" type="button"  onClick={this.idCheck} type="button" value="idCheck">중복확인</button>
+                  <button className="btn btn-primary .idcheck" onClick={this.idCheck}  value="idCheck">중복확인</button>
                 </li>
 
                 <li>

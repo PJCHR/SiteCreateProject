@@ -4,11 +4,9 @@ import { Link } from 'react-router-dom';
 
 import PWcheckStyle from '../css/PWcheckStyle.module.css';
 
-
 class PWcheck extends Component {
     state = {
         authority: [],
-        logined_ID:'',
     };
 
     componentDidMount() {
@@ -16,8 +14,8 @@ class PWcheck extends Component {
     }
 
     checkPwcheck = async () => {
-        const { inputPs } = this.state;
-        if (this.state.authority.id === '') {
+        const { logined_ID, inputPs } = this.state;
+        if (logined_ID === '') {
             alert("로그인 되어있지않습니다.");
             document.location.href="/login?ReturnUrl=" + document.location.href;
         }
@@ -25,18 +23,16 @@ class PWcheck extends Component {
             alert("패스워드를 입력해주세요");
         }
         if ( inputPs !== '') {
-            this.setState({logined_ID: this.state.authority.id})
-            await axios.post('/pwcheck', this.state)
+            axios.post('/pwcheck', this.state)
+            .then(res => {this.setState({ pwcheck: res.data })})
             .then(res => {
-                
-                this.setState({ pwcheck: res.data })
-        
                 const { pwcheck } = this.state;
+
                 if (pwcheck.success === 'true') {
                     document.location.href = '/customerInfo';
                 }
                 else if (pwcheck.success === 'false') {
-                    alert("비밀번호가 맞지않습니다.");
+                    alert("패스워드가 맞지않습니다.");
                 }
             })
         }
@@ -45,6 +41,7 @@ class PWcheck extends Component {
     checkAuthority = () => {
         axios.get('/authority')
         .then(res=>this.setState({authority:res.data}))
+        .then(res=>this.setState({logined_ID: this.state.authority.id}))
         .catch((Error)=>{console.log(Error)})
     }
   
@@ -61,7 +58,7 @@ class PWcheck extends Component {
 
             <header className={PWcheckStyle.member_header} ReturnUrl={document.location.href}>
                 <h1 className={PWcheckStyle.tit}>
-                    <a href="/" className={PWcheckStyle.sp_login_logo_11st_s}>나의쇼핑사이트</a>
+                    <h1 className={PWcheckStyle.logo}>  <Link to='/'>home</Link> </h1>
                     <span>비밀번호 확인</span>
                 </h1>
             </header>
