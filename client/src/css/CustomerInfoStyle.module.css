@@ -13,15 +13,16 @@
 }
 .userBox > ul {
   position: relative;
-  width: 315px;
+  width: 415px;
   margin: 50px auto;
 }
 .userBox ul > li {
   padding: 5px;
 }
 .userBox p {
+  display: inline-block;
   height: 25px;
-  margin: 5px auto;
+  margin: 5px 10px 5px 0;
 }
 .userBox input {
   width: 200px;
@@ -36,4 +37,10 @@
 }
 .userBox button:disabled {
   background-color: rgb(151, 151, 151);
+}
+.userBox .btn_box {
+  position: relative;
+  left: 60px;
+  top: 40px;
+  margin-bottom: 80px;
 }

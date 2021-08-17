@@ -4,6 +4,7 @@ import * as time from '../script/time.js';
 import HomeStyle from '../css/HomeStyle.module.css';
 import RegisterStyle from '../css/RegisterStyle.module.css';
 import { TOP, BOTTOM } from './Home';
+import axios from 'axios';
 
 class Register extends Component {
   state = {
@@ -18,20 +19,10 @@ class Register extends Component {
     date_created: "",
   };
 
-
-  componentDidMount(){
-    this.onDate();
-  }
-
-  onDate = async () => {
-    
-  }
-
   idCheck = async () => {
     const { id } = this.state;
-    await fetch(`/idcheck?id=${id}`)
-        .then(response => response.json())
-        .then(response => this.setState({ idcheck: response }))
+    await axios.get(`/idcheck?id=${id}`)
+        .then(res => this.setState({ idcheck: res.data }))
     const { idcheck } = this.state;
     if (id === '') {
         alert('ID를 입력하세요.');
@@ -51,18 +42,11 @@ class Register extends Component {
   sendData = async () => {
     const now = new Date();
     this.setState(await{date_created: time.getFormatDate(now) +' '+ time.getFormatTime(now)});
-    const options = {
-        method: 'post',
-        body: JSON.stringify(this.state),
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    }
     await this.idCheck;
     const {id, pw, re_pw, email, nickname, phone, registerActive} = this.state;
     if (id !== '' & pw === re_pw & pw !== '' & re_pw !== '' & email !== '' & nickname !== '' & phone !== '' &registerActive==='active' ) {
       if(pw === re_pw){
-        return fetch("/register", options)
+        return axios.post("/register")
           .then(() => alert('가입되었습니다.'))
           .then(() => document.location.href = '/')
       }

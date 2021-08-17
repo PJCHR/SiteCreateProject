@@ -216,7 +216,7 @@ app.post('/login', (req, res) => {
         },
         jwtJSON.secret,    // 비밀 키
         {
-          expiresIn: '5m'    // 유효 시간은 5분
+          // expiresIn: '5m'    // 유효 시간은 5분
         }
         )
         res.cookie("user", token);
@@ -227,7 +227,35 @@ app.post('/login', (req, res) => {
       }
     }
   })
-}); // => 로그인 
+}); // => 로그인
+app.post('/customerInfo', (req, res) => {
+  const Id = req.body.userId;
+  const sql = `SELECT * FROM customer_info WHERE id='${Id}'`;
+  connection.query(sql, (err, rows, field) => {
+    if (err) {
+      console.log(err);
+    }
+    else {
+      res.send(rows);
+    }
+  })
+});
+app.post('/userinfoChange', (req, res) => {
+  const Id = req.body.inputId;
+  const Pw = crypto.createHmac('sha256', key.secret).update(req.body.inputPs).digest('base64'); //암호화,
+  let customerInfo = [];
+  const sql = `SELECT * FROM customer_info WHERE id='${Id}' AND pw='${Pw}'`;
+  connection.query(sql, (err, rows, field) => {
+    if (err) {
+      console.log(err);
+    }
+    else {
+      res.send(rows);
+    }
+  })
+});
+
+
 app.delete('/logout',(req,res)=>{
   res.clearCookie('user').send(req.cookies.name);
  });
