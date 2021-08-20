@@ -240,6 +240,24 @@ app.post('/customerInfo', (req, res) => {
     }
   })
 });
+app.post('/customerInfo-change', (req, res) => {
+  const Id = req.body.userId;
+  const Pw = crypto.createHmac('sha256', key.secret).update(req.body.pw).digest('base64'); //암호화,
+  const Email = req.body.email;
+  const NICKNAME = req.body.nickname;
+  const PHONE = req.body.phone;
+  const DATE = req.body.date_change;
+  console.log(Id,Pw,Email,NICKNAME,PHONE,DATE)
+  const sql = `UPDATE customer_info SET pw = '${Pw}', email = '${Email}', nickname = '${NICKNAME}', phone = '${PHONE}', date_change = '${DATE}' WHERE id= ${Id}'`;
+  connection.query(sql, (err, rows, field) => {
+    if (err) {
+      console.log(err);
+    }
+    else {
+      res.send(rows);
+    }
+  })
+});
 app.post('/userinfoChange', (req, res) => {
   const Id = req.body.inputId;
   const Pw = crypto.createHmac('sha256', key.secret).update(req.body.inputPs).digest('base64'); //암호화,

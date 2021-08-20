@@ -6,11 +6,18 @@ import CustomerInfoStyle from '../css/CustomerInfoStyle.module.css';
 
 import { TOP, BOTTOM } from './Home';
 import axios from 'axios';
+import * as time from '../script/time.js';
 
 class CustomerInfo extends Component {
     state = {
       authority:[],
       userInfo:[],
+      pw: "",
+      re_pw: "",
+      email: "",
+      nickname: "",
+      phone: "",
+      date_change: "",
     };
     componentDidMount() {
       this.checkAuthority();
@@ -19,34 +26,55 @@ class CustomerInfo extends Component {
   onViewInfo = async () => {
     this.setState({userId: this.state.authority.id})
     await axios.post('/customerInfo', this.state)
-    .then(res => this.setState({ userInfo: res.data }))
+    .then(res => {
+      this.setState({ userInfo: res.data });
+    })
+    .then(res => {
+      this.setState({ email: this.state.userInfo.email });
+      this.setState({ nickname: this.state.userInfo.nickname });
+      this.setState({ phone: this.state.userInfo.phone });})
     .catch(err => console.log(err));
   }
 
-  onUserInfoChange = async () => {
-      const { logined_ID, inputPs } = this.state;
-      if (logined_ID === '') {
-          alert("로그인 되어있지않습니다.");
-          document.location.href="/login?ReturnUrl=" + document.location.href;
+  sendData = async () => {
+    const now = new Date();
+    this.setState(await{date_change: time.getFormatDate(now) +' '+ time.getFormatTime(now)});
+    const {userId, pw, re_pw, email, nickname, phone, date_change} = this.state;
+    console.log(userId, pw, re_pw, email, nickname, phone, date_change);
+    
+    if (this.state.authority.status === 'login') {
+      if (pw === re_pw & pw !== '' & re_pw !== '' & email !== '' & nickname !== '' & phone !== '') {
+        if(pw === re_pw){
+          return axios.post("/customerInfo-change")
+            .then(() => alert('변경 완료되었습니다.'))
+            .then(() => document.location.href = '/')
+        }
       }
-      else if (inputPs === '') {
-          alert("패스워드를 입력해주세요");
+      else if (pw === '') {
+          alert('패스워드 입력 바랍니다.');
       }
-      if ( inputPs !== '') {
-          axios.post('/pwcheck', this.state)
-          .then(res => {this.setState({ pwcheck: res.data })})
-          .then(res => {
-              const { pwcheck } = this.state;
-
-              if (pwcheck.success === 'true') {
-                  document.location.href = '/customerInfo';
-              }
-              else if (pwcheck.success === 'false') {
-                  alert("패스워드가 맞지않습니다.");
-              }
-          })
+      else if (re_pw === '') {
+        alert('패스워드 확인란 입력 바랍니다.');
       }
+      else if (pw !== re_pw) {
+        alert('패스워드가 같지않습니다.'); // 화면 상에서 표시되어야함
+      }
+      else if (email === '') {
+        alert('이메일 입력 바랍니다.');
+      }
+      else if (nickname === '') {
+          alert('이름 입력 바랍니다.');
+      }
+      else if (phone === '') {
+        alert('전화 번호를 입력 바랍니다.');
+      }
+    }
+    else {
+      alert('유효시간이 지났습니다. 로그인 후 이용바랍니다. ');
+      document.location.href = "/";
+    }
   }
+
   checkAuthority = () => {
     axios.get('/authority')
     .then(res=> {
@@ -97,8 +125,8 @@ class CustomerInfo extends Component {
                 </li>
 
                 <div className={CustomerInfoStyle.btn_box}>
-                  <button className="btn btn-primary" type="button" onClick={this.onUserInfoChange}>변경</button>
-                  <button className="btn btn-primary" type="button" onClick={() => document.location.href = '/'}>취소</button>
+                  <button className="btn btn-primary" onClick={this.sendData}>변경</button>
+                  <button className="btn btn-primary" onClick={() => document.location.href = '/'}>취소</button>
                 </div>
               </ul>
             </div>
