@@ -1,0 +1,186 @@
+body{
+  font-family:"Noto Sans KR", "Helvetica Neue", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", "돋움", dotum, sans-serif;
+}
+.page_wrap{
+    width:1200px;
+    margin:0 auto;
+}
+.product_wrap{
+    width:800px;
+    height:600px;
+    position:absolute;
+ 
+}
+.product_image{
+    width:500px;
+    height: 500px;
+    margin-top:60px;
+    background-size: cover;
+    border:1px solid black;
+    float:left;
+}
+.product_title{
+    font-size:36px;
+    margin-top:60px;
+    position: relative;
+    left:50px;
+    color:#111;
+    
+}
+.product_rank{
+   font-style:italic;
+   left:50px;
+   position: relative;
+}
+.product_price{
+font-size:26px;
+font-weight:bold;
+position: relative;
+left:50px;
+top:40px;
+
+}
+.product_tooltip{
+    top:120px;
+    left:50px;
+    position: relative;
+    text-align: center;
+}
+.product_rate{
+    position: relative;
+    float:left;
+    font-size:12px;
+    font-weight:bold;
+   
+}
+.star_image{
+    background:url('../image/star.png');
+    width:60px;
+    height:60px;
+    background-size:cover;
+    position: relative;
+}
+
+.product_delivery{
+    position: relative;
+    float:left;
+    left:60px;
+    
+}
+.deliver_image{
+    background:url('../image/delivery.png');
+    width:60px;
+    height:60px;
+    background-size:cover;
+    position: relative;
+    
+}
+.product_search{
+    position: relative;
+    float:left;
+    font-size:12px;
+    left:30px;
+}
+.tag_image{
+    background:url('../image/click.png');
+    width:60px;
+    height:60px;
+    background-size:cover;
+    position: relative;
+
+}
+.product_tip{
+    position: relative;
+    font-size:12px;
+    font-weight:bold;
+    left:50px;
+    top:300px;
+}
+
+.change{
+    font-weight:bold;
+    color:#111;
+   
+}
+.cart_wrap{
+    width:300px;
+    height:600px;
+    float:right;
+    background-color: yellow;
+    position:relative;
+    margin-top:60px;
+    border-left:1px solid #eee;
+    background-color:#fff;
+}
+.select_btn{
+    width:105px;
+    height:30px;
+    top:350px;
+    left:30px;
+    position: relative;
+  border: 1px solid #111;
+}
+.btn_increase{
+    background: url('../image/increase.png');
+    background-size:cover;
+    width:30px;
+    height:30px;
+    border:0;
+    border-right:1px solid #111;
+    cursor:pointer;
+    float:left;
+}
+.btn_decrease{
+    background: url('../image/minus.png');
+    background-size:cover;
+    width:30px;
+    height:30px;
+    border:0px;
+    cursor:pointer;
+    border-left:1px solid #111;
+    left:15px;
+    position: relative;
+}
+
+.count{
+    border:0;
+    font-size:20px;
+    position: relative;
+    float:left;
+    width:30px;
+    left:10px;
+    text-align: center;
+    font-weight: bold;
+  
+}
+.how_much{
+    font-size:14px;
+    color:#111;
+    position: relative;
+    top:400px;
+    left:30px;
+}
+.price_sum{
+    font-size:33px;
+    color:red;
+    font-weight: bold;
+    position: relative;
+    top:400px;
+    left:30px;   
+}
+.cart_btn{
+    width:180px;
+    height:60px;
+    background-color: #f43142;
+    position: relative;
+    top:450px;
+    left:30px;
+    border: 1px solid #fff ;
+    text-align: center;
+    color:#fff;
+    font-size:22px;
+    font-weight:bold;
+    box-shadow:0px 15px 18px -2px rgb(0 0 0 / 8%), 0px 0px 5px 0px rgb(0 0 0 / 28%);
+    cursor:pointer;
+    line-height:60px;
+}

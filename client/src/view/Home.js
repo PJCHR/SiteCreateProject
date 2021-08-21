@@ -23,6 +23,10 @@ class Home extends Component {
     .catch(err => console.log(err));
   };
 
+  itempage = (item) =>{
+    document.location.href = "/itempage?item="+item;
+}
+
   render() {
     const { products } = this.state;
     return (
@@ -31,11 +35,11 @@ class Home extends Component {
       <div id="content">
         <div className={ContentsStyle.content_wrap}>
           <ul className={ContentsStyle.goods_trap}>
-            {products.map(item => {
+            {products.map((item,number) => {
               return (
-                <li>
+                <li key={number}>
                   <div className={ContentsStyle.goods}>
-                    <img className={ContentsStyle.goods_img} src={item.imgsource} alt="goods" />          
+                    <Link onClick={()=>this.itempage(number+1)}><img className={ContentsStyle.goods_img} src={item.imgsource} alt="goods" /></Link>
                     <div className={ContentsStyle.goods_info}> <p className={ContentsStyle.goods_info_text}> {item.pdt_name} </p> </div>
                     <div className={ContentsStyle.space}>
                       <div className={ContentsStyle.space1}> <h1 className={ContentsStyle.free_post_img}/> </div>

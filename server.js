@@ -56,10 +56,6 @@ app.get('/search', (req, res) => {
     }
   });
 });
-
-// title 글 길이가 일정선을 넘으면 ... 또는 없도록 만들 것.
-// look_post /공개여부/ 1이면 비밀글, 0이면 일반 글.
-// subject /말머리/ 일반 공지 질문나눔. 운영자 아이디라면 말머리 추가에 공지가 나오게.
 app.post('/cscenter=board_list', (req, res) => {
   const sql = `SELECT * FROM cs_board_info`;
   connection.query(sql, (err, rows, fields) => {
@@ -70,7 +66,6 @@ app.post('/cscenter=board_list', (req, res) => {
     }
   });
 });
-
 app.post("/cscenter=write_board-save", (req, res) =>{
   const id = req.body.id; 
   const nickname = req.body.nickname;
@@ -228,7 +223,7 @@ app.post('/login', (req, res) => {
     }
   })
 }); // => 로그인
-app.post('/customerInfo', (req, res) => {
+app.post('/customerinfo', (req, res) => {
   const Id = req.body.userId;
   const sql = `SELECT * FROM customer_info WHERE id='${Id}'`;
   connection.query(sql, (err, rows, field) => {
@@ -240,15 +235,15 @@ app.post('/customerInfo', (req, res) => {
     }
   })
 });
-app.post('/customerInfo-change', (req, res) => {
+app.post('/customerinfo-change', (req, res) => {
   const Id = req.body.userId;
   const Pw = crypto.createHmac('sha256', key.secret).update(req.body.pw).digest('base64'); //암호화,
   const Email = req.body.email;
   const NICKNAME = req.body.nickname;
   const PHONE = req.body.phone;
   const DATE = req.body.date_change;
-  console.log(Id,Pw,Email,NICKNAME,PHONE,DATE)
-  const sql = `UPDATE customer_info SET pw = '${Pw}', email = '${Email}', nickname = '${NICKNAME}', phone = '${PHONE}', date_change = '${DATE}' WHERE id= ${Id}'`;
+  console.log(Id,Pw,Email,NICKNAME,PHONE,DATE);
+  const sql = `UPDATE customer_info SET pw = '${Pw}', email = '${Email}', nickname = '${NICKNAME}', phone = '${PHONE}', date_change = '${DATE}' WHERE id= '${Id}'`;
   connection.query(sql, (err, rows, field) => {
     if (err) {
       console.log(err);
@@ -258,22 +253,6 @@ app.post('/customerInfo-change', (req, res) => {
     }
   })
 });
-app.post('/userinfoChange', (req, res) => {
-  const Id = req.body.inputId;
-  const Pw = crypto.createHmac('sha256', key.secret).update(req.body.inputPs).digest('base64'); //암호화,
-  let customerInfo = [];
-  const sql = `SELECT * FROM customer_info WHERE id='${Id}' AND pw='${Pw}'`;
-  connection.query(sql, (err, rows, field) => {
-    if (err) {
-      console.log(err);
-    }
-    else {
-      res.send(rows);
-    }
-  })
-});
-
-
 app.delete('/logout',(req,res)=>{
   res.clearCookie('user').send(req.cookies.name);
  });

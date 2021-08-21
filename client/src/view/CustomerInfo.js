@@ -12,12 +12,12 @@ class CustomerInfo extends Component {
     state = {
       authority:[],
       userInfo:[],
-      pw: "",
-      re_pw: "",
-      email: "",
-      nickname: "",
-      phone: "",
-      date_change: "",
+      pw: '',
+      re_pw: '',
+      email: '',
+      nickname:'',
+      phone: '',
+      date_change: '',
     };
     componentDidMount() {
       this.checkAuthority();
@@ -25,14 +25,14 @@ class CustomerInfo extends Component {
 
   onViewInfo = async () => {
     this.setState({userId: this.state.authority.id})
-    await axios.post('/customerInfo', this.state)
+    await axios.post('/customerinfo', this.state)
     .then(res => {
       this.setState({ userInfo: res.data });
     })
     .then(res => {
-      this.setState({ email: this.state.userInfo.email });
-      this.setState({ nickname: this.state.userInfo.nickname });
-      this.setState({ phone: this.state.userInfo.phone });})
+      this.setState({ email: this.state.userInfo[0].email, nickname: this.state.userInfo[0].nickname, phone: this.state.userInfo[0].phone});
+      // console.log(this.state.email, this.state.nickname, this.state.phone);
+    })
     .catch(err => console.log(err));
   }
 
@@ -45,9 +45,9 @@ class CustomerInfo extends Component {
     if (this.state.authority.status === 'login') {
       if (pw === re_pw & pw !== '' & re_pw !== '' & email !== '' & nickname !== '' & phone !== '') {
         if(pw === re_pw){
-          return axios.post("/customerInfo-change")
-            .then(() => alert('변경 완료되었습니다.'))
-            .then(() => document.location.href = '/')
+          return axios.post('/customerinfo-change',this.state)
+          .then(() => alert('변경 완료되었습니다.'))
+          .then(() => document.location.href = '/')
         }
       }
       else if (pw === '') {
