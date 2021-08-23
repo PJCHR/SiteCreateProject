@@ -56,6 +56,61 @@ app.get('/search', (req, res) => {
     }
   });
 });
+app.get("/itemApi",(req,res)=>{
+  const { item } = req.query;
+  const sql = `SELECT * FROM product_info WHERE num=${item}`;
+  connection.query(sql,(err, result, field) =>{
+      if(err){
+        console.log(err);
+      }
+      else{
+        res.send(result);
+      }
+  })
+});
+app.post("/cart",(req,res)=>{
+  var num=req.body.result[0].num;
+  var count=req.body.count;
+  var id = req.body.authority.id;
+  const params = [null,id,num,count];
+  connection.query('insert into shoppingCart values(?,?,?,?)', params,
+      (err, result, field) => {
+          if(err){
+              console.log(err)
+          }
+          else{
+              res.send(result)
+          }
+      });
+});
+
+app.post("/mycart",(req,res)=>{
+  var id = req.body.authority.id;
+  connection.query('select shoppingCart.num, pct_name,pct_price, shoppingCart.much, imgsource FROM shoppingMall INNER JOIN shoppingCart ON shoppingMall.num = shoppingCart.pct_num WHERE shoppingCart.id=?',id,
+  (err,result,field)=>{
+     if(err){
+         console.log(err)
+     } 
+     else{
+         res.send(result)
+     }
+  });
+
+});
+
+app.post("/mycartDelete",(req,res)=>{
+  var num = req.body.num;
+  
+  connection.query('delete from shoppingCart where num = ?', num,
+  (err,result,field)=>{
+      if(err){
+          console.log(err)
+      }
+      else{
+          res.send(result)
+      }
+  })
+});
 app.post('/cscenter=board_list', (req, res) => {
   const sql = `SELECT * FROM cs_board_info`;
   connection.query(sql, (err, rows, fields) => {

@@ -23,9 +23,16 @@ class Home extends Component {
     .catch(err => console.log(err));
   };
 
+  comma = (price) => {
+    var regexp = /\B(?=(\d{3})+(?!\d))/g;
+    price = price + ""
+
+    return price.toString().replace(regexp, ',') + "원";
+  }
+
   itempage = (item) =>{
     document.location.href = "/itempage?item="+item;
-}
+  }
 
   render() {
     const { products } = this.state;
@@ -43,7 +50,7 @@ class Home extends Component {
                     <div className={ContentsStyle.goods_info}> <p className={ContentsStyle.goods_info_text}> {item.pdt_name} </p> </div>
                     <div className={ContentsStyle.space}>
                       <div className={ContentsStyle.space1}> <h1 className={ContentsStyle.free_post_img}/> </div>
-                      <div className={ContentsStyle.space2}> <p className={ContentsStyle.price_text}> {item.pdt_price+'원'} </p> </div>
+                      <div className={ContentsStyle.space2}> <p className={ContentsStyle.price_text}> {this.comma(item.pdt_price)} </p> </div>
                     </div>
                   </div>
                 </li>
