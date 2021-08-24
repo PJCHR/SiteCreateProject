@@ -1,4 +1,4 @@
-import React, { Component, Link } from 'react';
+import React, { Component} from 'react';
 import I from '../css/Item.module.css';
 import HomeStyle from '../css/HomeStyle.module.css';
 

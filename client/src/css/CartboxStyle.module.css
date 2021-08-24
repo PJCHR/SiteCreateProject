@@ -1,0 +1,7 @@
+.content_wrap {
+  width: 100%;
+  margin: 0 auto;
+  /* background: #f6f7fb; */
+  font-family: 'Noto Sans KR', 'Helvetica Neue', 'Apple SD Gothic Neo',
+    '맑은 고딕', 'Malgun Gothic', '돋움', dotum, sans-serif;
+}
