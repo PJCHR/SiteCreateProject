@@ -73,42 +73,39 @@ app.post("/cart",(req,res)=>{
   var count=req.body.count;
   var id = req.body.authority.id;
   const params = [null,id,num,count];
-  connection.query('insert into shoppingCart values(?,?,?,?)', params,
-      (err, result, field) => {
-          if(err){
-              console.log(err)
-          }
-          else{
-              res.send(result)
-          }
-      });
+  connection.query('INSERT INTO shoppingCart VALUES (?,?,?,?)', params, (err, result, field) => {
+    if(err){
+      console.log(err)
+    }
+    else{
+      res.send(result)
+    }
+});
 });
 
 app.post("/mycart",(req,res)=>{
   var id = req.body.authority.id;
-  connection.query('select shoppingCart.num, pct_name,pct_price, shoppingCart.much, imgsource FROM shoppingMall INNER JOIN shoppingCart ON shoppingMall.num = shoppingCart.pct_num WHERE shoppingCart.id=?',id,
-  (err,result,field)=>{
-     if(err){
-         console.log(err)
+  const sql = `SELECT shoppingCart.num, pdt_name,pdt_price, shoppingCart.count, imgsource FROM product_info INNER JOIN shoppingCart ON product_info.num = shoppingCart.pct_num WHERE shoppingCart.id='${id}'`;
+  connection.query(sql, (err, result, fields)=>{
+    if(err){
+      console.log(err)
      } 
      else{
-         res.send(result)
+      res.send(result)
      }
   });
-
 });
 
 app.post("/mycartDelete",(req,res)=>{
   var num = req.body.num;
-  
-  connection.query('delete from shoppingCart where num = ?', num,
-  (err,result,field)=>{
-      if(err){
-          console.log(err)
-      }
-      else{
-          res.send(result)
-      }
+  const sql = `DELETE FROM shoppingCart WHERE num = '${num}`;
+  connection.query(sql, (err,result,field)=>{
+    if(err){
+      console.log(err)
+    }
+    else{
+      res.send(result)
+    }
   })
 });
 app.post('/cscenter=board_list', (req, res) => {
