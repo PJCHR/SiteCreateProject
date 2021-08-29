@@ -56,7 +56,7 @@ app.get('/search', (req, res) => {
     }
   });
 });
-app.get("/itemApi",(req,res)=>{
+app.get("/itemApi", (req,res)=>{
   const { item } = req.query;
   const sql = `SELECT * FROM product_info WHERE num=${item}`;
   connection.query(sql,(err, result, field) =>{
@@ -68,24 +68,27 @@ app.get("/itemApi",(req,res)=>{
       }
   })
 });
-app.post("/cart",(req,res)=>{
+app.post("/cart", (req,res)=>{
   var num=req.body.result[0].num;
+  var pdt_name=req.body.result[0].pdt_name;
+  var pdt_price=req.body.result[0].pdt_price;
+  var imgsource=req.body.result[0].imgsource;
   var count=req.body.count;
   var id = req.body.authority.id;
-  const params = [null,id,num,count];
-  connection.query('INSERT INTO shoppingCart VALUES (?,?,?,?)', params, (err, result, field) => {
+  const sql = `INSERT INTO shoppingCart (num, id, pdt_name, pdt_price, count, imgsource) VALUES (${num}, '${id}', '${pdt_name}', ${pdt_price}, ${count}, '${imgsource}')`;
+  connection.query(sql, (err, result, field) => {
     if(err){
       console.log(err)
     }
     else{
       res.send(result)
     }
-});
+  });
 });
 
-app.post("/mycart",(req,res)=>{
+app.post("/mycart", (req,res)=>{
   var id = req.body.authority.id;
-  const sql = `SELECT shoppingCart.num, pdt_name,pdt_price, shoppingCart.count, imgsource FROM product_info INNER JOIN shoppingCart ON product_info.num = shoppingCart.pct_num WHERE shoppingCart.id='${id}'`;
+  const sql = `SELECT shoppingCart.num, pdt_name, pdt_price, shoppingCart.count, imgsource FROM product_info INNER JOIN shoppingCart ON product_info.num = shoppingCart.pct_num WHERE shoppingCart.id='${id}'`;
   connection.query(sql, (err, result, fields)=>{
     if(err){
       console.log(err)

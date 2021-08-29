@@ -56,9 +56,11 @@ class Item extends Component {
 
     cartDeliver = () => {
         if (this.state.status === 'login') {
+            console.log(this.state.result);
+            console.log(this.state.count);
             axios.post("/cart", this.state)
-                .then(res => res)
-                .then(() => alert("장바구니에 담겼습니다."))
+            .then(res => res)
+            .then(() => alert("장바구니에 담겼습니다."))
         }
         else {
             alert("로그인 후 이용부탁드립니다.")

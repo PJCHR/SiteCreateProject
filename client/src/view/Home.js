@@ -282,7 +282,7 @@ export class BOTTOM extends Component {
     render() {
         return (
         <div id="footer">
-          <div className={HomeStyle.footer_wrap} role="conteninfo">
+          <div className={HomeStyle.footer_wrap}>
             <div className={HomeStyle.liner}>
               <p>name</p>
               <p>adress</p>
