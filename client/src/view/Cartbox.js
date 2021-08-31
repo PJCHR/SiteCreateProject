@@ -24,7 +24,6 @@ class Cartbox extends Component {
 		  .then(res => this.setState({ authority: res.data }));
       await axios.post('/mycart',this.state)
       .then(res => {this.setState({ result: res.data });})
-      .then(this.onVisible);
     }
 
     reLoginCheck = () => {
@@ -61,7 +60,7 @@ class Cartbox extends Component {
        if(result){
         axios.post("/mycartDelete", json)
         .then(res => res)
-        .then(setTimeout(()=>document.location.href = document.location.href, 1000))
+        .then(setTimeout(() => document.location.href = document.location.href, 1000))
        }
        else{
 		    alert('삭제를 취소하였습니다.');
@@ -86,14 +85,14 @@ class Cartbox extends Component {
                 : this.state.result.length >= 1 ? 
 
                 this.state.result.map((item, index) => {
-                  priceSum += item.pdt_price*item.much;
+                  priceSum += item.pdt_price * item.count;
                   return (
                     <div className={M.item_wrap} key={index}>
                     <img className={M.item_image} src={item.imgsource} alt="이미지" /> 
                     <div className={M.item_product}>{item.pdt_name}</div>
-                    <div className={M.item_much}>수량 : {item.much}개</div>
-                    <div className={M.item_pay}>{this.comma(item.pdt_price*item.much)} </div>
-                    <button className={M.item_delete} onClick={()=>this.deleteAction(item.num)}>삭제</button>
+                    <div className={M.item_much}>수량 : {item.count}개</div>
+                    <div className={M.item_pay}>{this.comma(item.pdt_price * item.count)} </div>
+                    <button className={M.item_delete} onClick={() => this.deleteAction(item.num)}>삭제</button>
                     </div>
                   )
                 }) :

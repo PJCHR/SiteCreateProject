@@ -119,14 +119,14 @@ class ServiceCenter extends Component {
             
             <div className="left_menu">
               <h2 className="depth_1">고객센터</h2>
-              <ul id="lnb" className="depth_2">
+              {/* <ul id="lnb" className="depth_2">
                 <li>
-                  <a>공지사항</a>{/* href="/cscenter=not_list" */}
+                  <a>공지사항</a>href="/cscenter=not_list"
                 </li>
                 <li>
-                  <a>자주묻는질문</a>{/* href="/cscenter=faq_list" */}
+                  <a>자주묻는질문</a>href="/cscenter=faq_list"
                 </li>
-              </ul>
+              </ul> */}
             </div>
               
           </div>

@@ -88,7 +88,7 @@ app.post("/cart", (req,res)=>{
 
 app.post("/mycart", (req,res)=>{
   var id = req.body.authority.id;
-  const sql = `SELECT shoppingCart.num, pdt_name, pdt_price, shoppingCart.count, imgsource FROM product_info INNER JOIN shoppingCart ON product_info.num = shoppingCart.pct_num WHERE shoppingCart.id='${id}'`;
+  const sql = `SELECT * FROM shoppingCart WHERE shoppingCart.id='${id}'`;
   connection.query(sql, (err, result, fields)=>{
     if(err){
       console.log(err)
@@ -101,7 +101,7 @@ app.post("/mycart", (req,res)=>{
 
 app.post("/mycartDelete",(req,res)=>{
   var num = req.body.num;
-  const sql = `DELETE FROM shoppingCart WHERE num = '${num}`;
+  const sql = `DELETE FROM shoppingCart WHERE num = ${num}`;
   connection.query(sql, (err,result,field)=>{
     if(err){
       console.log(err)
