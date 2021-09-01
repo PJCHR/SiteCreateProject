@@ -51,13 +51,21 @@ class Item extends Component {
     checkAuthority = () => {
         axios.get('/authority')
         .then(response => this.setState({ status: response.data.status, authority: response.data }))
+    }
 
+    orderList = () => {
+        if (this.state.status === 'login') {
+            axios.post("/buyproduct", this.state)
+            .then(res => res)
+            // .then(() => alert("장바구니에 담겼습니다."))
+        }
+        else {
+            alert("로그인 후 이용부탁드립니다.")
+        }
     }
 
     cartDeliver = () => {
         if (this.state.status === 'login') {
-            console.log(this.state.result);
-            console.log(this.state.count);
             axios.post("/cart", this.state)
             .then(res => res)
             .then(() => alert("장바구니에 담겼습니다."))
@@ -91,16 +99,19 @@ class Item extends Component {
                                 </div>
                             </div>
                             <div className={I.cart_wrap}>
-                                <div className={I.select_btn}>
+                                <div className={I.select_btn_wrap}>
                                     <button className={I.btn_minus} onClick={this.decrease} />
                                     <div className={I.count}>{count}</div>
                                     <button className={I.btn_plus} onClick={this.increase} />
                                 </div>
                                 <div className={I.price_wrap}>
-                                    <div className={I.how_much}>총 {count}개</div>
+                                    <p className={I.fin_count}>총 {count}개</p>
                                     <div className={I.price_sum}>{this.comma(parseInt(item.pdt_price * count))}</div>
                                 </div>
-                                <button className={I.cart_btn} onClick={this.cartDeliver}>장바구니 담기</button>
+                                <div className={I.buy_btn_wrap}>
+                                    <button className={I.cart_btn} onClick={this.cartDeliver}>장바구니</button>
+                                    <button className={I.buy_btn} onClick>구매하기</button>
+                                </div>
                             </div>
                         </div>
                     )

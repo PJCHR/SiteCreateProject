@@ -111,6 +111,24 @@ app.post("/mycartDelete",(req,res)=>{
     }
   })
 });
+app.post("/buyproduct", (req,res)=>{
+  var num=req.body.result[0].num;
+  var pdt_name=req.body.result[0].pdt_name;
+  var pdt_price=req.body.result[0].pdt_price;
+  var imgsource=req.body.result[0].imgsource;
+  var buytime=req.body.buytime;
+  var count=req.body.count;
+  var id = req.body.authority.id;
+  const sql = `INSERT INTO customer_buylist (num, id, pdt_name, pdt_price, count, imgsource, buytime) VALUES (${num}, '${id}', '${pdt_name}', ${pdt_price}, ${count}, '${imgsource}', '${buytime}')`;
+  connection.query(sql, (err, result, field) => {
+    if(err){
+      console.log(err)
+    }
+    else{
+      res.send(result)
+    }
+  });
+});
 app.post('/cscenter=board_list', (req, res) => {
   const sql = `SELECT * FROM cs_board_info`;
   connection.query(sql, (err, rows, fields) => {
