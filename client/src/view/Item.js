@@ -50,14 +50,12 @@ class Item extends Component {
 
     checkAuthority = () => {
         axios.get('/authority')
-        .then(response => this.setState({ status: response.data.status, authority: response.data }))
+        .then(res => this.setState({ status: res.data.status, authority: res.data }))
     }
-
-    orderList = () => {
+    
+    orderList = (num, count) => {
         if (this.state.status === 'login') {
-            axios.post("/buyproduct", this.state)
-            .then(res => res)
-            // .then(() => alert("장바구니에 담겼습니다."))
+            document.location.href = `/OrderInfoAction?num=${num}&count=${count}`;
         }
         else {
             alert("로그인 후 이용부탁드립니다.")
@@ -110,7 +108,7 @@ class Item extends Component {
                                 </div>
                                 <div className={I.buy_btn_wrap}>
                                     <button className={I.cart_btn} onClick={this.cartDeliver}>장바구니</button>
-                                    <button className={I.buy_btn} onClick>구매하기</button>
+                                    <button className={I.buy_btn} onClick={()=>this.orderList(item.num, count)}>구매하기</button>
                                 </div>
                             </div>
                         </div>

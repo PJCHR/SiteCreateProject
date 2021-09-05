@@ -92,7 +92,7 @@ class Cartbox extends Component {
                     <div className={M.item_product}>{item.pdt_name}</div>
                     <div className={M.item_much}>수량 : {item.count}개</div>
                     <div className={M.item_pay}>{this.comma(item.pdt_price * item.count)} </div>
-                    <button className={M.item_delete} onClick={() => this.deleteAction(item.num)}>삭제</button>
+                    <button className={M.item_delete} onClick={() => this.deleteAction(index)}>삭제</button>
                     </div>
                   )
                 }) :

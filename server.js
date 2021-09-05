@@ -100,8 +100,8 @@ app.post("/mycart", (req,res)=>{
 });
 
 app.post("/mycartDelete",(req,res)=>{
-  var num = req.body.num;
-  const sql = `DELETE FROM shoppingCart WHERE num = ${num}`;
+  var index = req.body.num;
+  const sql = `DELETE FROM shoppingCart WHERE index = ${index}`;
   connection.query(sql, (err,result,field)=>{
     if(err){
       console.log(err)

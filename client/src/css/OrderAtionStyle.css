@@ -1,0 +1,15 @@
+.header_wrap {
+  width: 100%;
+  margin: 0 auto;
+}
+.inner_wrap {
+  position: relative;
+  width: 1240px;
+  height: 120px;
+  margin: 0 auto;
+}
+.content_wrap {
+  width: 100%;
+  margin: 0 auto;
+  background: #f6f7fb;
+}
