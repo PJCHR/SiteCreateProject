@@ -55,7 +55,7 @@ class Item extends Component {
     
     orderList = (num, count) => {
         if (this.state.status === 'login') {
-            document.location.href = `/OrderInfoAction?num=${num}&count=${count}`;
+            document.location.href = `/orderaction?num=${num}&count=${count}`;
         }
         else {
             alert("로그인 후 이용부탁드립니다.")

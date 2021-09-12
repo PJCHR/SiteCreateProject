@@ -1,4 +1,5 @@
-import React, { Component, Link } from 'react';
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import queryString from "query-string";
 
@@ -6,14 +7,14 @@ import { TOP, BOTTOM } from './Home';
 
 import HomeStyle from '../css/HomeStyle.module.css';
 import HeaderStyle from '../css/HeaderStyle.module.css';
-import OrderAtionStyle from '../css/OrderAtionStyle.css';
+import OrderActionStyle from '../css/OrderActionStyle.module.css';
 
-class OrderAtion extends Component {
+class OrderAction extends Component {
     state = {
 
     }
     componentDidMount() {
-
+        this.getQueryString();
     }
 
     getQueryString = () => {
@@ -26,7 +27,7 @@ class OrderAtion extends Component {
 
     comma = (price) => {
         var regexp = /\B(?=(\d{3})+(?!\d))/g;
-        price = price + ""
+        price = price + "";
 
         return price.toString().replace(regexp, ',') + "원";
     }
@@ -35,14 +36,14 @@ class OrderAtion extends Component {
         return(
             <div className={HomeStyle.body_wrap} ReturnUrl={document.location.href}>
                 <div id="gnb">
-                    <div className={OrderAtionStyle.header_wrap}>
-                        <div className={OrderAtionStyle.inner_wrap}>
-                            <h1 className={HeaderStyle.logo}>  <Link to='/'>home</Link> </h1>
+                    <div className={OrderActionStyle.header_wrap}>
+                        <div className={OrderActionStyle.inner_wrap}>
+                            <h1 className={HeaderStyle.logo}> <Link to='/'>home</Link> </h1>
                         </div>
                     </div>
                 </div>
                 <div id="content">
-                    <div className={OrderAtionStyle.content_wrap}>
+                    <div className={OrderActionStyle.content_wrap}>
                         
                     </div>
                 </div>
@@ -52,4 +53,4 @@ class OrderAtion extends Component {
     }
 }
 
-export default OrderAtion;
+export default OrderAction;

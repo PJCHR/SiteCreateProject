@@ -14,7 +14,7 @@ import Board_Write from './view/Board_Write';
 import Board_Fix from './view/Board_Fix';
 import Item from './view/Item';
 import Cartbox from './view/Cartbox';
-import OrderAtion from './view/OrderAction';
+import OrderAction from './view/OrderAction';
 
 class App extends Component {
   render() {
@@ -33,7 +33,7 @@ class App extends Component {
         <Route path="/cscenter=board_list_fix" component={Board_Fix} />
         {/* <Route path="/cscenter=faq_list" component={ReadBoard} /> */}
         <Route path="/itempage" component={Item}/>
-        <Route path="/OrderAtion" component={OrderAtion}/>
+        <Route path="/orderaction" component={OrderAction}/>
       </Router>
     );
   }
