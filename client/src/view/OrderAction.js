@@ -44,7 +44,23 @@ class OrderAction extends Component {
                 </div>
                 <div id="content">
                     <div className={OrderActionStyle.content_wrap}>
-                        
+                        <div className={OrderActionStyle.order_title_wrap}>
+                            <h1>주문결제</h1>
+                            {/* 3가지 테이블 생성 */}
+                        </div>
+                        <div className={OrderActionStyle.order_info}>
+                            <div className={OrderActionStyle.shopping_adress_wrap}>
+
+                            </div>
+                            <div className={OrderActionStyle.order_product_wrap}>
+
+                            </div>
+                        </div>
+                        <div className={OrderActionStyle.payment_info}>
+                            <div className={OrderActionStyle.payment_wrap}>
+
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <BOTTOM/>
