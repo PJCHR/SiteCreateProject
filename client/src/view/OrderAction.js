@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import queryString from "query-string";
 
-import { TOP, BOTTOM } from './Home';
+import { BOTTOM } from './Home';
 
 import HomeStyle from '../css/HomeStyle.module.css';
 import OrderActionStyle from '../css/OrderActionStyle.module.css';
@@ -42,7 +42,7 @@ class OrderAction extends Component {
                     </div>
                 </div>
                 <div id="content">
-                    <div className={OrderActionStyle.order_content}>
+                    <div className={OrderActionStyle.order}>
                         <div className={OrderActionStyle.order_header}>
                             <div className={OrderActionStyle.order_header_inner}>
                                 <div className={OrderActionStyle.order_title}>
@@ -57,16 +57,21 @@ class OrderAction extends Component {
                                 </div>
                             </div>
                         </div>
-                        <div className={OrderActionStyle.order_info}>
-                            <div className={OrderActionStyle.shopping_adress_wrap}>
+                        <div className={OrderActionStyle.order_content_wrap}>
+                            <div className={OrderActionStyle.order_content}>
+                                <div className={OrderActionStyle.order_info}>
 
-                            </div>
-                            <div className={OrderActionStyle.order_product_wrap}>
+                                </div>
 
-                            </div>
-                            <div className={OrderActionStyle.payment_info}>
-                                <div className={OrderActionStyle.payment_wrap}>
+                                <div className={OrderActionStyle.order_goods}>
 
+                                </div>
+
+                                <div className={OrderActionStyle.order_payment}>
+                                    <h3 className={OrderActionStyle.skip}>주문/결제 정보</h3>
+                                    <div className={OrderActionStyle.payment_wrap}>
+
+                                    </div>
                                 </div>
                             </div>
 

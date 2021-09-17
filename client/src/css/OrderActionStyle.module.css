@@ -5,6 +5,14 @@ menu,
 li {
   list-style: none;
 }
+.skip {
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  margin: -1px;
+  width: 1px;
+  height: 1px;
+}
 .header_wrap {
   position: relative;
   width: 100%;
@@ -68,6 +76,12 @@ li {
   border-radius: 25px;
   border: 1px solid #eee;
 }
+/* 각 페이지가 활성화되면 active 클래스를 추가? 스크립트로 css 추가해줘야함 if문 */
+.step .active {
+  font-weight: bold;
+  color: #fff;
+  background-color: #333;
+}
 .step li {
   float: left;
   min-width: 80px;
@@ -97,27 +111,50 @@ li {
   border-left: 1px solid #eee;
   border-right: 1px solid #eee;
 }
-.step .second .skip {
-  position: absolute;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  margin: -1px;
-  width: 1px;
-  height: 1px;
-}
 .order_title > h1 {
   font-weight: bold;
   color: #000;
   letter-spacing: 0;
   font-size: 32px;
 }
-.order_content {
-  position: relative;
-  min-height: 300px;
-}
-.order_info {
+.order_content_wrap {
   position: relative;
   width: 1240px;
   margin: 0 auto;
   zoom: 1;
+}
+.order_content {
+  position: relative;
+  width: 920px;
+  padding: 1px 40px 45px 0;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.order_info {
+  position: relative;
+  width: 870px;
+  min-height: 393px;
+  margin-bottom: 45px;
+}
+.order_goods {
+  position: relative;
+  width: 870px;
+  min-height: 315px;
+  margin-bottom: 45px;
+}
+.order_payment {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  margin-left: 304px;
+  right: 0;
+  z-index: 1;
+  width: 300px;
+  min-height: 540px;
+  padding-left: 20px;
+  background-color: #fff;
+}
+.payment_wrap {
+  width: 300px;
+  background-color: #fff;
 }
