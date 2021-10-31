@@ -30,16 +30,16 @@ class Board__Read extends Component {
   };
   onView = () => {
     var query = this.getQueryString();
+    this.checkAuthority();
     axios.post(`/cscenter=board_list_read?idx=${query}`)
     .then(res=> {
       this.setState({cs_boardinfo: res.data});
 
       var btn = document.getElementById("delBtn");
       var btn2 = document.getElementById("fixBtn");
-
       this.state.cs_boardinfo.map((item) => {
-        if(this.state.authority.id === item.id){
 
+        if(this.state.authority.id === item.id){
           btn.style.visibility = "visible";
           btn2.style.visibility = "visible";
         }
@@ -62,7 +62,7 @@ class Board__Read extends Component {
   }
 
   checkAuthority = () => {
-    axios.post('/authority')
+    axios.get('/authority')
     .then(res=>{
       this.setState({authority:res.data})
     })

@@ -13,16 +13,23 @@ li {
   width: 1px;
   height: 1px;
 }
-.header_wrap {
-  position: relative;
-  width: 100%;
-  z-index: 1000;
-  font-family: 'Noto Sans KR', 'Helvetica Neue', 'Apple SD Gothic Neo',
-    '맑은 고딕', 'Malgun Gothic', '돋움', dotum, sans-serif;
+body,
+h1,
+h2,
+h3,
+h4,
+th,
+td,
+input,
+select,
+textarea,
+button {
   font-size: 14px;
   line-height: 1.5;
+  font-family: 'Noto Sans KR', 'Helvetica Neue', 'Apple SD Gothic Neo',
+    '맑은 고딕', 'Malgun Gothic', '돋움', dotum, sans-serif;
+  color: #666;
   letter-spacing: 0;
-  background: #fff;
 }
 .inner {
   position: relative;
@@ -50,7 +57,10 @@ li {
   width: 100%;
   outline: none;
 }
-
+.l_order {
+  position: relative;
+  min-height: 300px;
+}
 .order_header {
   position: relative;
   height: 88px;
@@ -123,7 +133,7 @@ li {
   margin: 0 auto;
   zoom: 1;
 }
-.order_content {
+.l_order_content {
   position: relative;
   width: 920px;
   padding: 1px 40px 45px 0;
@@ -136,6 +146,28 @@ li {
   min-height: 393px;
   margin-bottom: 45px;
 }
+.order_info .c_order_style_3 {
+  padding: 14px 0 4px 0;
+  /* height: 40px; */
+}
+.order_info .c_order_style_3 .c_order_title {
+  font-weight: bold;
+  float: left;
+  font-size: 20px;
+  line-height: 40px;
+  color: #000;
+}
+.c_order_select_delivery ul {
+  height: 25px;
+  width: 100%;
+  padding: 23px 0 22px 0;
+  border-bottom: 1px solid #eee;
+}
+.c_order_select_delivery li {
+  position: relative;
+  float: left;
+  margin-right: 34px;
+}
 .order_goods {
   position: relative;
   width: 870px;
@@ -145,14 +177,14 @@ li {
 .order_payment {
   position: absolute;
   top: 0;
-  left: 50%;
+  right: 0%;
   margin-left: 304px;
-  right: 0;
   z-index: 1;
   width: 300px;
   min-height: 540px;
   padding-left: 20px;
   background-color: #fff;
+  background: #000;
 }
 .payment_wrap {
   width: 300px;
