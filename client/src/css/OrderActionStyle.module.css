@@ -148,7 +148,8 @@ button {
 }
 .order_info .c_order_style_3 {
   padding: 14px 0 4px 0;
-  /* height: 40px; */
+  height: 60px;
+  border-bottom: 1px solid #999;
 }
 .order_info .c_order_style_3 .c_order_title {
   font-weight: bold;
@@ -160,7 +161,7 @@ button {
 .c_order_select_delivery ul {
   height: 25px;
   width: 100%;
-  padding: 23px 0 22px 0;
+  padding: 12px 0 32px 0;
   border-bottom: 1px solid #eee;
 }
 .c_order_select_delivery li {
@@ -168,11 +169,25 @@ button {
   float: left;
   margin-right: 34px;
 }
+.c_order_select_delivery li span {
+  display: inline-block;
+  padding-left: 16px;
+  font-size: 14px;
+  line-height: 22px;
+  color: #333;
+  letter-spacing: 0;
+}
+/* 추후 라디오 버튼 활성화, 비활성화시 레이아웃 변화 추가필요 */
+/* .order_info .c_order_radio input[type="radio"]:checked + span {
+  font-weight: bold;
+  color: #f43142;
+} */
 .order_goods {
   position: relative;
   width: 870px;
   min-height: 315px;
   margin-bottom: 45px;
+  background: blue;
 }
 .order_payment {
   position: absolute;

@@ -62,8 +62,12 @@ class ServiceCenter extends Component {
   }
 
   onCheckLook_post = (lookpost,inner_id,number) => {
+    console.log(lookpost,inner_id,number);
     number = parseInt(number);
     let {id} = this.state.authority;
+    console.log(id);
+    console.log(this.state.authority);
+    
     if(lookpost === 1){
       if(id !== inner_id){
         alert('회원님은 열람할 수 없는 게시글입니다.')

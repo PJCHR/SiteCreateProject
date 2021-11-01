@@ -30,7 +30,22 @@ class OrderAction extends Component {
 
         return price.toString().replace(regexp, ',') + "원";
     }
+    checkRadio = (v,id) => {
+        console.log(v, id);
 
+        if(v === 1){
+            document.getElementById(id).style.display = ""; // 기본배송지
+        }else{
+            document.getElementById(id).style.display = "none"; // 숨김
+        }
+        if(v === 2){
+            document.getElementById(id).style.display = ""; // 직접입력
+        }else{
+            document.getElementById(id).style.display = "none"; // 숨김
+        }
+        // console.log('속성값 확인:' + document.getElementById('addr1').style);
+    }
+ 
     render(){
         return(
             <div className={HomeStyle.body_wrap} ReturnUrl={document.location.href}>
@@ -68,24 +83,41 @@ class OrderAction extends Component {
                                         <div className={OrderActionStyle.c_order_content}>
                                             <div className={OrderActionStyle.c_order_select_delivery}>
                                                 <ul>
-                                                <li>
-                                                    <label class="c_order_radio" for="addrArrRadio1" id="addrArrRadioLabel" data-log-actionid-label="registration_address">
-                                                        <input type="radio" id="addrArrRadio1" name="addrArrRadio" parent="1" value="" rcvr_name="" phone="" mobile_phone="" mail_no="" base_addr="" desc_addr="" mail_no_seq="" jejuyn="N" islandyn="N" addrtypcd="02" buildmngno="2871037027106740000038509" lnmaddrseq="" addrseq="1" onclick="" data-log-body="{'btn_name':'기본배송지'}"/><span>기본배송지</span>
-                                                    </label>
-                                                </li>
+                                                    {/* onChange에서 함수추가 후에 함수에서 라디오의 체크 여부가 value 값에 따라 1이면 1의 레이아웃, 2라면 2의 레이아웃을 표시 해당되지 않는 레이아웃은 비활성화를 하는 동시에 값이 전달되지않도록 한다. 라디오가 체크되있을 때 활성화 */}
+                                                    {/* 기본 배송지 */}
+                                                    <li>
+                                                        <label for="r1">
+                                                            <input type="radio" name="radio" id="r1" value="1" onClick={this.checkRadio(this.value,'addr1')} checked/><span>기본배송지</span>
+                                                        </label>
+                                                    </li>
+                                                    {/* 직접 입력 */}
+                                                    <li>
+                                                        <label for="r2">
+                                                            <input type="radio" name="radio" id="r2" value="2" onClick={this.checkRadio(this.value,'addr2')}/><span>직접입력</span>
+                                                        </label>
+                                                    </li>
                                                 </ul>
                                             </div>
+                                            
+                                            {/* 배송지 라디오 체크에 따라 레이아웃 바뀜 */}
+                                            {/* 기본배송지 */}
+                                            <div className={OrderActionStyle.c_order_delivery} id="addr1" style={{display:"none"}}>기본배송지</div>
+
+                                            {/* 직접입력 */}
+                                            <div className={OrderActionStyle.c_order_delivery} id="addr2" style={{display:"none"}}>직접입력</div>
+                                            {/* 요청사항 선택 */}
+                                            <div className={OrderActionStyle.c_order_delivery_request}></div>
                                         </div>
                                     </div>
 
                                     <div className={OrderActionStyle.order_goods}>
-
+                                        구매 상품 게시
                                     </div>
                                 </div>
                                 <div className={OrderActionStyle.order_payment}>
                                     <h3 className={OrderActionStyle.skip}>주문/결제 정보</h3>
                                     <div className={OrderActionStyle.payment_wrap}>
-                                        
+                                        결제 정보창
                                     </div>
                                 </div>
 

@@ -232,6 +232,7 @@ app.post('/register', (req, res) => {
   const NICKNAME = req.body.nickname;
   const PHONE = req.body.phone;
   const DATE = req.body.date_created;
+  console.log(Id,Email,NICKNAME,PHONE,DATE);
   const sql = `INSERT INTO customer_info (id, pw, nickname, email, phone, date_created) VALUES ('${Id}', '${Pw}', '${NICKNAME}', '${Email}', '${PHONE}', '${DATE}')`;
   connection.query(sql, (err, rows, fields) => {
     if (err) {

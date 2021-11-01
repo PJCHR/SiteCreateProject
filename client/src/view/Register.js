@@ -44,9 +44,10 @@ class Register extends Component {
     this.setState(await{date_created: time.getFormatDate(now) +' '+ time.getFormatTime(now)});
     await this.idCheck;
     const {id, pw, re_pw, email, nickname, phone, registerActive} = this.state;
+    console.log(this.state.id,this.state.pw,this.state.re_pw,this.state.email,this.state.nickname,this.state.phone,this.state.date_created);
     if (id !== '' & pw === re_pw & pw !== '' & re_pw !== '' & email !== '' & nickname !== '' & phone !== '' &registerActive==='active' ) {
       if(pw === re_pw){
-        return axios.post("/register")
+        return axios.post("/register", this.state)
           .then(() => alert('가입되었습니다.'))
           .then(() => document.location.href = '/')
       }
