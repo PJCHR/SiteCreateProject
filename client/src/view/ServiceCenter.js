@@ -80,6 +80,10 @@ class ServiceCenter extends Component {
       document.location.href="/cscenter=board_list_read?idx="+number;
     }
   }
+  checklogin = () => {
+      alert("로그인 후 이용부탁드립니다.");
+      document.location.href = "/login?ReturnUrl=" + document.location.href;
+  }
   onLockImg = (lookpost) =>{
 
     if(lookpost === 1){
@@ -138,7 +142,7 @@ class ServiceCenter extends Component {
           <div className="boardlist">
 
             <div className="writeboardgo">
-              {authority.status==="login"?<h1 className="write_icon"><Link to="/cscenter=board_list_write">글쓰기</Link></h1>:<h1 className="write_icon"><Link to={"/login?ReturnUrl=" + document.location.href}>로그인</Link></h1>}
+              {authority.status==="login"?<h1 className="write_icon"><Link to="/cscenter=board_list_write">글쓰기</Link></h1>:<h1 className="write_icon"><Link  onClick={(e) => this.checklogin()}>로그인</Link></h1>}
             </div>
             <div className="b_list_table">
 

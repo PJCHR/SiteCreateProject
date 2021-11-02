@@ -100,18 +100,17 @@ export class TOP extends Component {
       this.logoutApi();
     }
   }
-  checklogin = (menu) => {
-    if (this.state.authority.id) {
-        if (menu === "2") {
-            document.location.href = "/Account";
-        }
-    }
-
-    else {
-        alert('로그인 후 이용 가능합니다.');
-        document.location.href = "/login?ReturnUrl="+this.props.ReturnUrl;
-    }
-  }
+  // checklogin = (menu) => {
+  //   if (this.state.authority.id) {
+  //       if (menu === "2") {
+  //           document.location.href = "/Account";
+  //       }
+  //   }
+  //   else {
+  //       alert('로그인 후 이용 가능합니다.');
+  //       document.location.href = "/login?ReturnUrl="+this.props.ReturnUrl;
+  //   }
+  // }
 
   checkAuthority = () => {
     axios.get('/authority')

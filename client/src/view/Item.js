@@ -59,6 +59,7 @@ class Item extends Component {
         }
         else {
             alert("로그인 후 이용부탁드립니다.")
+            document.location.href = "/login?ReturnUrl="+ document.location.href;
         }
     }
 

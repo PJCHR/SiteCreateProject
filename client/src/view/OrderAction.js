@@ -33,16 +33,16 @@ class OrderAction extends Component {
     checkRadio = (v,id) => {
         console.log(v, id);
 
-        if(v === 1){
-            document.getElementById(id).style.display = ""; // 기본배송지
-        }else{
-            document.getElementById(id).style.display = "none"; // 숨김
-        }
-        if(v === 2){
-            document.getElementById(id).style.display = ""; // 직접입력
-        }else{
-            document.getElementById(id).style.display = "none"; // 숨김
-        }
+        // if(v === 1){
+        //     document.getElementById(id).style.display = ""; // 기본배송지
+        // }else{
+        //     document.getElementById(id).style.display = "none"; // 숨김
+        // }
+        // if(v === 2){
+        //     document.getElementById(id).style.display = ""; // 직접입력
+        // }else{
+        //     document.getElementById(id).style.display = "none"; // 숨김
+        // }
         // console.log('속성값 확인:' + document.getElementById('addr1').style);
     }
  
