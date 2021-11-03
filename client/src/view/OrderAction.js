@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import queryString from "query-string";
+import $ from "jquery"
 
 import { BOTTOM } from './Home';
 
@@ -10,10 +11,10 @@ import OrderActionStyle from '../css/OrderActionStyle.module.css';
 
 class OrderAction extends Component {
     state = {
-
     }
     componentDidMount() {
         this.getQueryString();
+        this.checkRadio();
     }
 
     getQueryString = () => {
@@ -30,20 +31,25 @@ class OrderAction extends Component {
 
         return price.toString().replace(regexp, ',') + "원";
     }
-    checkRadio = (v,id) => {
-        console.log(v, id);
-
-        // if(v === 1){
-        //     document.getElementById(id).style.display = ""; // 기본배송지
-        // }else{
-        //     document.getElementById(id).style.display = "none"; // 숨김
-        // }
-        // if(v === 2){
-        //     document.getElementById(id).style.display = ""; // 직접입력
-        // }else{
-        //     document.getElementById(id).style.display = "none"; // 숨김
-        // }
-        // console.log('속성값 확인:' + document.getElementById('addr1').style);
+    checkRadio = () => {
+        // $(document).ready(function(){
+        //     $("#radioCheck").click(function(event){
+        //         event.preventDefault();
+        //     });
+        // });
+        var v = document.querySelector('input[name="radioCheck"]:checked').value;
+        // console.log(v);
+        
+        if(v === 'basic'){
+            document.getElementById('addr1').style.display = "block"; // 기본배송지
+        }else{
+            document.getElementById('addr1').style.display = "none"; // 숨김
+        }
+        if(v === 'self'){
+            document.getElementById('addr2').style.display = "block"; // 직접입력
+        }else{
+            document.getElementById('addr2').style.display = "none"; // 숨김
+        }
     }
  
     render(){
@@ -86,14 +92,15 @@ class OrderAction extends Component {
                                                     {/* onChange에서 함수추가 후에 함수에서 라디오의 체크 여부가 value 값에 따라 1이면 1의 레이아웃, 2라면 2의 레이아웃을 표시 해당되지 않는 레이아웃은 비활성화를 하는 동시에 값이 전달되지않도록 한다. 라디오가 체크되있을 때 활성화 */}
                                                     {/* 기본 배송지 */}
                                                     <li>
+                                                        {/* <label><input type="radio" name="radiobox" value="rdo1">rdo1</input></label> */}
                                                         <label for="r1">
-                                                            <input type="radio" name="radio" id="r1" value="1" onClick={this.checkRadio(this.value,'addr1')} checked/><span>기본배송지</span>
+                                                            <input type="radio" name="radioCheck" id="r1" value="basic" onClick={this.checkRadio} checked/><span>기본배송지</span>
                                                         </label>
                                                     </li>
                                                     {/* 직접 입력 */}
                                                     <li>
                                                         <label for="r2">
-                                                            <input type="radio" name="radio" id="r2" value="2" onClick={this.checkRadio(this.value,'addr2')}/><span>직접입력</span>
+                                                            <input type="radio" name="radioCheck" id="r2" value="self" onClick={this.checkRadio}/><span>직접입력</span>
                                                         </label>
                                                     </li>
                                                 </ul>

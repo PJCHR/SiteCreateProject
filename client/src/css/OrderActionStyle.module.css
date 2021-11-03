@@ -177,6 +177,10 @@ button {
   color: #333;
   letter-spacing: 0;
 }
+
+.c_order_basic_delivery {
+  /* display: none; */
+}
 /* 추후 라디오 버튼 활성화, 비활성화시 레이아웃 변화 추가필요 */
 /* .order_info .c_order_radio input[type="radio"]:checked + span {
   font-weight: bold;
