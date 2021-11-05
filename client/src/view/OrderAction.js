@@ -89,29 +89,33 @@ class OrderAction extends Component {
                                         <div className={OrderActionStyle.c_order_content}>
                                             <div className={OrderActionStyle.c_order_select_delivery}>
                                                 <ul>
-                                                    {/* onChange에서 함수추가 후에 함수에서 라디오의 체크 여부가 value 값에 따라 1이면 1의 레이아웃, 2라면 2의 레이아웃을 표시 해당되지 않는 레이아웃은 비활성화를 하는 동시에 값이 전달되지않도록 한다. 라디오가 체크되있을 때 활성화 */}
                                                     {/* 기본 배송지 */}
                                                     <li>
                                                         {/* <label><input type="radio" name="radiobox" value="rdo1">rdo1</input></label> */}
-                                                        <label for="r1">
-                                                            <input type="radio" name="radioCheck" id="r1" value="basic" onClick={this.checkRadio} checked/><span>기본배송지</span>
-                                                        </label>
+                                                        <label><input type="radio" name="radioCheck" id="r1" value="basic" onClick={this.checkRadio} checked/><span>기본배송지</span></label>
                                                     </li>
                                                     {/* 직접 입력 */}
                                                     <li>
-                                                        <label for="r2">
-                                                            <input type="radio" name="radioCheck" id="r2" value="self" onClick={this.checkRadio}/><span>직접입력</span>
-                                                        </label>
+                                                        <label><input type="radio" name="radioCheck" id="r2" value="self" onClick={this.checkRadio} /><span>직접입력</span></label>
                                                     </li>
                                                 </ul>
                                             </div>
                                             
                                             {/* 배송지 라디오 체크에 따라 레이아웃 바뀜 */}
                                             {/* 기본배송지 */}
-                                            <div className={OrderActionStyle.c_order_delivery} id="addr1" style={{display:"none"}}>기본배송지</div>
+                                            <div className={OrderActionStyle.c_order_delivery} id="addr1" style={{display:"none"}}>기본배송지
+                                                <div className={OrderActionStyle.c_order_delivery_info}>
+
+                                                </div>
+                                            </div>
 
                                             {/* 직접입력 */}
-                                            <div className={OrderActionStyle.c_order_delivery} id="addr2" style={{display:"none"}}>직접입력</div>
+                                            <div className={OrderActionStyle.c_order_delivery} id="addr2" style={{display:"none"}}>직접입력
+                                                <div className={OrderActionStyle.c_order_delivery_info}>
+                                                    
+                                                </div>
+                                            </div>
+                                            
                                             {/* 요청사항 선택 */}
                                             <div className={OrderActionStyle.c_order_delivery_request}></div>
                                         </div>
@@ -138,4 +142,4 @@ class OrderAction extends Component {
     }
 }
 
-export default OrderAction;
+export default OrderAction; 
