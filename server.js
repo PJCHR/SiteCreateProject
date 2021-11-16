@@ -68,6 +68,19 @@ app.get("/itemApi", (req,res)=>{
       }
   })
 });
+app.post("/orderaction", (req,res)=>{
+  var user = req.body.authority.id;
+  
+  const sql = `SELECT num, id, nickname, addr, phone FROM customer_info WHERE id='${user}'`;
+  connection.query(sql,(err, result, field) =>{
+      if(err){
+        console.log(err);
+      }
+      else{
+        res.send(result);
+      }
+  })
+});
 app.post("/cart", (req,res)=>{
   var num=req.body.result[0].num;
   var pdt_name=req.body.result[0].pdt_name;

@@ -36,6 +36,8 @@ class Register extends Component {
         alert('해당 ID는 이미 존재합니다.');
 
     }
+
+    
   }
   
 
@@ -85,7 +87,46 @@ class Register extends Component {
       id.value=id.value.toLowerCase();
   }
 
+  autoHypenPhone = (str) => {
+    str = str.replace(/[^0-9]/g, '');
+    var tmp = '';
+    if( str.length < 4){
+        return str;
+    }else if(str.length < 7){
+        tmp += str.substr(0, 3);
+        tmp += '-';
+        tmp += str.substr(3);
+        return tmp;
+    }else if(str.length < 11){
+        tmp += str.substr(0, 3);
+        tmp += '-';
+        tmp += str.substr(3, 3);
+        tmp += '-';
+        tmp += str.substr(6);
+        return tmp;
+    }else{              
+        tmp += str.substr(0, 3);
+        tmp += '-';
+        tmp += str.substr(3, 4);
+        tmp += '-';
+        tmp += str.substr(7);
+        return tmp;
+    }
+    return str;
+  }
+
+  checkPhone = () => {
+    var cellPhone = document.getElementById('cellPhone');
+    cellPhone.onkeyup = function(event){
+    event = event || window.event;
+    var _val = this.value.trim();
+    this.value = this.autoHypenPhone(_val) ;
+    }
+  }
+  
+
   render() {
+    
     return (
       <div className={HomeStyle.body_wrap}>
         <TOP ReturnUrl={document.location.href}/>
@@ -112,7 +153,7 @@ class Register extends Component {
               
                 <li>
                   <p>이메일</p>
-                  <input type="text" onChange={e => this.setState({ email: e.target.value })}/>
+                  <input type="text" placeholder='abcde@gmail.com' onChange={e => this.setState({ email: e.target.value })}/>
                 </li>
               
                 <li>
@@ -122,7 +163,7 @@ class Register extends Component {
               
                 <li>
                   <p>전화번호</p>
-                  <input type="tel" onChange={e => this.setState({ phone: e.target.value })}/>
+                  <input type="text" name="cellPhone" id="cellPhone" placeholder="번호 입력" maxlength="13" onkeyup={this.checkPhone()} onChange={e => this.setState({ phone: e.target.value })}/>
                 </li>
 
                 <li>

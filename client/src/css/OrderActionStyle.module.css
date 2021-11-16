@@ -177,7 +177,35 @@ button {
   color: #333;
   letter-spacing: 0;
 }
+.c_order_address .name {
+  padding-bottom: 12px;
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: bold;
+  color: #111;
+  letter-spacing: 0;
+}
+.c_order_address .address {
+  padding-bottom: 8px;
+  margin-right: 4px;
+  font-size: 17px;
+  line-height: 4px;
+  color: #111;
+}
 
+.c_order_address .address .form_box {
+  word-break: break-all;
+}
+
+.c_order_address .phone_number {
+  padding-bottom: 15px;
+  font-family: 'Lato', 'Helvetica Neue', 'Apple SD Gothic Neo', '맑은 고딕',
+    'Malgun Gothic', '돋움', dotum, sans-serif;
+  font-size: 17px;
+  line-height: 21px;
+  color: #666;
+  letter-spacing: 0;
+}
 .c_order_basic_delivery {
   /* display: none; */
 }

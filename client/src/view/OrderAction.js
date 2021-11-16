@@ -11,10 +11,12 @@ import OrderActionStyle from '../css/OrderActionStyle.module.css';
 
 class OrderAction extends Component {
     state = {
+        userData: [],
     }
     componentDidMount() {
         this.getQueryString();
         this.checkRadio();
+        this.userAddr();
     }
 
     getQueryString = () => {
@@ -31,6 +33,9 @@ class OrderAction extends Component {
 
         return price.toString().replace(regexp, ',') + "원";
     }
+
+    
+
     checkRadio = () => {
         // $(document).ready(function(){
         //     $("#radioCheck").click(function(event){
@@ -50,9 +55,27 @@ class OrderAction extends Component {
         }else{
             document.getElementById('addr2').style.display = "none"; // 숨김
         }
+
+        // var cellPhone = document.getElementById('cellPhone');
+        // cellPhone.onkeyup = function(event){
+        // event = event || window.event;
+        // var _val = this.value.trim();
+        // this.value = this.autoHypenPhone(_val) ;
+        // }
     }
- 
+    
+    userAddr = async () => {
+        await axios.get('/authority',this.state)
+        .then(res => this.setState({ authority: res.data }))
+        await axios.post('/orderaction',this.state)
+        .then(res => this.setState({ userData: res.data }))
+        .catch(err => console.log(err));
+
+        
+    }
+
     render(){
+        const { userData } = this.state;
         return(
             <div className={HomeStyle.body_wrap} ReturnUrl={document.location.href}>
                 <div id="gnb">
@@ -103,10 +126,40 @@ class OrderAction extends Component {
                                             
                                             {/* 배송지 라디오 체크에 따라 레이아웃 바뀜 */}
                                             {/* 기본배송지 */}
-                                            <div className={OrderActionStyle.c_order_delivery} id="addr1" style={{display:"none"}}>기본배송지
+                                            <div className={OrderActionStyle.c_order_delivery} id="addr1" style={{display:"none"}}>
+                                                <h3 className={OrderActionStyle.skip}>기본배송지</h3>
+                                                {userData.map((item,number) => {
+                                                return(
                                                 <div className={OrderActionStyle.c_order_delivery_info}>
-
+                                                    <div className={OrderActionStyle.c_order_address}>
+                                                        <dl>
+                                                            {/* 받는 사람 */}
+                                                            <div className={OrderActionStyle.name}>
+                                                                <dt className={OrderActionStyle.skip}>받으시는 분</dt>
+                                                                <dd>
+                                                                    <span id="dlv_view_01_html">{item.nickname}</span>
+                                                                </dd>
+                                                            </div>
+                                                            {/* 주소 */}
+                                                            <div className={OrderActionStyle.address}>
+                                                                <dt className={OrderActionStyle.skip}>주소</dt>
+                                                                <dd>
+                                                                    <div className={OrderActionStyle.form_box}>
+                                                                        <span id="dlv_view_02_html">{item.addr}</span>
+                                                                    </div>
+                                                                </dd>
+                                                            </div>
+                                                            {/* 휴대전화 */}
+                                                            <div id="dlv_03_view">
+                                                                <div className={OrderActionStyle.phone_number}>
+                                                                    <dt className={OrderActionStyle.skip}>휴대전화</dt>
+                                                                    <dd><span id="dlv_view_03_html">{item.phone}</span></dd>
+                                                                </div>
+                                                            </div>
+                                                        </dl>
+                                                    </div>
                                                 </div>
+                                                )})}
                                             </div>
 
                                             {/* 직접입력 */}
