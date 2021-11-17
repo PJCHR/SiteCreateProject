@@ -42,16 +42,23 @@ class OrderAction extends Component {
         //         event.preventDefault();
         //     });
         // });
-        var v = document.querySelector('input[name="radioCheck"]:checked').value;
+
+        // 체크값 확인 코드
+        // var v = document.querySelector('input[name="radioCheck"]:checked').value;
+        var v = $('input[name=radioCheck]:checked').val();
         // console.log(v);
         
         if(v === 'basic'){
             document.getElementById('addr1').style.display = "block"; // 기본배송지
+            // $('r2').prop('checked',false);
+            // $('r1').prop('checked',true);
         }else{
             document.getElementById('addr1').style.display = "none"; // 숨김
         }
         if(v === 'self'){
             document.getElementById('addr2').style.display = "block"; // 직접입력
+            // $('r2').prop('checked',true);
+            // $('r1').prop('checked',false);
         }else{
             document.getElementById('addr2').style.display = "none"; // 숨김
         }
