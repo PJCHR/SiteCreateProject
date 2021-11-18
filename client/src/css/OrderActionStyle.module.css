@@ -206,6 +206,29 @@ button {
   color: #666;
   letter-spacing: 0;
 }
+.c_order_delivery .field {
+  margin-bottom: 15px;
+  zoom: 1;
+}
+.c_order_delivery .field input[type='text'].name {
+  width: 341px;
+}
+.c_order_delivery .field input[type='text'] {
+  display: block;
+  float: left;
+  width: 608px;
+  height: 20px;
+  padding: 13px 16px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+  font-weight: normal;
+  line-height: 20px;
+  color: #111;
+  letter-spacing: 0;
+}
+.c_order_delivery_request {
+  width: 640px;
+}
 .c_order_basic_delivery {
   /* display: none; */
 }
@@ -214,13 +237,41 @@ button {
   font-weight: bold;
   color: #f43142;
 } */
-.order_goods {
+.b_order_goods {
   position: relative;
   width: 870px;
   min-height: 315px;
   margin-bottom: 45px;
-  background: blue;
 }
+.b_order_goods .c_order_title {
+  /* height: 24px; */
+  padding: 34px 0 24px 0;
+}
+.b_order_goods .c_order_title {
+  width: 100%;
+  padding: 15px 0 14px 0;
+}
+.b_order_goods .c_order_title .title {
+  display: inline-block;
+  font-size: 20px;
+  line-height: 24px;
+  color: #111;
+  vertical-align: top;
+  font-weight: bold;
+}
+.b_order_goods .text {
+  float: left;
+  padding-left: 20px;
+  margin-top: 3px;
+  font-size: 14px;
+  color: #666;
+  letter-spacing: 0;
+}
+.b_order_goods .c_order_content .c_order_title:first-child,
+.b_order_goods .c_order_store_product .c_order_title:first-child {
+  border-top: 0 none;
+}
+
 .order_payment {
   position: absolute;
   top: 0;
