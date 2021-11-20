@@ -243,15 +243,14 @@ button {
   min-height: 315px;
   margin-bottom: 45px;
 }
-.b_order_goods .c_order_title {
-  /* height: 24px; */
-  padding: 34px 0 24px 0;
-}
-.b_order_goods .c_order_title {
+.c_order_style_2 {
   width: 100%;
-  padding: 15px 0 14px 0;
+  height: 24px;
+  padding: 24px 0 34px 0;
+  border-bottom: 1px solid #999;
 }
-.b_order_goods .c_order_title .title {
+.b_order_goods h2.title {
+  float: left;
   display: inline-block;
   font-size: 20px;
   line-height: 24px;
@@ -267,9 +266,117 @@ button {
   color: #666;
   letter-spacing: 0;
 }
+.b_order_goods .c_order_title {
+  width: 100%;
+  padding: 10px 0 4px 0;
+}
+
 .b_order_goods .c_order_content .c_order_title:first-child,
 .b_order_goods .c_order_store_product .c_order_title:first-child {
   border-top: 0 none;
+}
+.b_order_goods .c_order_content .c_order_title,
+.b_order_goods .c_order_store_product .c_order_title {
+  border-top: 1px solid #999;
+  border-bottom: 1px solid #eee;
+}
+.b_order_goods .c_order_title .ico_store {
+  overflow: hidden;
+  display: inline-block;
+  margin-right: 4px;
+  /* background-image: url(/img/order_v3/sprites/sp_ico_2x_2021826_140102.png);
+  background-position: 0px -185px; */
+  width: 24px;
+  height: 24px;
+  background-size: 259px 231px;
+  line-height: 200px;
+  vertical-align: top;
+}
+.b_order_content .c_order_title h3 {
+  display: inline-block;
+  font-size: 15px;
+  line-height: 24px;
+  color: #111;
+  vertical-align: top;
+}
+.b_order_goods .c_order_title .store {
+  display: inline-block;
+  font-weight: normal;
+  font-size: 15px;
+  line-height: 24px;
+  color: #111;
+}
+.b_order_goods .c_order_cart_list > ul > li {
+  padding-left: 120px;
+  border-bottom: 1px solid #eee;
+  border-top: 0 none;
+}
+.b_order_goods .c_order_cart_list .group_prd > ul > li {
+  border-top: 0 none;
+  padding-left: 120px;
+}
+.c_order_cart_list .group_prd > ul > li:first-child {
+  border-top: 0;
+}
+.c_order_cart_list .group_prd > ul > li {
+  display: block;
+  position: relative;
+  padding-left: 165px;
+  border-top: 1px solid #eee;
+  zoom: 1;
+}
+.c_order_cart_list .cart_info_box {
+  position: relative;
+  min-height: 176px;
+}
+.b_order_goods .c_order_cart_list .group_prd > ul > li .c_order_prd_row {
+  display: table;
+  table-layout: fixed;
+  width: auto;
+}
+.c_order_cart_list .cart_info_box .c_order_prd_row {
+  display: table;
+  table-layout: fixed;
+  width: 100%;
+  min-height: 176px;
+}
+.b_order_goods .c_order_cart_list .group_prd > ul > li .c_order_prd {
+  width: 376px;
+}
+.b_order_goods .cart_info_box .c_order_quantity {
+  display: table-cell;
+  width: 90px;
+  min-height: 176px;
+  padding: 27px 20px 25px;
+  font-size: 15px;
+  color: #111;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  border-left: 1px solid #eee;
+  text-align: center;
+  vertical-align: top;
+}
+.number {
+  font-family: 'Lato', 'Helvetica Neue', 'Apple SD Gothic Neo', '맑은 고딕',
+    'Malgun Gothic', '돋움', dotum, sans-serif;
+  font-style: normal;
+}
+
+.b_order_goods .c_order_cart_list .group_prd > ul > li .c_order_prd_price {
+  width: 155px;
+  border-right: 1px solid #eee;
+}
+.b_order_goods .c_order_cart_list .group_prd > ul > li .c_order_prd_price {
+  width: 155px;
+  border-right: 1px solid #eee;
+}
+.b_order_goods .c_order_cart_list .group_prd > ul > li .c_order_prd_price {
+  width: 155px;
+  border-right: 1px solid #eee;
+}
+.c_order_prd_price .price_box .total_price .number {
+  font-size: 20px;
+  font-weight: bold;
 }
 
 .order_payment {

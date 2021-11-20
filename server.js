@@ -81,6 +81,19 @@ app.post("/orderaction", (req,res)=>{
       }
   })
 });
+app.post("/importItem", (req,res)=>{
+  var num = req.body.itemNo;
+  
+  const sql = `SELECT * FROM product_info WHERE num=${num}`;
+  connection.query(sql,(err, result, field) =>{
+      if(err){
+        console.log(err);
+      }
+      else{
+        res.send(result);
+      }
+  })
+});
 app.post("/cart", (req,res)=>{
   var num=req.body.result[0].num;
   var pdt_name=req.body.result[0].pdt_name;

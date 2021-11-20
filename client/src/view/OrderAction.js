@@ -12,10 +12,10 @@ import OrderActionStyle from '../css/OrderActionStyle.module.css';
 class OrderAction extends Component {
     state = {
         userData: [],
+        itemData: [],
     }
     componentDidMount() {
         this.getQueryString();
-        // this.checkRadio();
         this.userAddr();
     }
 
@@ -23,15 +23,16 @@ class OrderAction extends Component {
         const result = queryString.parse(this.props.location.search);
         const rst = result.num;
         const rst2 = result.count;
+        this.setState({itemCount: rst2});
 
-        return rst, rst2;
+        return rst;
     }
 
     comma = (price) => {
         var regexp = /\B(?=(\d{3})+(?!\d))/g;
-        price = price + "";
+        price = price * this.state.itemCount + "";
 
-        return price.toString().replace(regexp, ',') + "원";
+        return price.toString().replace(regexp, ',');
     }
 
     
@@ -73,10 +74,17 @@ class OrderAction extends Component {
         await axios.post('/orderaction',this.state)
         .then(res => this.setState({ userData: res.data }))
         .catch(err => console.log(err));
+
+        var query = this.getQueryString();
+        this.setState({itemNo:query});
+        await axios.post('/importItem',this.state)
+        .then(res => {this.setState({ itemData: res.data })})
+        .catch(err => console.log(err));
     }
 
     render(){
         const { userData } = this.state;
+        const { itemData } = this.state;
         return(
             <div className={HomeStyle.body_wrap} ReturnUrl={document.location.href}>
                 <div id="gnb">
@@ -185,7 +193,7 @@ class OrderAction extends Component {
                                     </div>
 
                                     <div className={OrderActionStyle.b_order_goods}>
-                                        <div className={OrderActionStyle.c_order_title}>
+                                        <div className={OrderActionStyle.c_order_style_2}>
                                             <h2 className={OrderActionStyle.title}>주문상품</h2>
                                             <p className={OrderActionStyle.text}>상품수량 및 옵션변경은 상품상세 또는 장바구니에서 가능합니다.</p>
                                         </div>
@@ -193,14 +201,41 @@ class OrderAction extends Component {
                                             <div className={OrderActionStyle.c_order_store_product}>
 
                                                 <div className={OrderActionStyle.c_order_title}>
-                                                    <h3 className={OrderActionStyle.title}><span className={OrderActionStyle.ico_store}>스토어명</span><span className={OrderActionStyle.store} id="storeNm">스파클생수 </span></h3>
+                                                    <h3 className={OrderActionStyle.title}><span className={OrderActionStyle.ico_store}>스토어명</span><span className={OrderActionStyle.store}> 강화도지역마켓 </span></h3>
                                                 </div>
 
                                                 <div className={OrderActionStyle.c_order_cart_list}>
                                                     <ul>
                                                         <li className={OrderActionStyle.group_prd}>
                                                             <ul>
-                                                                
+                                                                <li>
+                                                                    <div className={OrderActionStyle.cart_info_box}>
+                                                                    {itemData.map((item,number) => {
+                                                                    return(
+                                                                        <div className={OrderActionStyle.c_order_prd_row}>
+                                                                            
+                                                                            
+                                                                            <div className={OrderActionStyle.c_order_prd}>
+                                                                                {item.pdt_name}
+                                                                            </div>
+
+                                                                            <div className={OrderActionStyle.c_order_quantity}>
+                                                                                <span className={OrderActionStyle.number}>{this.state.itemCount}</span>개
+                                                                            </div>
+                                                                            
+                                                                            <div className={OrderActionStyle.c_order_prd_price}>
+                                                                                <dl className={OrderActionStyle.price_box}>
+                                                                                    <div className={OrderActionStyle.total_price}>
+                                                                                        <dt className={OrderActionStyle.skip}>할인모음가</dt>
+                                                                                        <dd><i className={OrderActionStyle.number}>{this.comma(item.pdt_price)}</i>원</dd>
+                                                                                    </div>
+                                                                                </dl>
+                                                                            </div>
+
+                                                                        </div>
+                                                                    )})}
+                                                                    </div>
+                                                                </li>
                                                             </ul>
                                                         </li>
                                                     </ul>
