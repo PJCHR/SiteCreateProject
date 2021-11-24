@@ -284,8 +284,8 @@ button {
   overflow: hidden;
   display: inline-block;
   margin-right: 4px;
-  /* background-image: url(/img/order_v3/sprites/sp_ico_2x_2021826_140102.png);
-  background-position: 0px -185px; */
+  /* background-image: url(../img/); */
+  /* background-position: 0px -185px; */
   width: 24px;
   height: 24px;
   background-size: 259px 231px;
@@ -307,7 +307,7 @@ button {
   color: #111;
 }
 .b_order_goods .c_order_cart_list > ul > li {
-  padding-left: 120px;
+  padding-left: 50px;
   border-bottom: 1px solid #eee;
   border-top: 0 none;
 }
@@ -319,7 +319,6 @@ button {
   border-top: 0;
 }
 .c_order_cart_list .group_prd > ul > li {
-  display: block;
   position: relative;
   padding-left: 165px;
   border-top: 1px solid #eee;
@@ -327,34 +326,68 @@ button {
 }
 .c_order_cart_list .cart_info_box {
   position: relative;
-  min-height: 176px;
 }
 .b_order_goods .c_order_cart_list .group_prd > ul > li .c_order_prd_row {
   display: table;
   table-layout: fixed;
   width: auto;
+  /* min-height: 176px; */
+  min-height: 116px;
 }
-.c_order_cart_list .cart_info_box .c_order_prd_row {
-  display: table;
-  table-layout: fixed;
-  width: 100%;
-  min-height: 176px;
+.b_order_goods .cart_info_box .c_order_prd {
+  width: 375px;
+  padding: 22px 20px 25px 20px;
+  vertical-align: top;
 }
-.b_order_goods .c_order_cart_list .group_prd > ul > li .c_order_prd {
-  width: 376px;
+.c_order_cart_list .cart_info_box .c_order_prd {
+  display: table-cell;
+  position: relative;
+  width: 370px;
+  padding: 20px;
+  box-sizing: border-box;
+  text-align: left;
+}
+
+.c_order_prd .prd_name {
+  margin-bottom: 11px;
+  padding-top: 8%;
+  color: #111;
+  font-size: 17px;
+}
+
+.c_order_cart_list .cart_thumb_box {
+  position: absolute;
+  /* top: 28px; */
+  top: 1px;
+  left: -145px;
+}
+.c_order_thumb {
+  overflow: hidden;
+  position: relative;
+  display: block;
+  width: 120px;
+  height: 120px;
+}
+.c_order_thumb img {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  max-width: 100%;
+  max-height: 100%;
+  margin: auto;
 }
 .b_order_goods .cart_info_box .c_order_quantity {
   display: table-cell;
   width: 90px;
-  min-height: 176px;
-  padding: 27px 20px 25px;
+  /* padding: 27px 20px 25px; */
   font-size: 15px;
   color: #111;
-  -webkit-box-sizing: border-box;
   box-sizing: border-box;
   border-left: 1px solid #eee;
   text-align: center;
-  vertical-align: top;
+  vertical-align: middle;
 }
 .number {
   font-family: 'Lato', 'Helvetica Neue', 'Apple SD Gothic Neo', '맑은 고딕',
@@ -362,23 +395,29 @@ button {
   font-style: normal;
 }
 
-.b_order_goods .c_order_cart_list .group_prd > ul > li .c_order_prd_price {
-  width: 155px;
-  border-right: 1px solid #eee;
+.c_order_cart_list .group_prd > ul > li:first-child .cart_thumb_box,
+.c_order_cart_list .group_prd > ul > li:first-child .c_order_prd,
+.c_order_cart_list .group_prd > ul > li:first-child .c_order_prd_price {
+  border-top: 0;
 }
-.b_order_goods .c_order_cart_list .group_prd > ul > li .c_order_prd_price {
-  width: 155px;
-  border-right: 1px solid #eee;
+.c_order_cart_list .cart_info_box .c_order_prd_price {
+  display: table-cell;
+  position: relative;
+  width: 171px;
+  box-sizing: border-box;
+  border-left: 1px solid #eee;
+  /* border-right: 1px solid #eee; */
+  padding: 22px 10px;
+  top: 6px;
+  vertical-align: middle;
 }
-.b_order_goods .c_order_cart_list .group_prd > ul > li .c_order_prd_price {
-  width: 155px;
-  border-right: 1px solid #eee;
+.c_order_prd_price .price_box {
+  text-align: center;
 }
-.c_order_prd_price .price_box .total_price .number {
-  font-size: 20px;
-  font-weight: bold;
+.c_order_prd_price .price_box .total_price {
+  font-size: 15px;
+  color: #111;
 }
-
 .order_payment {
   position: absolute;
   top: 0;
@@ -390,6 +429,10 @@ button {
   padding-left: 20px;
   background-color: #fff;
   background: #000;
+}
+.c_order_prd_price .price_box .total_price .number {
+  font-size: 20px;
+  font-weight: bold;
 }
 .payment_wrap {
   width: 300px;

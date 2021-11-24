@@ -210,30 +210,37 @@ class OrderAction extends Component {
                                                             <ul>
                                                                 <li>
                                                                     <div className={OrderActionStyle.cart_info_box}>
-                                                                    {itemData.map((item,number) => {
-                                                                    return(
-                                                                        <div className={OrderActionStyle.c_order_prd_row}>
-                                                                            
-                                                                            
-                                                                            <div className={OrderActionStyle.c_order_prd}>
-                                                                                {item.pdt_name}
-                                                                            </div>
-
-                                                                            <div className={OrderActionStyle.c_order_quantity}>
-                                                                                <span className={OrderActionStyle.number}>{this.state.itemCount}</span>개
-                                                                            </div>
-                                                                            
-                                                                            <div className={OrderActionStyle.c_order_prd_price}>
-                                                                                <dl className={OrderActionStyle.price_box}>
-                                                                                    <div className={OrderActionStyle.total_price}>
-                                                                                        <dt className={OrderActionStyle.skip}>할인모음가</dt>
-                                                                                        <dd><i className={OrderActionStyle.number}>{this.comma(item.pdt_price)}</i>원</dd>
+                                                                        {itemData.map((item,number) => {
+                                                                        return(
+                                                                            <div className={OrderActionStyle.c_order_prd_row}>
+                                                                                
+                                                                                
+                                                                                <div className={OrderActionStyle.c_order_prd}>
+                                                                                    <div className={OrderActionStyle.prd_name}>
+                                                                                        {item.pdt_name}
+                                                                                        <div className={OrderActionStyle.cart_thumb_box}>
+                                                                                            <span className={OrderActionStyle.c_order_thumb}>
+                                                                                                <img src={item.imgsource} alt="상품이미지"/>
+                                                                                            </span>
+                                                                                        </div>
                                                                                     </div>
-                                                                                </dl>
-                                                                            </div>
+                                                                                </div>
 
-                                                                        </div>
-                                                                    )})}
+                                                                                <div className={OrderActionStyle.c_order_quantity}>
+                                                                                    <span className={OrderActionStyle.number}>{this.state.itemCount}</span>개
+                                                                                </div>
+                                                                                
+                                                                                <div className={OrderActionStyle.c_order_prd_price}>
+                                                                                    <dl className={OrderActionStyle.price_box}>
+                                                                                        <div className={OrderActionStyle.total_price}>
+                                                                                            <dt className={OrderActionStyle.skip}>할인모음가</dt>
+                                                                                            <dd><i className={OrderActionStyle.number}>{this.comma(item.pdt_price)}</i>원</dd>
+                                                                                        </div>
+                                                                                    </dl>
+                                                                                </div>
+
+                                                                            </div>
+                                                                        )})}
                                                                     </div>
                                                                 </li>
                                                             </ul>
@@ -249,9 +256,46 @@ class OrderAction extends Component {
                                 </div>
                                 <div className={OrderActionStyle.order_payment}>
                                     <h3 className={OrderActionStyle.skip}>주문/결제 정보</h3>
-                                    <div className={OrderActionStyle.payment_wrap}>
-                                        결제 정보창
+                                    <div class="c_order_amount">
+
+                                        <div class="c_order_title c_order_style_2">
+                                            <h4 class="title">결제 예정금액</h4>
+                                        </div>
+
+                                        <div class="c_order_content">
+                                            <dl>
+                                                <div class="price_field">
+                                                    <dt>상품금액</dt>
+                                                    <dd><em class="number">14,900</em>원</dd>
+                                                </div>
+                                                
+                                                <div class="price_field">
+                                                    <dt>배송비</dt>
+                                                    <dd id="dlvTotalAmountDisplay"><em class="number" id="dlvTotalAmountView"> 0</em>원</dd>
+                                                    <dd class="calculating" id="dlvAmountCalcIng" style="display: none">계산 중 <span class="calculating_ani"><span></span></span></dd>
+                                                </div>
+                                            </dl>
+                                            
+                                            <div class="c_order_total_price">
+                                                <h4 class="txt_total">합계</h4>
+                                                <span class="price"><em class="number" id="CalcAmountInDsc">14,900</em>원</span>
+                                                <div class="final_price" id="CalcAmount" style="display:none">14,900<span>원</span></div>
+                                                
+                                            </div>
+                                            {/* <!-- [D] 로딩 추가 --> */}
+                                            <div class="util_loding" id="payInfoLoading" style="display:none;">
+                                                <p class="skip">변경 중입니다.</p>
+                                            </div>
+                                            {/* <!--// [D] 로딩 추가 --> */}
+                                        </div>
+                                    </div> 
+                                     
+                                    <div className={OrderActionStyle.c_order_button}>
+                                        <button type="button" className={OrderActionStyle.btn_order} onclick>
+                                            <em className={OrderActionStyle.number}>14,900</em>원 결제하기
+                                        </button>
                                     </div>
+                                    
                                 </div>
 
                             </div>
