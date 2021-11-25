@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import queryString from "query-string";
-import $ from "jquery"
+import phoneFomatter from "../script/phoneFomatter";
+import $, { nodeName } from "jquery"
 
 import { BOTTOM } from './Home';
 
@@ -17,6 +18,7 @@ class OrderAction extends Component {
     componentDidMount() {
         this.getQueryString();
         this.userAddr();
+        this.checkAuthority();
     }
 
     getQueryString = () => {
@@ -34,8 +36,6 @@ class OrderAction extends Component {
 
         return price.toString().replace(regexp, ',');
     }
-
-    
 
     checkRadio = () => {
         // $(document).ready(function(){
@@ -67,6 +67,50 @@ class OrderAction extends Component {
         // $('r2').prop('checked',true);
         // $('r1').prop('checked',false);
     }
+
+    phoneFomatter = (num,type) => {
+        // type 에 0이 포함되면 *** 으로 표시됨.
+          var formatNum = '';
+        
+          if(num.length === 11){
+              if(type === 0){
+                  formatNum = num.replace(/(\d{3})(\d{4})(\d{4})/, '$1-****-$3');
+              }else{
+                  formatNum = num.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+              }
+          }else if(num.length === 8){
+              formatNum = num.replace(/(\d{4})(\d{4})/, '$1-$2');
+          }else{
+              if(num.indexOf('02') === 0){
+                  if(type === 0){
+                      formatNum = num.replace(/(\d{2})(\d{4})(\d{4})/, '$1-****-$3');
+                  }else{
+                      formatNum = num.replace(/(\d{2})(\d{4})(\d{4})/, '$1-$2-$3');
+                  }
+              }else{
+                  if(type === 0){
+                      formatNum = num.replace(/(\d{3})(\d{3})(\d{4})/, '$1-***-$3');
+                  }else{
+                      formatNum = num.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
+                  }
+              }
+          }
+        
+          return formatNum;
+        }
+
+    payment = () => {
+        if (this.state.status === 'login') {
+            alert('구매가 완료되었습니다.');
+            console.log('결제가 완료되었습니다.');
+
+            document.location.href = `/`;
+        }
+        else {
+            alert("로그인 후 이용부탁드립니다.")
+            document.location.href = "/login?ReturnUrl="+ document.location.href;
+        }
+    }
     
     userAddr = async () => {
         await axios.get('/authority',this.state)
@@ -80,6 +124,12 @@ class OrderAction extends Component {
         await axios.post('/importItem',this.state)
         .then(res => {this.setState({ itemData: res.data })})
         .catch(err => console.log(err));
+
+    }
+
+    checkAuthority = () => {
+        axios.get('/authority')
+        .then(res => this.setState({ status: res.data.status, authority: res.data }))
     }
 
     render(){
@@ -88,9 +138,11 @@ class OrderAction extends Component {
         return(
             <div className={HomeStyle.body_wrap} ReturnUrl={document.location.href}>
                 <div id="gnb">
-                    <div className={OrderActionStyle.header_wrap}>
-                        <div className={OrderActionStyle.inner}>
-                            <h1 className={OrderActionStyle.logo}> <Link to='/'>home</Link> </h1>
+                    <div className={OrderActionStyle.l_header}>
+                            <div className={OrderActionStyle.b_header_gnb}>
+                                <div className={OrderActionStyle.inner}>
+                                <h1 className={OrderActionStyle.logo}> <Link to='/'>home</Link> </h1>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -161,17 +213,16 @@ class OrderAction extends Component {
                                                             {/* 휴대전화 TEXT */}
                                                             <div className={OrderActionStyle.phone_number} id="div_03">
                                                                 <dt className={OrderActionStyle.skip}>휴대전화</dt>
-                                                                <dd><span>{item.phone}</span></dd>
+                                                                <dd><span>{this.phoneFomatter(item.phone)}</span></dd>
                                                             </div>
 
                                                             {/* 받는 사람 INPUT */}
                                                             <div className={OrderActionStyle.field} id="div_view1" style={{display: 'none'}}>
-                                                                <dt className={OrderActionStyle.skip}><label for="rcvrNm">받으시는 분</label></dt>
+                                                                <dt className={OrderActionStyle.skip}><label>받으시는 분</label></dt>
                                                                 <dd>
                                                                     {/* 값을 넣는 것에 따라 state에 저장 */}
-                                                                    <input type="text" className={OrderActionStyle.name} id="rcvrNm" name="rcvrNm" maxlength="40" value="" placeholder="받는 사람" title="받는 사람"/>
+                                                                    <input type="text" className={OrderActionStyle.name} maxlength="40" value="" placeholder="받는 사람" title="받는 사람"/>
                                                                 </dd>
-                                                                <input type="hidden" id="rcvrNmTmp" name="rcvrNmTmp" value=""/>
                                                             </div>
                                                             
                                                         </dl>
@@ -182,7 +233,7 @@ class OrderAction extends Component {
                                             
                                             {/* 요청사항 선택 */}
                                             <div className={OrderActionStyle.c_order_delivery}>
-                                                <h3 className={OrderActionStyle.skip}><label for="prdOrdDlvReqCont0">배송시요구사항</label></h3>
+                                                <h3 className={OrderActionStyle.skip}><label>배송시요구사항</label></h3>
                                                 <div className={OrderActionStyle.delivery_info}>
                                                     <div className={OrderActionStyle.c_order_delivery_request}>
                                                     
@@ -254,48 +305,53 @@ class OrderAction extends Component {
                                         
                                     </div>
                                 </div>
-                                <div className={OrderActionStyle.order_payment}>
+                                <div className={OrderActionStyle.l_order_side}>
                                     <h3 className={OrderActionStyle.skip}>주문/결제 정보</h3>
-                                    <div class="c_order_amount">
-
-                                        <div class="c_order_title c_order_style_2">
-                                            <h4 class="title">결제 예정금액</h4>
-                                        </div>
-
-                                        <div class="c_order_content">
-                                            <dl>
-                                                <div class="price_field">
-                                                    <dt>상품금액</dt>
-                                                    <dd><em class="number">14,900</em>원</dd>
-                                                </div>
-                                                
-                                                <div class="price_field">
-                                                    <dt>배송비</dt>
-                                                    <dd id="dlvTotalAmountDisplay"><em class="number" id="dlvTotalAmountView"> 0</em>원</dd>
-                                                    <dd class="calculating" id="dlvAmountCalcIng" style="display: none">계산 중 <span class="calculating_ani"><span></span></span></dd>
-                                                </div>
-                                            </dl>
+                                    {itemData.map((item,number) => {
+                                    return(
+                                        <div className={OrderActionStyle.b_order_sticky} style={{left: '989.5px', top: '0px', marginTop: '0px'}}>
                                             
-                                            <div class="c_order_total_price">
-                                                <h4 class="txt_total">합계</h4>
-                                                <span class="price"><em class="number" id="CalcAmountInDsc">14,900</em>원</span>
-                                                <div class="final_price" id="CalcAmount" style="display:none">14,900<span>원</span></div>
-                                                
+                                            <div className={OrderActionStyle.c_order_amount}>
+
+                                                <div className={OrderActionStyle.c_order_style_2}>
+                                                    <h4 className={OrderActionStyle.title}>결제 예정금액</h4>
+                                                </div>
+
+                                                <div className={OrderActionStyle.c_order_content}>
+                                                    <dl>
+                                                        <div className={OrderActionStyle.price_field}>
+                                                            <dt>상품금액</dt>
+                                                            <dd><em className={OrderActionStyle.number}>{this.comma(item.pdt_price)}</em>원</dd>
+                                                        </div>
+                                                        
+                                                        <div className={OrderActionStyle.price_field}>
+                                                            <dt>배송비</dt>
+                                                            <dd><em className={OrderActionStyle.number}> 0</em>원</dd>
+                                                            {/* <dd class="calculating" id="dlvAmountCalcIng">계산 중 <span class="calculating_ani"><span></span></span></dd> */}
+                                                        </div>
+                                                    </dl>
+                                                    
+                                                    <div className={OrderActionStyle.c_order_total_price}>
+                                                        <h4 className={OrderActionStyle.txt_total}>합계</h4>
+                                                        <span className={OrderActionStyle.price}>
+                                                            {/* 추가로 배송비 옵션을 만든다면 계산식을 넣을 것 */}
+                                                            <em className={OrderActionStyle.number} onChange={e => this.setState({item_price: item.pdt_price})}>{this.comma(item.pdt_price)}</em>원
+                                                        </span>
+                                                        {/* <div className={OrderActionStyle.final_price} style={{display: 'none'}}>14,900<span>원</span></div> */}
+                                                        
+                                                    </div>
+                                                    
+                                                </div>
+                                            </div> 
+                                            
+                                            
+                                            <div className={OrderActionStyle.c_order_button}>
+                                                <button type="button" className={OrderActionStyle.btn_order} onClick={this.payment} value='결제하기'>
+                                                    <em className={OrderActionStyle.number}>{this.comma(item.pdt_price)}</em>원 결제하기
+                                                </button>
                                             </div>
-                                            {/* <!-- [D] 로딩 추가 --> */}
-                                            <div class="util_loding" id="payInfoLoading" style="display:none;">
-                                                <p class="skip">변경 중입니다.</p>
-                                            </div>
-                                            {/* <!--// [D] 로딩 추가 --> */}
                                         </div>
-                                    </div> 
-                                     
-                                    <div className={OrderActionStyle.c_order_button}>
-                                        <button type="button" className={OrderActionStyle.btn_order} onclick>
-                                            <em className={OrderActionStyle.number}>14,900</em>원 결제하기
-                                        </button>
-                                    </div>
-                                    
+                                    )})}
                                 </div>
 
                             </div>

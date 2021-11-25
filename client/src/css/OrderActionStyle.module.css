@@ -31,16 +31,31 @@ button {
   color: #666;
   letter-spacing: 0;
 }
+div.l_header {
+  position: relative;
+  width: 100%;
+  z-index: 1000;
+  font-family: 'Noto Sans KR', 'Helvetica Neue', 'Apple SD Gothic Neo',
+    '맑은 고딕', 'Malgun Gothic', '돋움', dotum, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  letter-spacing: 0;
+}
+.b_header_gnb {
+  position: relative;
+  background: #fff;
+  z-index: 100;
+}
 .inner {
   position: relative;
   width: 1240px;
   margin: 0 auto;
 }
 .logo {
-  width: 255px;
-  height: 70px;
-  left: 0px;
   top: 20px;
+  left: 0px;
+  width: 255px;
+  height: 60px;
   overflow: hidden;
   line-height: 400px;
   background-image: url(/src/img/logo.png);
@@ -48,9 +63,13 @@ button {
 }
 .logo a {
   position: relative;
+  display: block;
   width: 100%;
   height: 100%;
+  overflow: hidden;
+  line-height: 400px;
 }
+
 .body #content {
   position: relative;
   z-index: 20;
@@ -127,6 +146,7 @@ button {
   letter-spacing: 0;
   font-size: 32px;
 }
+
 .order_content_wrap {
   position: relative;
   width: 1240px;
@@ -140,6 +160,16 @@ button {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
+.l_order_content:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  display: block;
+  width: 1px;
+  background-color: #f4f4f4;
+}
 .order_info {
   position: relative;
   width: 870px;
@@ -147,7 +177,7 @@ button {
   margin-bottom: 45px;
 }
 .order_info .c_order_style_3 {
-  padding: 14px 0 4px 0;
+  padding: 20px 0 4px 0;
   height: 60px;
   border-bottom: 1px solid #999;
 }
@@ -283,14 +313,13 @@ button {
 .b_order_goods .c_order_title .ico_store {
   overflow: hidden;
   display: inline-block;
-  margin-right: 4px;
-  /* background-image: url(../img/); */
-  /* background-position: 0px -185px; */
+  margin-right: 7px;
+  background-image: url(../img/icon_store.png);
   width: 24px;
   height: 24px;
-  background-size: 259px 231px;
+  background-size: 24px 24px;
   line-height: 200px;
-  vertical-align: top;
+  vertical-align: middle;
 }
 .b_order_content .c_order_title h3 {
   display: inline-block;
@@ -307,7 +336,7 @@ button {
   color: #111;
 }
 .b_order_goods .c_order_cart_list > ul > li {
-  padding-left: 50px;
+  padding-left: 40px;
   border-bottom: 1px solid #eee;
   border-top: 0 none;
 }
@@ -418,7 +447,12 @@ button {
   font-size: 15px;
   color: #111;
 }
-.order_payment {
+.c_order_prd_price .price_box .total_price .number {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.l_order_side {
   position: absolute;
   top: 0;
   right: 0%;
@@ -428,13 +462,142 @@ button {
   min-height: 540px;
   padding-left: 20px;
   background-color: #fff;
-  background: #000;
 }
-.c_order_prd_price .price_box .total_price .number {
-  font-size: 20px;
-  font-weight: bold;
-}
-.payment_wrap {
+.l_order_side .b_order_sticky {
   width: 300px;
   background-color: #fff;
+}
+.b_order_sticky .c_order_style_2 {
+  padding-top: 28px;
+}
+.c_order_style_2 {
+  /* width: 100%;
+  height: 28px; */
+  zoom: 1;
+}
+
+.c_order_style_2 .title {
+  float: left;
+  font-size: 19px;
+  line-height: 28px;
+  color: #000;
+  letter-spacing: 0;
+  font-weight: bold;
+}
+.c_order_style_2:after {
+  display: block;
+  content: '';
+  clear: both;
+}
+
+/* .c_order_content, */
+.b_order_sticky .c_order_content {
+  position: relative;
+  margin-top: 20px;
+  padding-bottom: 17px;
+  border-bottom: 0;
+  /* border-bottom: 1px dashed #ddd; */
+}
+.l_order_side .price_field {
+  position: relative;
+  margin-top: 12px;
+}
+.l_order_side .price_field > dt {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 15px;
+  line-height: 22px;
+  color: #333;
+}
+.l_order_side .price_field > dd {
+  padding-left: 114px;
+  font-size: 15px;
+  line-height: 22px;
+  color: #333;
+  text-align: right;
+}
+.l_order_side .price_field .number {
+  margin-right: 1px;
+  font-size: 17px;
+  font-weight: bold;
+  color: #111;
+}
+.l_order_side .price_field:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+.c_order_total_price {
+  position: relative;
+  margin-top: 20px;
+  padding-bottom: 10px;
+}
+.c_order_total_price .txt_total {
+  position: absolute;
+  top: 14px;
+  left: 0;
+  font-size: 15px;
+  font-weight: normal;
+  line-height: 22px;
+  color: #f43142;
+}
+.c_order_total_price {
+  position: relative;
+  margin-top: 20px;
+  padding-bottom: 10px;
+}
+.c_order_total_price .price {
+  display: block;
+  padding-left: 40px;
+  font-size: 15px;
+  color: #f43142;
+  text-align: right;
+}
+.c_order_total_price .price .number {
+  display: inline-block;
+  margin-right: 3px;
+  font-size: 34px;
+  font-weight: bold;
+  line-height: 41px;
+  vertical-align: -3px;
+}
+.c_order_button {
+  position: relative;
+  z-index: 1;
+  width: 300px;
+  height: 64px;
+  /* padding-top: 25px;
+  padding-bottom: 23px; */
+}
+.c_order_button .btn_order {
+  position: relative;
+  width: 300px;
+  height: 64px;
+  font-size: 18px;
+  font-weight: bold;
+  letter-spacing: 0;
+  color: #fff;
+  background: #fc583f;
+  background: -webkit-gradient(
+    linear,
+    left top,
+    right top,
+    from(#fc583f),
+    color-stop(45%, #fc4949),
+    to(#fc3a57)
+  );
+  background: -webkit-linear-gradient(
+    left,
+    #fc583f 0%,
+    #fc4949 45%,
+    #fc3a57 100%
+  );
+  background: linear-gradient(to right, #fc583f 0%, #fc4949 45%, #fc3a57 100%);
+  -webkit-box-shadow: 0 8px 8px 0 rgb(244 49 66 / 20%);
+  box-shadow: 0 8px 8px 0 rgb(244 49 66 / 20%);
+}
+.c_order_button .number {
+  font-size: 19px;
+  font-weight: bold;
 }

@@ -126,16 +126,17 @@ app.post("/mycart", (req,res)=>{
 });
 
 app.post("/mycartDelete",(req,res)=>{
-  var index = req.body.num;
+  var index = req.body.index;
+  console.log('번aa호',index);
   const sql = `DELETE FROM shoppingCart WHERE index = ${index}`;
-  connection.query(sql, (err,result,field)=>{
-    if(err){
-      console.log(err)
-    }
-    else{
-      res.send(result)
-    }
-  })
+  // connection.query(sql, (err,result,field)=>{
+  //   if(err){
+  //     console.log(err)
+  //   }
+  //   else{
+  //     res.send(result)
+  //   }
+  // })
 });
 app.post("/buyproduct", (req,res)=>{
   var num=req.body.result[0].num;

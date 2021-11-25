@@ -67,7 +67,14 @@ class Item extends Component {
         if (this.state.status === 'login') {
             axios.post("/cart", this.state)
             .then(res => res)
-            .then(() => alert("장바구니에 담겼습니다."))
+            .then(() => {
+                if(window.confirm('장바구니에 담겼습니다. 확인하시겠습니까?') === true){
+                    document.location.href = '/cartbox';
+                }
+                else{
+                    return false;
+                }
+            })
         }
         else {
             alert("로그인 후 이용부탁드립니다.")
