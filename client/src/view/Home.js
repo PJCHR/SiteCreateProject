@@ -283,12 +283,13 @@ export class BOTTOM extends Component {
         <div id="footer">
           <div className={HomeStyle.footer_wrap}>
             <div className={HomeStyle.liner}>
-              <p>name</p>
-              <p>adress</p>
-              <p>phonenumber</p>
+              <p>NAME - ParkJicheonhoryeong</p>
+              <p>ADRESS - NULL</p>
+              <p>H.P - NULL</p>
             </div>
+            
             <div className={HomeStyle.remark}>
-              <p>강화수산마켓</p>
+              <p>강화도지역마켓</p>
               <p>GANGHWAFISHMARKET.COM</p>
             </div>
           </div>

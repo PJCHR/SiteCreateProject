@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import queryString from 'query-string';
 import * as time from '../script/time.js';
+import HtmlParser from 'node-html-parser'
 
 import HomeStyle from '../css/HomeStyle.module.css';
 import '../css/Board_ReadStyle.css';
@@ -14,7 +15,7 @@ class Board__Read extends Component {
 
   state = {
     cs_boardinfo: [],
-    authority: [],
+    authority: []
   };
 
   componentDidMount() {
@@ -28,23 +29,25 @@ class Board__Read extends Component {
 
     return rst;
   };
-  onView = () => {
+  onView = async () => {
     var query = this.getQueryString();
-    this.checkAuthority();
-    axios.post(`/cscenter=board_list_read?idx=${query}`)
+
+    await axios.post(`/cscenter=board_list_read?idx=${query}`)
+    .then(res=> this.setState({cs_boardinfo: res.data }))
+    .catch((Error)=>{console.log(Error)})
+
+    await axios.post(`/cscenter=board_list_read_user?idx=${query}`)
     .then(res=> {
-      this.setState({cs_boardinfo: res.data});
+      this.setState({userID: res.data});
 
       var btn = document.getElementById("delBtn");
       var btn2 = document.getElementById("fixBtn");
-      this.state.cs_boardinfo.map((item) => {
-
-        if(this.state.authority.id === item.id){
-          btn.style.visibility = "visible";
-          btn2.style.visibility = "visible";
-        }
-      })
-
+        
+      if(this.state.authority.id === this.state.userID[0].id){
+        btn.style.visibility = "visible";
+        btn2.style.visibility = "visible";
+      }
+      
     })
     .catch((Error)=>{console.log(Error)})
   }
@@ -53,19 +56,17 @@ class Board__Read extends Component {
     var query = this.getQueryString();
     axios.post(`/cscenter=board_list_read-delete?idx=${query}`)
     .then(() => alert('삭제완료'))
-    .then(() => window.location.href = "/cscenter=board_list")
+    .then(() => window.location.href = "/cscenter=board_list?page=1")
     .catch((Error)=>{console.log(Error)})
   }
   onbtnFix = async () => {
     var query = this.getQueryString();
-    document.location.href = `/cscenter=board_list_fix?idx=${query}`;
+    document.location.href = `/cscenter=board_list_fix?idx=${query}&ReturnUrl=`+document.location.href;
   }
 
   checkAuthority = () => {
     axios.get('/authority')
-    .then(res=>{
-      this.setState({authority:res.data})
-    })
+    .then(res=>{this.setState({authority:res.data})})
     .catch((Error)=>{console.log(Error)})
   }
       
@@ -91,10 +92,7 @@ class Board__Read extends Component {
                       <h5>[{list.subject}] {list.title}</h5>
                       <h1>{list.nickname}   |   {list.date_created}</h1>
                     </div>
-
                     <div className="cont">{list.content}</div>
-
-                    
                   </div>
                 )})
               }

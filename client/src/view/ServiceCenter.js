@@ -33,11 +33,11 @@ class ServiceCenter extends Component {
   }
 
   // 게시판 쓰기, 읽기, 목록
-  onBoardboard_list = () => {
+  onBoardboard_list = async () => {
     let query = this.getQueryString();
 
     // 배열 값 가져오고 count_length 값 정함
-    axios.post(`/cscenter=board_list?page=${query}`,this.state)
+    await axios.post(`/cscenter=board_list?page=${query}`,this.state)
     .then(res=> {this.setState({cs_boardinfo: res.data });})
     .then(res=> {
 
@@ -184,7 +184,15 @@ class ServiceCenter extends Component {
               </Table>
               
             </div>
-
+            {/* 
+              activePage: 현재 페이지
+              itemsCountPerPage: 한 페이지당 보여줄 리스트 아이템의 개수
+              totalItemsCount: 총 아이템의 개수
+              pageRangeDisplayed: Paginator 내에서 보여줄 페이지의 범위
+              prevPageText: "이전"을 나타낼 텍스트 (prev, <, ...)
+              nextPageText: "다음"을 나타낼 텍스트 (next, >, ...)
+              onChange: 페이지가 바뀔 때 핸들링해줄 함수 
+            */}
             <Pagination activePage={parseInt(pageNum)} itemsCountPerPage={this.state.cnt} totalItemsCount={this.state.pageCount} pageRangeDisplayed={this.state.pageRange} prevPageText={"‹"} nextPageText={"›"} onChange={this.handlePageChange} />
             
           </div>

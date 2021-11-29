@@ -126,17 +126,16 @@ app.post("/mycart", (req,res)=>{
 });
 
 app.post("/mycartDelete",(req,res)=>{
-  var index = req.body.index;
-  console.log('번aa호',index);
-  const sql = `DELETE FROM shoppingCart WHERE index = ${index}`;
-  // connection.query(sql, (err,result,field)=>{
-  //   if(err){
-  //     console.log(err)
-  //   }
-  //   else{
-  //     res.send(result)
-  //   }
-  // })
+  var idx = req.body.idx;
+  const sql = `DELETE FROM shoppingCart WHERE idx = ${idx}`;
+  connection.query(sql, (err,result,field)=>{
+    if(err){
+      console.log(err)
+    }
+    else{
+      res.send(result)
+    }
+  })
 });
 app.post("/buyproduct", (req,res)=>{
   var num=req.body.result[0].num;
@@ -157,7 +156,7 @@ app.post("/buyproduct", (req,res)=>{
   });
 });
 app.post('/cscenter=board_list', (req, res) => {
-  const sql = `SELECT * FROM cs_board_info`;
+  const sql = `SELECT * FROM cs_board_info ORDER BY idx DESC`;
   connection.query(sql, (err, rows, fields) => {
     if (err) {
       console.log('DATA GET FAIL');
@@ -199,6 +198,17 @@ app.post("/cscenter=board_list_read", (req, res)=>{
     }
   })
 })
+app.post("/cscenter=board_list_read_user", (req, res)=>{
+  const text = req.query.idx;
+  const sql = `SELECT id FROM cs_board_info WHERE idx LIKE ${text}`;
+  connection.query(sql, (err, rows, fields) => {
+    if (err) {
+      console.log('DATA GET FAIL');
+    } else {
+      res.send(rows);
+    }
+  })
+})
 app.post("/cscenter=board_list_fix", (req, res)=>{
   const text = req.query.idx;
   const sql = `SELECT * FROM cs_board_info WHERE idx LIKE ${text}`;
@@ -225,7 +235,7 @@ app.post("/cscenter=board_list_read-delete", (req, res) =>{
 app.post("/cscenter=write_board-fix", (req, res) =>{
   const text = req.query.idx;
   const subject = req.body.radioValue;  
-  const title = req.body.title; 
+  const title = req.body.title;
   const content = req.body.content; 
   const con = content.slice(3, -4);
   const date_created = req.body.date_created;

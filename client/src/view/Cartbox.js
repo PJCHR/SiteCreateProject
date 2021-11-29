@@ -11,7 +11,6 @@ class Cartbox extends Component {
       authority: '',
       result: [],
       status:'',
-      index: ''
     }
 
     componentDidMount() {
@@ -52,22 +51,10 @@ class Cartbox extends Component {
         return price.toString().replace(regexp, ',') + "원";
     }
 
-    deleteAction = (data) => {
-      // var json = {num:data}
-      // if(result = window.confirm("해당 물품을 장바구니에서 삭제하겠습니까?")){
-      //     fetch("/mycartDelete",{
-      //         method: 'post',
-      //         body: JSON.stringify(json),
-      //         headers: { 'Content-Type': 'application/json' }
-      //     })
-      //     .then(response => response)
-      //     .then(setTimeout(()=>document.location.href=document.location.href,1000))
-      //   }
+    deleteAction = async (data) => {
       var putData = data;
-      this.setState({index: putData});
-      const { index } = this.state;
-      console.log(index);
-      // if(this.st)
+      this.setState(await{idx: putData});
+
       if(window.confirm("해당 물품을 장바구니에서 삭제하겠습니까?")){
         axios.post("/mycartDelete", this.state)
         .then(res => res)
@@ -99,14 +86,14 @@ class Cartbox extends Component {
 
                 this.state.result.map((item, index) => {
                   priceSum += item.pdt_price * item.count;
-                  var indexNo = index + 1;
+                  var idxNo = index + 1;
                   return (
                     <div className={M.item_wrap} key={index}>
                     <img className={M.item_image} src={item.imgsource} alt="이미지" /> 
                     <div className={M.item_product}>{item.pdt_name}</div>
                     <div className={M.item_much}>수량 : {item.count}개</div>
                     <div className={M.item_pay}>{this.comma(item.pdt_price * item.count)} </div>
-                    <button className={M.item_delete} onClick={e => this.deleteAction(indexNo)}>삭제</button>
+                    <button className={M.item_delete} onClick={e => this.deleteAction(idxNo)}>삭제</button>
                     </div>
                   )
                 }) 

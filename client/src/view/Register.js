@@ -163,7 +163,7 @@ class Register extends Component {
               
                 <li>
                   <p>전화번호</p>
-                  <input type="text" name="cellPhone" id="cellPhone" placeholder="번호 입력" maxlength="13" onkeyup={this.checkPhone()} onChange={e => this.setState({ phone: e.target.value })}/>
+                  <input type="text" name="cellPhone" id="cellPhone" placeholder="010-1234-5678" maxlength="13" onChange={e => this.setState({ phone: e.target.value })}/>
                 </li>
 
                 <li>

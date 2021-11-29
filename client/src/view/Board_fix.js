@@ -35,20 +35,43 @@ class Board__Fix extends Component {
     this.checkAuthority();
     this.onGetData();
   }
+
+  checkAuthority = async() => {
+    axios.get('/authority')
+    .then(
+      res=>{this.setState({authority:res.data})
+    
+      if(this.state.authority.id !== 'admin'){
+        console.log(this.state.authority.id)
+        this.setState({radios: [
+          { name: '일반', value: '일반' },
+          { name: '질문', value: '질문' },
+        ]})
+      }
+    })
+    .catch((Error)=>{console.log(Error)})
+  }
+
+  getQueryString = () => {
+    const result = queryString.parse(this.props.location.search);
+    const rst = [result.idx,result.ReturnUrl];
+    return rst;
+  };
+
   onGetData = () =>{
-    var query = this.getQueryString();
+    var query = this.getQueryString()[0];
     axios.post(`/cscenter=board_list_fix?idx=${query}`)
     .then(res=> {
         this.setState({cs_boardinfo: res.data});
-
         this.setState({title: this.state.cs_boardinfo[0].title});
         this.setState({content: this.state.cs_boardinfo[0].content});
+        
       })
     .catch((Error)=>{console.log(Error)})
   }
 
   onSendData = async () => {
-    var query = this.getQueryString();
+    
     const now = new Date();
     this.setState(await{date_created: time.getFormatDate(now) +' '+ time.getFormatTime(now)});
     this.setState({id: this.state.authority.id});
@@ -61,13 +84,17 @@ class Board__Fix extends Component {
     }
     const {id, nickname, radioValue, title, content, hit, check, date_created} = this.state;
     if (id !== '' & nickname !== '' & radioValue !== '' & title !== '' & content !== '' & hit !== '' & check !== '') {
+
+      var query = this.getQueryString()[0];
+      var page = this.getQueryString()[1];
+
       if(check === 1){radioValue = '비공개';
         if(check === 1){
           axios.post(`/cscenter=write_board-fix?idx=${query}`,this.state)
           .then(res=>res)
           .then(() => alert('등록완료.'))
           .then(() => window.location.href = "/")
-          .then(() => window.location.href = "/cscenter=board_list")
+          .then(() => window.location.href = document.location.href = page)
           .catch((Error)=>{console.log(Error)})
         }
         if(check === 0){
@@ -75,7 +102,7 @@ class Board__Fix extends Component {
           .then(res=>res)
           .then(() => alert('등록완료.'))
           .then(() => window.location.href = "/")
-          .then(() => window.location.href = "/cscenter=board_list")
+          .then(() => window.location.href = document.location.href = page)
           .catch((Error)=>{console.log(Error)})
         }
       }
@@ -85,7 +112,7 @@ class Board__Fix extends Component {
           .then(res=>res)
           .then(() => alert('등록완료.'))
           .then(() => window.location.href = "/")
-          .then(() => window.location.href = "/cscenter=board_list")
+          .then(() => window.location.href = document.location.href = page)
           .catch((Error)=>{console.log(Error)})
         }
         if(check === 0){
@@ -93,7 +120,7 @@ class Board__Fix extends Component {
           .then(res=>res)
           .then(() => alert('등록완료.'))
           .then(() => window.location.href = "/")
-          .then(() => window.location.href = "/cscenter=board_list")
+          .then(() => window.location.href = document.location.href = page)
           .catch((Error)=>{console.log(Error)})
         }
       }
@@ -114,30 +141,6 @@ class Board__Fix extends Component {
       }
     }
   }
-
-  checkAuthority = async() => {
-    axios.get('/authority')
-    .then(
-      res=>{this.setState({authority:res.data})
-    
-      if(this.state.authority.id !== 'admin'){
-        console.log(this.state.authority.id)
-        this.setState({radios: [
-          { name: '일반', value: '일반' },
-          { name: '질문', value: '질문' },
-        ]})
-      }
-    })
-    .catch((Error)=>{console.log(Error)})
-  }
-
-
-  getQueryString = () => {
-    const result = queryString.parse(this.props.location.search);
-    const rst = result.idx;
-
-    return rst;
-  };
 
   render() {
     const { authority } = this.state;
@@ -195,19 +198,20 @@ class Board__Fix extends Component {
                   onReady={ editor => {
                       // You can store the "editor" and use when it is needed.
                       // console.log( 'Editor is ready to use!', editor );
-                  } }
+                  }}
                   onChange={ ( event, editor ) => {
-                      const data = editor.getData();
-                      
-                      // console.log( { event, editor, data } );
-                      this.setState({content: data})
-                    }}
+                    // console.log( { event, editor, data } );
+                    const data = editor.getData();
+                    
+                    this.setState({content: data})
+                    // console.log(this.state.content);
+                  }}
                   onBlur={ ( event, editor ) => {
                       // console.log( 'Blur.', editor );
-                  } }
+                  }}
                   onFocus={ ( event, editor ) => {
                       // console.log( 'Focus.', editor );
-                  } }
+                  }}
               />
             </div>
             <button className="submit-button" onClick={this.onSendData}>입력</button>
