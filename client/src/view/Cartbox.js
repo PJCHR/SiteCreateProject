@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import $, { nodeName } from "jquery"
+import axios from 'axios';
 
 import HomeStyle from '../css/HomeStyle.module.css';
 import M from '../css/CartboxStyle.module.css';
 
 import { TOP, BOTTOM } from './Home';
-import axios from 'axios';
+
 
 class Cartbox extends Component {
 	state = {
@@ -44,6 +46,15 @@ class Cartbox extends Component {
         document.location.href = "/login?ReturnUrl=" + document.location.href;
     }
 
+    checkConfirm = () => {
+      var chk_arr = [];
+
+     $('input[name=ChkboxSelt]:checked').each(function(){
+       var chk = $(this).val();
+       console.log(chk_arr.push(chk));
+     })
+    }
+
     comma = (price) => {
         var regexp = /\B(?=(\d{3})+(?!\d))/g;
         price = price + ""
@@ -52,9 +63,7 @@ class Cartbox extends Component {
     }
 
     deleteAction = async (data) => {
-      var putData = data;
-      this.setState(await{idx: putData});
-
+      this.setState(await{idx: data});
       if(window.confirm("해당 물품을 장바구니에서 삭제하겠습니까?")){
         axios.post("/mycartDelete", this.state)
         .then(res => res)
@@ -84,16 +93,42 @@ class Cartbox extends Component {
                 : 
                 this.state.result.length >= 1 ? 
 
+                
+                // <div class="b_order_cart_top">
+                //   <span class="all_check">
+                //     <label class="c_order_checkbox">
+                //       <input type="checkbox" name="bcktSeq_All_bottom" id="bcktSeq_All_bottom" onclick="allCheckAction(this); chkBox(this);" title="장바구니 전체 상품 선택"/>
+                //       <span>전체선택 <span id="checkPrdCnt"></span></span>
+                //     </label>
+                //   </span>
+                //   <button type="button" onclick="funcCheckDel(); doCommonStat('SCSP001'); chkAllPrdSelectList(this, 'check');">선택삭제</button>
+                  
+                // </div>
+                
                 this.state.result.map((item, index) => {
                   priceSum += item.pdt_price * item.count;
-                  var idxNo = index + 1;
+                  
                   return (
-                    <div className={M.item_wrap} key={index}>
-                    <img className={M.item_image} src={item.imgsource} alt="이미지" /> 
-                    <div className={M.item_product}>{item.pdt_name}</div>
-                    <div className={M.item_much}>수량 : {item.count}개</div>
-                    <div className={M.item_pay}>{this.comma(item.pdt_price * item.count)} </div>
-                    <button className={M.item_delete} onClick={e => this.deleteAction(idxNo)}>삭제</button>
+                    <div className={M.item} key={index}>
+                      
+                      <div className={M.c_order_store}>
+                        <div className={M.store_name}>
+                          <h4>
+                            <a>십일초이스 생수</a>
+                          </h4>
+                        </div>
+                          <label className={M.c_order_checkbox_part}>
+                            <input type="checkbox" name="ChkboxSelt" id={`checkSelt-${index}`} value={`checkSelt-${index}`} onClick={this.checkConfirm} title="스토어전체선택"/>
+                            <span>store name</span>
+                          </label>
+                        </div>
+                        <div className={M.item_info}>
+                          <img className={M.item_image} src={item.imgsource} alt="이미지" /> 
+                          <div className={M.item_product}>{item.pdt_name}</div>
+                          <div className={M.item_much}>수량 : {item.count}개</div>
+                          <div className={M.item_pay}>{this.comma(item.pdt_price * item.count)} </div>
+                          <button className={M.item_delete} onClick={e => this.deleteAction(item.idx)}>삭제</button>
+                        </div>
                     </div>
                   )
                 }) 
