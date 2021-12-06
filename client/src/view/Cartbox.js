@@ -46,6 +46,10 @@ class Cartbox extends Component {
         document.location.href = "/login?ReturnUrl=" + document.location.href;
     }
 
+    loginAction = () => {
+      
+    }
+
     checkConfirm = () => {
       var chk_arr = [];
 
@@ -83,9 +87,40 @@ class Cartbox extends Component {
       <div id="content">
         <div className={M.content_wrap}>
           <div className={M.cart_wrap}>
+
+            <div className={M.order_header}>
+              <div className={M.order_header_inner}>
+
+                  <div className={M.order_title}>
+                      <h1>장바구니</h1>
+                  </div>
+
+                  <div className={M.order_step}>
+                      <ul className={M.step}>
+                          <li><i className={M.number}>01</i> 장바구니</li>
+                          <li className={M.second}><i className={M.number}>02</i> 주문결제<span className={M.skip}>현재 단계</span></li>
+                          <li><i className={M.number}>03</i> 주문완료</li>
+                      </ul>
+                  </div>
+
+              </div>
+            </div>
+
             <div className={M.cart_border}>
-              {
-              this.state.authority.length === 0 ? 
+
+              <div className={M.b_order_cart_top}>
+                <span className={M.all_check}>
+                  <label className={M.c_order_checkbox}>
+                    <input type="checkbox" name="ChkboxSelt" id="bcktSeq_All_bottom" onClick title="장바구니 전체 상품 선택"/>
+                    <span>전체선택 
+                      <span id="checkPrdCnt"/>
+                    </span>
+                  </label>
+                </span>
+                <button onclick >선택삭제</button>
+              </div>
+
+              {this.state.authority.length === 0 ? 
                 <div>
                   <div className={M.login_fail}> 로그인 후 이용 부탁드립니다. </div>
                   <button className={M.login_button} onClick={this.loginAction}> 로그인</button>
@@ -94,18 +129,9 @@ class Cartbox extends Component {
                 this.state.result.length >= 1 ? 
 
                 
-                // <div class="b_order_cart_top">
-                //   <span class="all_check">
-                //     <label class="c_order_checkbox">
-                //       <input type="checkbox" name="bcktSeq_All_bottom" id="bcktSeq_All_bottom" onclick="allCheckAction(this); chkBox(this);" title="장바구니 전체 상품 선택"/>
-                //       <span>전체선택 <span id="checkPrdCnt"></span></span>
-                //     </label>
-                //   </span>
-                //   <button type="button" onclick="funcCheckDel(); doCommonStat('SCSP001'); chkAllPrdSelectList(this, 'check');">선택삭제</button>
-                  
-                // </div>
                 
-                this.state.result.map((item, index) => {
+                <div className={M.item_listForm}>
+                {this.state.result.map((item, index) => {
                   priceSum += item.pdt_price * item.count;
                   
                   return (
@@ -131,9 +157,10 @@ class Cartbox extends Component {
                         </div>
                     </div>
                   )
-                }) 
+                })}
+                </div>
                 : 
-                <div className={M.login_fail}> 아직 바구니에 담긴 물건이 없습니다. </div> 
+                <div className={M.login_fail}> 장바구니에 담긴 물건이 없습니다. </div> 
               }
             </div>
 

@@ -9,9 +9,6 @@
   visibility: hidden;
 }
 .cart_wrap {
-  width: 100%;
-}
-.cart_wrap {
   width: 1240px;
   min-height: 600px;
   margin: 0 auto;
@@ -20,9 +17,235 @@
   /* position: relative; */
   width: 900px;
   border-top: 1px solid #ccc;
-  margin-top: 40px;
+  /* margin-top: 40px; */
   text-align: center;
   float: left;
+}
+
+.skip {
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  margin: -1px;
+  width: 1px;
+  height: 1px;
+}
+.order_header {
+  position: relative;
+  height: 88px;
+  border-top: 1px solid #eee;
+  -webkit-box-shadow: 0 1px 2px 0 rgb(0 0 0 / 6%), 0 2px 12px 0 rgb(0 0 0 / 3%);
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 6%), 0 2px 12px 0 rgb(0 0 0 / 3%);
+  z-index: 10;
+}
+.order_header_inner {
+  width: 1240px;
+  height: 44px;
+  margin: 0 auto;
+  padding: 22px 0;
+}
+.order_title {
+  float: left;
+}
+.order_step {
+  float: right;
+}
+.step {
+  overflow: hidden;
+  height: 42px;
+  border-radius: 25px;
+  border: 1px solid #eee;
+}
+/* 각 페이지가 활성화되면 active 클래스를 추가? 스크립트로 css 추가해줘야함 if문 */
+
+.step li {
+  float: left;
+  min-width: 80px;
+  padding: 10px 15px 11px 15px;
+  font-family: 'Noto Sans KR', 'Helvetica Neue', 'Apple SD Gothic Neo',
+    '맑은 고딕', 'Malgun Gothic', '돋움', dotum, sans-serif;
+  font-size: 14px;
+  line-height: 21px;
+  color: #333;
+  text-align: center;
+  letter-spacing: 0;
+}
+.step li a {
+  color: #333;
+  text-decoration: none;
+}
+.step li .number {
+  font-weight: bold;
+}
+.step .second:active {
+  font-weight: bold;
+  color: #fff;
+  background-color: #333;
+}
+.step .second {
+  min-width: 70px;
+  border-left: 1px solid #eee;
+  border-right: 1px solid #eee;
+}
+.order_title > h1 {
+  font-weight: bold;
+  color: #000;
+  letter-spacing: 0;
+  font-size: 32px;
+}
+
+.b_order_cart_top {
+  height: 64px;
+  padding: 19px 10px;
+  background: #fafafa;
+  border: 1px solid #eee;
+  border-width: 1px 0;
+  box-sizing: border-box;
+}
+.b_order_cart_top .all_check {
+  display: inline-block;
+  margin-right: 14px;
+  float: left;
+}
+.b_order_cart_top button {
+  position: relative;
+  margin: 0 15px;
+}
+.b_order_cart_top label,
+.b_order_cart_top button {
+  color: #333;
+  border: 0px;
+  font-size: 16px;
+  line-height: 24px;
+  vertical-align: middle;
+  float: left;
+}
+.c_order_checkbox > span {
+  position: relative;
+  display: inline-block;
+  height: 22px;
+  padding-left: 30px;
+  vertical-align: middle;
+  line-height: 22px;
+  font-size: 15px;
+  color: #666;
+}
+.c_order_checkbox input {
+  position: relative;
+  width: 0;
+  height: 0;
+  opacity: 0;
+}
+.b_order_cart_top .c_order_checkbox span:before {
+  top: 1px;
+}
+.c_order_checkbox > span:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 22px;
+  height: 22px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  border-radius: 100%;
+}
+.b_order_cart_top .c_order_checkbox span {
+  height: 24px;
+  font-size: 16px;
+  color: #333;
+  line-height: 24px;
+  vertical-align: top;
+}
+.b_order_cart_top input:checked + span:before {
+  border: 0;
+  background: #f43142;
+}
+.b_order_cart_top .c_order_checkbox span:after {
+  top: 8px;
+}
+.c_order_checkbox > span:after {
+  content: '';
+  position: absolute;
+  top: 6px;
+  left: 5px;
+  display: block;
+  width: 10px;
+  height: 6px;
+  border: 1px solid #ddd;
+  border-width: 0 0 1px 1px;
+  -webkit-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+.b_order_cart_top button {
+  position: relative;
+  margin: 0 15px;
+}
+.b_order_cart_top button:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -15px;
+  display: inline-block;
+  width: 1px;
+  height: 15px;
+  margin: 5px 0 0 0;
+  background-color: #ddd;
+  vertical-align: top;
+}
+.c_order_store {
+  position: relative;
+  padding: 21px 74px 21px 10px;
+  border-top: 1px solid #bbb;
+  white-space: nowrap;
+  zoom: 1;
+}
+.c_order_store .store_name {
+  position: relative;
+  float: left;
+  padding-right: 15px;
+  margin-left: 31px;
+  vertical-align: middle;
+}
+.c_order_store .store_name h4 {
+  display: inline-block;
+}
+.c_order_store .store_name a {
+  display: inline-block;
+  max-width: 343px;
+  color: #111;
+  vertical-align: middle;
+  font-size: 20px;
+  font-weight: bold;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.c_order_store .store_name:after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 0;
+  display: block;
+  width: 6px;
+  height: 6px;
+  margin-top: -3px;
+  border: 1px solid #999;
+  border-width: 1px 1px 0 0;
+  transform: rotate(45deg);
+}
+.c_order_store .c_order_checkbox_part {
+  position: absolute;
+  top: 26px;
+  left: 9px;
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  vertical-align: middle;
+  margin-right: 10px;
 }
 .login_fail {
   font-size: 20px;
@@ -46,9 +269,8 @@
   width: 300px;
   height: 220px;
   float: right;
-  margin-top: 40px;
-  left: 20px;
-
+  /* margin-top: 40px; */
+  right: 10px;
   border: 1px solid #ccc;
 }
 .buy_text {
@@ -84,23 +306,7 @@
   cursor: pointer;
   line-height: 60px;
 }
-.c_order_store {
-  position: relative;
-  padding: 21px 74px 21px 10px;
-  border-top: 1px solid #bbb;
-  white-space: nowrap;
-  zoom: 1;
-}
-.c_order_store .c_order_checkbox_part {
-  position: absolute;
-  top: 26px;
-  left: 9px;
-  display: inline-block;
-  width: 22px;
-  height: 22px;
-  vertical-align: middle;
-  margin-right: 10px;
-}
+
 .c_order_checkbox_part input {
   position: absolute;
   width: 0;
@@ -123,7 +329,7 @@
 .c_order_checkbox_part > span:before {
   content: '';
   position: absolute;
-  top: 0;
+  top: 2px;
   left: 0;
   width: 100%;
   height: 100%;
@@ -139,7 +345,7 @@
 .c_order_checkbox_part > span:after {
   content: '';
   position: absolute;
-  top: 6px;
+  top: 8px;
   left: 5px;
   display: block;
   width: 10px;
@@ -149,13 +355,14 @@
   transform: rotate(-45deg);
 }
 .item_info {
+  position: relative;
   width: 900px;
   height: 100px;
   border-top: 1px solid #eee;
+  margin-top: 30px;
   /* border-bottom: 1px solid #ccc; */
   text-align: left;
   color: #111;
-  position: relative;
 }
 .item_image {
   position: relative;
