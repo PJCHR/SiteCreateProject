@@ -43,7 +43,7 @@ class OrderAction extends Component {
         // 체크값 확인 코드
         // var v = document.querySelector('input[name="radioCheck"]:checked').value;
         var v = $('input[name=radioCheck]:checked').val();
-        // console.log(v);
+        console.log(v);
         
         if(v === 'basic'){
             document.getElementById('div_view1').style.display = "none"; // 받는사람 INPUT
