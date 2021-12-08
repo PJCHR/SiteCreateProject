@@ -12,6 +12,8 @@ class Cartbox extends Component {
 	state = {
     authority: '',
     result: [],
+    checkedNum:[],
+    setCheckNum: [],
     status:'',
     count: 0,
   }
@@ -24,7 +26,9 @@ class Cartbox extends Component {
     await axios.get('/authority')
     .then(res => this.setState({ authority: res.data }));
     await axios.post('/mycart',this.state)
-    .then(res => {this.setState({ result: res.data });})
+    .then(res => {this.setState({ result: res.data });
+  })
+  
   }
 
   buyAction = async () => {
@@ -34,7 +38,7 @@ class Cartbox extends Component {
     
     if (this.state.status!=='login') {
       alert('유효시간이 지났습니다. 재 로그인 후 이용바랍니다.')
-      document.location.href = "/login?ReturnUrl=Mycart";
+      document.location.href = "/login?ReturnUrl=cartbox";
     }
     else {
       alert('결제되었습니다.');
@@ -47,7 +51,17 @@ class Cartbox extends Component {
   }
 
   all_Checkbox = () => {
+    // $("input[name=ChkboxSelt]:checked").each(function(){
+    //   var test = $(this).val();
+    //   // this.setState({setCheckNum: test});
+    //   console.log(test);
+    // });
+
+    var Chk_value = $('input:checkbox[name=ChkboxSelt]:checked').val;
+    console.log(Chk_value);
+
     var cnt = $('input:checkbox[name=ChkboxSelt]').length;
+
     if(document.getElementById("all_Checkbox").checked===true){  //id 를 사용하여 하나의 객체만을 호출
       for(var i=0;i<cnt;i++) document.getElementsByName("ChkboxSelt")[i].checked=true;   //name 을 사용하여 배열 형태로 담아 호출
       
@@ -62,45 +76,81 @@ class Cartbox extends Component {
     }
   }
 
-  checkConfirm = async (data) => {
-    // const val_Data = [];
-    const val_Data = $('input:checkbox[name=ChkboxSelt]').val();
-    console.log(data);
-
-    var cnt = $('input:checkbox[name=ChkboxSelt]').length;
-    var Chk_cnt = $('input:checkbox[name=ChkboxSelt]:checked').length;
-    
-    this.setState(await{count: Chk_cnt});
-
-    // 출력
-    if(this.state.count === cnt){document.getElementById("all_Checkbox").checked=true;}
-    if(this.state.count !== cnt){document.getElementById("all_Checkbox").checked=false;}
-    
-    if(Chk_cnt <= 0){
-      document.getElementById('checkPrdCnt').innerText = '';
+  checkConfirm = async (isChecked, idx) => {
+    if(isChecked === true){
+      const set = new Set(this.state.checkedNum.concat(idx));
+      const checkedNum = [...set];
+      await this.setState({checkedNum: checkedNum});
+      await console.log(this.state.checkedNum);
     }
-    else(document.getElementById('checkPrdCnt').innerText = '('+Chk_cnt+')');
+    else if(isChecked === false){
+      //여기 로직구현
+      const checkedNum = this.state.checkedNum.filter((element) => element !== idx);
+      await this.setState({checkedNum: checkedNum});
+      await console.log(this.state.checkedNum);
+    }
+
+  // //  $("input[name=ChkboxSelt]:checked").each(function(){
+  // //     var test = $(this).val();
+  // //     
+  // //     console.log(test);
+  // //   });
     
-    return Chk_cnt;
+  //   // this.setState(await{setCheckNum: data});
+  //   // console.log(this.checked);
+  //   var Chk_value = $('input:checkbox[name=ChkboxSelt]:checked');
+  //   // var Chk_value2 = $('input:checkbox[name=ChkboxSelt]').val;
+
+  //   console.log('체크된 번호 : '+Chk_value);
+  //   // console.log('논체크된 번호 : '+Chk_value2);
+
+  //   // this.setState({setCheckNum: Chk_value});
+
+  //   var cnt = $('input:checkbox[name=ChkboxSelt]').length;
+  //   var Chk_cnt = $('input:checkbox[name=ChkboxSelt]:checked').length;
+  //   this.setState(await{count: Chk_cnt});
+
+  //   // console.log(this.state.setCheckNum);
+  //   // 출력
+  //   if(this.state.count === cnt){document.getElementById("all_Checkbox").checked=true;}
+  //   if(this.state.count !== cnt){document.getElementById("all_Checkbox").checked=false;}
+    
+  //   if(Chk_cnt <= 0){
+  //     document.getElementById('checkPrdCnt').innerText = '';
+  //   }
+  //   else(document.getElementById('checkPrdCnt').innerText = '('+Chk_cnt+')');
+    
+  //   return Chk_cnt;
   }
 
-  all_deleteAction = async (data) => {
-    var cnt = $('input:checkbox[name=ChkboxSelt]').val();
+  all_deleteAction = async () => {
+    // $("input[name=ChkboxSelt]:checked").each(function(){
+    //   var test = $(this).val();
+    //   // this.setState({setCheckNum: test});
+    //   console.log(test);
+    // });
 
-    for(var i=0;i<data.length;i++){
-    }
+    // // for(var i=0;i<data.length;i++){
+    // // }
     
-    // console.log(this.state.idx);
+    // // console.log(this.state.idx);
     
-    if(this.state.count !== 0){
-      if(window.confirm("해당 물품을 장바구니에서 삭제하겠습니까?")){
-        // axios.post("/mycartDelete", this.state)
-        // .then(res => res)
-        // .then(setTimeout(() => document.location.href = document.location.href, 1000))
-      }
-    }
-    if(this.state.count === 0){
+    // if(this.state.count !== 0){
+
+    // }
+    if(this.state.checkedNum.length === 0){
       alert('삭제할 상품을 선택해주십시오.');
+    }
+    else{
+      if(window.confirm("해당 물품을 장바구니에서 삭제하겠습니까?")){
+        const data ={
+          login: this.state.authority,
+          nums: this.state.checkedNum
+        }
+        axios.post("/mycartDelete", data) 
+        .then(res => res)
+        .then(setTimeout(() => document.location.href = document.location.href, 1000))
+      }
     }
   }
 
@@ -159,7 +209,7 @@ class Cartbox extends Component {
                       </span>
                     </label>
                   </span>
-                  <button onClick={e => this.all_deleteAction(result)} >선택삭제</button>
+                  <button onClick={e => this.all_deleteAction()} >선택삭제</button>
                 </div>
 
                 {this.state.authority.length === 0 ? 
@@ -173,34 +223,34 @@ class Cartbox extends Component {
                   
                   
                   <div className={M.item_listForm}>
-                  {this.state.result.map((item, index) => {
-                    // 체크된 물품에 따라서 모두 합
-                    priceSum += item.pdt_price * item.count;
-                    
-                    return (
-                      <div className={M.item} key={index}>
-                        
-                        <div className={M.c_order_store}>
-                          <div className={M.store_name}>
-                            <h4>
-                              <a>강화도지역마켓</a>
-                            </h4>
-                          </div>
-                            <label className={M.c_order_checkbox_part}>
-                              <input type="checkbox" name="ChkboxSelt" id={`checkSelt-${index}`} value={index} onChange={e => this.checkConfirm(item.idx)} title="스토어선택"/>
-                              <span>store name</span>
-                            </label>
-                          </div>
-                          <div className={M.item_info}>
-                            <img className={M.item_image} src={item.imgsource} alt="이미지" /> 
-                            <div className={M.item_product}>{item.pdt_name}</div>
-                            <div className={M.item_much}>수량 : {item.count}개</div>
-                            <div className={M.item_pay}>{this.comma(item.pdt_price * item.count)} </div>
-                            <button className={M.item_delete} onClick={e => this.deleteAction(item.idx)}>삭제</button>
-                          </div>
-                      </div>
-                    )
-                  })}
+                    {this.state.result.map((item, index) => {
+                      // 체크된 물품에 따라서 모두 합
+                      priceSum += item.pdt_price * item.count;
+                      
+                      return (
+                        <div className={M.item} key={index}>
+                          
+                          <div className={M.c_order_store}>
+                            <div className={M.store_name}>
+                              <h4>
+                                <a>강화도지역마켓</a>
+                              </h4>
+                            </div>
+                              <label className={M.c_order_checkbox_part}>
+                                <input type="checkbox" name="ChkboxSelt" id={`checkSelt-${index}`} value={item.idx} onChange={e => this.checkConfirm(e.target.checked, item.idx)} title="스토어선택"/>
+                                <span>store name</span>
+                              </label>
+                            </div>
+                            <div className={M.item_info}>
+                              <img className={M.item_image} src={item.imgsource} alt="이미지" /> 
+                              <div className={M.item_product}>{item.pdt_name}</div>
+                              <div className={M.item_much} id='itemInfo_Cnt'>수량 : {item.count}개</div>
+                              <div className={M.item_pay} id='itemInfo_Price'>{this.comma(item.pdt_price * item.count)} </div>
+                              <button className={M.item_delete} onClick={e => this.deleteAction(item.idx)}>삭제</button>
+                            </div>
+                        </div>
+                      )
+                    })}
                   </div>
                   : 
                   <div className={M.login_fail}> 장바구니에 담긴 물건이 없습니다. </div> 
