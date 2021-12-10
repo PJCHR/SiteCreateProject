@@ -135,7 +135,7 @@ app.post("/mycartDelete",(req,res)=> {
         if(i===0){
           sql += 'idx = ' + nums[i];
         } else {
-          sql += ' or idx = ' + nums[i];
+          sql += ' OR idx = ' + nums[i] + ';';
         }
         connection.query(sql, (err,result,field)=>{
           if(err){
@@ -145,6 +145,7 @@ app.post("/mycartDelete",(req,res)=> {
             res.send(result)
           }
         })
+        console.log(sql);
       }
     }
   } catch(err){

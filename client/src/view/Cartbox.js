@@ -13,7 +13,7 @@ class Cartbox extends Component {
     authority: '',
     result: [],
     checkedNum:[],
-    setCheckNum: [],
+    arr_idx: [],
     status:'',
     count: 0,
   }
@@ -50,77 +50,63 @@ class Cartbox extends Component {
       document.location.href = "/login?ReturnUrl=" + document.location.href;
   }
 
-  all_Checkbox = () => {
-    // $("input[name=ChkboxSelt]:checked").each(function(){
-    //   var test = $(this).val();
-    //   // this.setState({setCheckNum: test});
-    //   console.log(test);
-    // });
+  all_Checkbox = (all_Chk) => {
+    $("input[name=ChkboxSelt]:checked").each(function(){
+      var test = $(this).val();
 
-    var Chk_value = $('input:checkbox[name=ChkboxSelt]:checked').val;
-    console.log(Chk_value);
+      console.log(test);
+    });
+    // input을 순회 조회하기 때문에 첫 입력에 값을 주지않음
 
     var cnt = $('input:checkbox[name=ChkboxSelt]').length;
 
-    if(document.getElementById("all_Checkbox").checked===true){  //id 를 사용하여 하나의 객체만을 호출
+    if(all_Chk === true){
       for(var i=0;i<cnt;i++) document.getElementsByName("ChkboxSelt")[i].checked=true;   //name 을 사용하여 배열 형태로 담아 호출
-      
+
+        // const set = new Set(this.state.checkedNum.concat(idx));
+        // const checkedNum = [...set];
+        // await this.setState({checkedNum: checkedNum});
+
       if(cnt > 0){
         document.getElementById('checkPrdCnt').innerText = '('+cnt+')';
       }
     }
-    
-    if(document.getElementById("all_Checkbox").checked===false){
+    else if(all_Chk === false){
       for(var i=0;i<cnt;i++) document.getElementsByName("ChkboxSelt")[i].checked=false;  
-      document.getElementById('checkPrdCnt').innerText = '';
+        document.getElementById('checkPrdCnt').innerText = '';
+
+        // const checkedNum = this.state.checkedNum.filter((element) => element !== idx);
+        // await this.setState({checkedNum: checkedNum});
     }
   }
 
   checkConfirm = async (isChecked, idx) => {
-    if(isChecked === true){
+    var cnt = $('input:checkbox[name=ChkboxSelt]').length;
+    
+    
+    if(isChecked === true){ // checked
       const set = new Set(this.state.checkedNum.concat(idx));
       const checkedNum = [...set];
       await this.setState({checkedNum: checkedNum});
-      await console.log(this.state.checkedNum);
+      // await console.log(this.state.checkedNum.length);
     }
-    else if(isChecked === false){
-      //여기 로직구현
+    else if(isChecked === false){ // non checked
       const checkedNum = this.state.checkedNum.filter((element) => element !== idx);
       await this.setState({checkedNum: checkedNum});
-      await console.log(this.state.checkedNum);
+      // await console.log(this.state.checkedNum.length);
     }
 
-  // //  $("input[name=ChkboxSelt]:checked").each(function(){
-  // //     var test = $(this).val();
-  // //     
-  // //     console.log(test);
-  // //   });
-    
-  //   // this.setState(await{setCheckNum: data});
-  //   // console.log(this.checked);
-  //   var Chk_value = $('input:checkbox[name=ChkboxSelt]:checked');
-  //   // var Chk_value2 = $('input:checkbox[name=ChkboxSelt]').val;
+    var Chk_cnt = await this.state.checkedNum.length;
 
-  //   console.log('체크된 번호 : '+Chk_value);
-  //   // console.log('논체크된 번호 : '+Chk_value2);
+    if(Chk_cnt === cnt){document.getElementById("all_Checkbox").checked=true;}
+    if(Chk_cnt !== cnt){document.getElementById("all_Checkbox").checked=false};
 
-  //   // this.setState({setCheckNum: Chk_value});
+    if(Chk_cnt <= 0){
+      document.getElementById('checkPrdCnt').innerText = '';
+    }
+    else {(document.getElementById('checkPrdCnt').innerText = '('+Chk_cnt+')')};
 
-  //   var cnt = $('input:checkbox[name=ChkboxSelt]').length;
-  //   var Chk_cnt = $('input:checkbox[name=ChkboxSelt]:checked').length;
-  //   this.setState(await{count: Chk_cnt});
-
-  //   // console.log(this.state.setCheckNum);
-  //   // 출력
-  //   if(this.state.count === cnt){document.getElementById("all_Checkbox").checked=true;}
-  //   if(this.state.count !== cnt){document.getElementById("all_Checkbox").checked=false;}
-    
-  //   if(Chk_cnt <= 0){
-  //     document.getElementById('checkPrdCnt').innerText = '';
-  //   }
-  //   else(document.getElementById('checkPrdCnt').innerText = '('+Chk_cnt+')');
-    
-  //   return Chk_cnt;
+    return Chk_cnt;
   }
 
   all_deleteAction = async () => {
@@ -203,7 +189,7 @@ class Cartbox extends Component {
                 <div className={M.b_order_cart_top}>
                   <span className={M.all_check}>
                     <label className={M.c_order_checkbox}>
-                      <input type="checkbox" name="ALL" id="all_Checkbox" onChange={this.all_Checkbox} title="장바구니 전체 상품 선택"/>
+                      <input type="checkbox" name="ALL" id="all_Checkbox" onChange={e => this.all_Checkbox(e.target.checked)} title="장바구니 전체 상품 선택"/>
                       <span>전체선택 
                         <span id="checkPrdCnt"/>
                       </span>
