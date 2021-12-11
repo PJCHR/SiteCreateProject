@@ -127,39 +127,20 @@ app.post("/mycart", (req,res)=>{
 
 app.post("/mycartDelete",(req,res)=> {
   try {
-    const isLogin = req.body.login.status; //일단 원래는 body로 보내는게 아니라 쿠키에서 채출해야함.
-    const nums = req.body.nums; // 일단 선택삭제를 구현하고 옆에있는 단일삭제는 나중에해볼게
-    let sql ='DELETE FROM shoppingCart WHERE ';
-    if(isLogin === 'login') {
-      for(let i=0; i<nums.length; i++){
-        if(i===0){
-          sql += 'idx = ' + nums[i];
-        } else {
-          sql += ' OR idx = ' + nums[i] + ';';
-        }
-        connection.query(sql, (err,result,field)=>{
-          if(err){
-            console.log(err)
-          }
-          else{
-            res.send(result)
-          }
-        })
-        console.log(sql);
+    const isLogin = req.body.login.status; // 원래는 body로 보내는게 아니라 쿠키에서 제출해야함.
+    const nums = req.body.nums; 
+    let sql = `DELETE FROM shoppingCart WHERE idx IN (${nums});`;
+    connection.query(sql, (err,result,field)=>{
+      if(err){
+        console.log(err)
       }
-    }
+      else{
+        res.send(result)
+      }
+    })
   } catch(err){
     res.send({error: err.message}); //에러 메세지를 보내는거임
   }
-  // const sql = `DELETE FROM shoppingCart WHERE idx = ${idx}`;
-  // connection.query(sql, (err,result,field)=>{
-  //   if(err){
-  //     console.log(err)
-  //   }
-  //   else{
-  //     res.send(result)
-  //   }
-  // })
 });
 app.post("/buyproduct", (req,res)=>{
   var num=req.body.result[0].num;

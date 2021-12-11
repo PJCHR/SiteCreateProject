@@ -50,50 +50,46 @@ class Cartbox extends Component {
       document.location.href = "/login?ReturnUrl=" + document.location.href;
   }
 
-  all_Checkbox = (all_Chk) => {
-    $("input[name=ChkboxSelt]:checked").each(function(){
-      var test = $(this).val();
+  all_Checkbox = async (all_Chk) => {
+    this.state.result.map(async(item) => {
+    
+      var cnt = $('input:checkbox[name=ChkboxSelt]').length;
 
-      console.log(test);
-    });
-    // input을 순회 조회하기 때문에 첫 입력에 값을 주지않음
+      if(all_Chk === true){
+        for(var i=0;i<cnt;i++) document.getElementsByName("ChkboxSelt")[i].checked=true;   //name 을 사용하여 배열 형태로 담아 호출
+          const set = new Set(this.state.checkedNum.concat(item.idx));
+          const checkedNum = [...set];
+          await this.setState({checkedNum: checkedNum});
+          console.log(this.state.checkedNum);
 
-    var cnt = $('input:checkbox[name=ChkboxSelt]').length;
-
-    if(all_Chk === true){
-      for(var i=0;i<cnt;i++) document.getElementsByName("ChkboxSelt")[i].checked=true;   //name 을 사용하여 배열 형태로 담아 호출
-
-        // const set = new Set(this.state.checkedNum.concat(idx));
-        // const checkedNum = [...set];
-        // await this.setState({checkedNum: checkedNum});
-
-      if(cnt > 0){
-        document.getElementById('checkPrdCnt').innerText = '('+cnt+')';
+        if(cnt > 0){
+          document.getElementById('checkPrdCnt').innerText = '('+cnt+')';
+        }
       }
-    }
-    else if(all_Chk === false){
-      for(var i=0;i<cnt;i++) document.getElementsByName("ChkboxSelt")[i].checked=false;  
-        document.getElementById('checkPrdCnt').innerText = '';
+      else if(all_Chk === false){
+        for(var i=0;i<cnt;i++) document.getElementsByName("ChkboxSelt")[i].checked=false;  
+          document.getElementById('checkPrdCnt').innerText = '';
 
-        // const checkedNum = this.state.checkedNum.filter((element) => element !== idx);
-        // await this.setState({checkedNum: checkedNum});
-    }
+          // const checkedNum = this.state.checkedNum.filter((element) => element !== item.idx);
+          // await this.setState({checkedNum: checkedNum});
+          // console.log(this.state.checkedNum);
+      }
+    })
   }
 
   checkConfirm = async (isChecked, idx) => {
     var cnt = $('input:checkbox[name=ChkboxSelt]').length;
     
-    
     if(isChecked === true){ // checked
       const set = new Set(this.state.checkedNum.concat(idx));
       const checkedNum = [...set];
       await this.setState({checkedNum: checkedNum});
-      // await console.log(this.state.checkedNum.length);
+      await console.log(this.state.checkedNum);
     }
     else if(isChecked === false){ // non checked
       const checkedNum = this.state.checkedNum.filter((element) => element !== idx);
       await this.setState({checkedNum: checkedNum});
-      // await console.log(this.state.checkedNum.length);
+      await console.log(this.state.checkedNum);
     }
 
     var Chk_cnt = await this.state.checkedNum.length;
@@ -106,24 +102,9 @@ class Cartbox extends Component {
     }
     else {(document.getElementById('checkPrdCnt').innerText = '('+Chk_cnt+')')};
 
-    return Chk_cnt;
   }
 
   all_deleteAction = async () => {
-    // $("input[name=ChkboxSelt]:checked").each(function(){
-    //   var test = $(this).val();
-    //   // this.setState({setCheckNum: test});
-    //   console.log(test);
-    // });
-
-    // // for(var i=0;i<data.length;i++){
-    // // }
-    
-    // // console.log(this.state.idx);
-    
-    // if(this.state.count !== 0){
-
-    // }
     if(this.state.checkedNum.length === 0){
       alert('삭제할 상품을 선택해주십시오.');
     }
@@ -140,10 +121,13 @@ class Cartbox extends Component {
     }
   }
 
-  deleteAction = async (data) => {
-    this.setState(await{idx: data});
+  deleteAction = async (idx) => {
+    const data ={
+      login: this.state.authority,
+      nums: idx
+    }
     if(window.confirm("해당 물품을 장바구니에서 삭제하겠습니까?")){
-      axios.post("/mycartDelete", this.state)
+      axios.post("/mycartDelete", data)
       .then(res => res)
       .then(setTimeout(() => document.location.href = document.location.href, 1000))
     }
