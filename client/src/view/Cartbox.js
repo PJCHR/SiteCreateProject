@@ -13,9 +13,8 @@ class Cartbox extends Component {
     authority: '',
     result: [],
     checkedNum:[],
-    arr_idx: [],
     status:'',
-    count: 0,
+    setPriceSum: 0,
   }
 
   componentDidMount() {
@@ -26,9 +25,7 @@ class Cartbox extends Component {
     await axios.get('/authority')
     .then(res => this.setState({ authority: res.data }));
     await axios.post('/mycart',this.state)
-    .then(res => {this.setState({ result: res.data });
-  })
-  
+    .then(res => this.setState({ result: res.data }));
   }
 
   buyAction = async () => {
@@ -51,16 +48,18 @@ class Cartbox extends Component {
   }
 
   all_Checkbox = async (all_Chk) => {
-    this.state.result.map(async(item) => {
-    
       var cnt = $('input:checkbox[name=ChkboxSelt]').length;
 
+      this.state.result.map((item) => { 
       if(all_Chk === true){
         for(var i=0;i<cnt;i++) document.getElementsByName("ChkboxSelt")[i].checked=true;   //name 을 사용하여 배열 형태로 담아 호출
-          const set = new Set(this.state.checkedNum.concat(item.idx));
-          const checkedNum = [...set];
-          await this.setState({checkedNum: checkedNum});
-          console.log(this.state.checkedNum);
+          // const set = new Set(this.state.checkedNum.concat());
+          // const checkedNum = [...set];
+          // await this.setState({checkedNum: checkedNum});
+          // console.log(this.state.checkedNum);
+          var priceSum = 0;
+          priceSum += item.pdt_price * item.count;
+          console.log(priceSum);
 
         if(cnt > 0){
           document.getElementById('checkPrdCnt').innerText = '('+cnt+')';
@@ -74,22 +73,28 @@ class Cartbox extends Component {
           // await this.setState({checkedNum: checkedNum});
           // console.log(this.state.checkedNum);
       }
-    })
+    });
   }
 
-  checkConfirm = async (isChecked, idx) => {
+  checkConfirm = async (isChecked, idx, price) => {
     var cnt = $('input:checkbox[name=ChkboxSelt]').length;
+    var priceSum = 0;
+    
     
     if(isChecked === true){ // checked
       const set = new Set(this.state.checkedNum.concat(idx));
       const checkedNum = [...set];
       await this.setState({checkedNum: checkedNum});
-      await console.log(this.state.checkedNum);
+      
+      priceSum = this.state.setPriceSum + price;
+      await this.setState({setPriceSum: priceSum});
     }
     else if(isChecked === false){ // non checked
       const checkedNum = this.state.checkedNum.filter((element) => element !== idx);
       await this.setState({checkedNum: checkedNum});
-      await console.log(this.state.checkedNum);
+
+      priceSum = this.state.setPriceSum - price;
+      await this.setState({setPriceSum: priceSum});
     }
 
     var Chk_cnt = await this.state.checkedNum.length;
@@ -114,7 +119,7 @@ class Cartbox extends Component {
           login: this.state.authority,
           nums: this.state.checkedNum
         }
-        axios.post("/mycartDelete", data) 
+        axios.post("/mycartDelete", data)
         .then(res => res)
         .then(setTimeout(() => document.location.href = document.location.href, 1000))
       }
@@ -141,8 +146,6 @@ class Cartbox extends Component {
   }
 
   render() {
-	  var priceSum = 0;
-    const { result, count } = this.state;
     return (
       <div className={HomeStyle.body_wrap}>
         <TOP ReturnUrl={document.location.href}/>
@@ -195,7 +198,7 @@ class Cartbox extends Component {
                   <div className={M.item_listForm}>
                     {this.state.result.map((item, index) => {
                       // 체크된 물품에 따라서 모두 합
-                      priceSum += item.pdt_price * item.count;
+                      // priceSum += item.pdt_price * item.count;
                       
                       return (
                         <div className={M.item} key={index}>
@@ -207,7 +210,7 @@ class Cartbox extends Component {
                               </h4>
                             </div>
                               <label className={M.c_order_checkbox_part}>
-                                <input type="checkbox" name="ChkboxSelt" id={`checkSelt-${index}`} value={item.idx} onChange={e => this.checkConfirm(e.target.checked, item.idx)} title="스토어선택"/>
+                                <input type="checkbox" name="ChkboxSelt" id={`checkSelt-${index}`} value={item.idx} onChange={e => this.checkConfirm(e.target.checked, item.idx, item.pdt_price * item.count)} title="스토어선택"/>
                                 <span>store name</span>
                               </label>
                             </div>
@@ -229,7 +232,7 @@ class Cartbox extends Component {
 
               <div className={M.buy_wrap}>
                 <div className={M.buy_text}> 결제 예정금액 </div>
-                <div className={M.buy_sum}>총 {this.comma(priceSum)}</div>
+                <div className={M.buy_sum}>총 {this.comma(this.state.setPriceSum)}</div>
                 <button className={M.buy_button} onClick={this.buyAction}>결제하기</button>
               </div>
             </div>
