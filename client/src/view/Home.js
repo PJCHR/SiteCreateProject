@@ -93,24 +93,17 @@ export class TOP extends Component {
     document.location.href= this.props.ReturnUrl;
   }
   
-  latelogoutApi = async () =>{
+  latelogoutApi = async () => {
     if(this.authority.status === 'logout'){
 
       alert("로그아웃됨.");
       this.logoutApi();
     }
   }
-  // checklogin = (menu) => {
-  //   if (this.state.authority.id) {
-  //       if (menu === "2") {
-  //           document.location.href = "/Account";
-  //       }
-  //   }
-  //   else {
-  //       alert('로그인 후 이용 가능합니다.');
-  //       document.location.href = "/login?ReturnUrl="+this.props.ReturnUrl;
-  //   }
-  // }
+
+  nonService = () => {
+    alert('사용자 주문 상세 미정');
+  }
 
   checkAuthority = () => {
     axios.get('/authority')
@@ -127,23 +120,11 @@ export class TOP extends Component {
 
         <div id="header" className={HeaderStyle.header}>
           <div className={HeaderStyle.inner}>
-          {/* <div className={HeaderStyle.c_gnb_button_category}><button type="button" aria-haspopup="dialog" aria-controls="gnbCategory" data-log-actionid-area="header_menu" data-log-actionid-label="sidemenu">카테고리 전체보기</button></div> */}
             <input type="checkbox" id="sidebar" />
             <div className={HeaderStyle.side_btn_wrap}>
-              {/* <button type="button" className={HeaderStyle.lside_btn} label="sidebar"> */}
                 <label for="sidebar" className={HeaderStyle.lside_btn}></label>
-              {/* </button> */}
             </div>
-            {/* <div className={HeaderStyle.category_btn}>
-              <h3></h3>
-              <h1>메뉴</h1>
-              <div className={HeaderStyle.category_layer}>
 
-              </div>
-            </div> */}
-
-            
-            
             <h1 className={HeaderStyle.logo}>  <Link to='/'>home</Link> </h1>
 
             <span className={HeaderStyle.search}>
@@ -161,7 +142,7 @@ export class TOP extends Component {
                   </ul>
                 </li>
               
-                <li className={HeaderStyle.cart}><Link to="/cartbox" className={HeaderStyle.mycart}></Link></li>
+                <li className={HeaderStyle.cart}><Link to="/cartbox?getMethod=cartbox" className={HeaderStyle.mycart}></Link></li>
               </ul>
             </div>
             
@@ -172,7 +153,7 @@ export class TOP extends Component {
                   <h2 id="gnbCategoryTitle" className={HeaderStyle.skip}>사용자정보/카테고리/주요서비스</h2>
                   <div className={HeaderStyle.categoryUser_info}>
                     <div className={HeaderStyle.user}>
-                      {authority.status==="login"?<Link className={HeaderStyle.login} to="">【 {authority.name} 님】</Link> : <Link className={HeaderStyle.login} to={"/login?ReturnUrl="+this.props.ReturnUrl}>로그인</Link>}
+                      {authority.status==="login"?<Link to="" className={HeaderStyle.login} onClick={this.nonService}>【 {authority.name} 님】</Link> : <Link className={HeaderStyle.login} to={"/login?ReturnUrl="+this.props.ReturnUrl}>로그인</Link>}
                     </div>
                   </div>
                   <div className={HeaderStyle.category_group}>
@@ -210,13 +191,10 @@ export class TOP extends Component {
                 <div className={HeaderStyle.c_category_banner}>
                   <span className={HeaderStyle.skip}>광고배너</span>
                   <a>
-                    {/* <img class="" src="//cdn.011st.com/11dims/resize/300x94/quality/75/11src/browsing/banner/2020/09/24/17770/2020092417512426755_11039491_1.jpg" alt="SKpay머니"> */}
                   </a>
                 </div>
 
-                {/* <button type="button" className={HeaderStyle.side_close} data-log-actionid-area="sidemenu" data-log-actionid-label="close">카테고리 메뉴닫기 */}
                 <label for="sidebar" className={HeaderStyle.side_close}></label>  
-                {/* </button> */}
 
               </div>
               
@@ -227,41 +205,8 @@ export class TOP extends Component {
       
           <div className={MenuStyle.menu_wrap}>
             <div className={MenuStyle.inner}>
-
-              {/* <ul className={MenuStyle.menu}>
-                <li>
-                  <a href="/">메뉴1</a>
-                  <ul className={MenuStyle.menu_sub}>
-                    <li> <a href="/">메뉴 1_1</a> </li>
-                    <li> <a href="/">메뉴 1_1</a> </li>
-                    <li> <a href="/">메뉴 1_1</a> </li>
-                  </ul>
-                </li>
-                <li> <a href="/">메뉴2</a>
-                  <ul className={MenuStyle.menu_sub}>
-                    <li> <a href="/">메뉴 2_1</a> </li>
-                    <li> <a href="/">메뉴 2_1</a> </li>
-                    <li> <a href="/">메뉴 2_1</a> </li>
-                  </ul>
-                </li>
-                <li> <a href="/">메뉴3</a>
-                  <ul className={MenuStyle.menu_sub}>
-                    <li> <a href="/">메뉴 3_1</a> </li>
-                    <li> <a href="/">메뉴 3_1</a> </li>
-                    <li> <a href="/">메뉴 3_1</a> </li>
-                  </ul>
-                </li>
-                <li> <a href="/">메뉴4</a>
-                  <ul className={MenuStyle.menu_sub}>
-                    <li> <a href="/">메뉴 4_1</a> </li>
-                    <li> <a href="/">메뉴 4_1</a> </li>
-                    <li> <a href="/">메뉴 4_1</a> </li>
-                  </ul>
-                </li>
-              </ul> */}
-
               <div className={MenuStyle.top_menu}>
-                <span className={MenuStyle.profile_display}>{authority.status==="login"?<Link to=""><strong className={MenuStyle.profile_display}>【 {authority.name} 님 】</strong></Link>:''}</span>
+                <span className={MenuStyle.profile_display}>{authority.status==="login"?<Link to="" onClick={this.nonService}><strong className={MenuStyle.profile_display}>【 {authority.name} 님 】</strong></Link>:''}</span>
                 <span className={MenuStyle.text_link}>
                   {authority.status==="login"?<Link onClick={this.logoutApi}>로그아웃</Link>:<Link to={"/login?ReturnUrl="+this.props.ReturnUrl}>로그인</Link>}
                   <Link to='/register'> 회원가입 </Link>

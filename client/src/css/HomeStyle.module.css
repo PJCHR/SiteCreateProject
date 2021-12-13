@@ -42,7 +42,7 @@ button {
 }
 
 .body_wrap {
-  min-width: 1280px;
+  min-width: 1240px;
 }
 /* tip-tool */
 .right_top {
@@ -62,6 +62,8 @@ button {
   background-size: 60px 60px;
 }
 .footer_wrap {
+  position: relative;
+  margin-top: 10px;
   /* min-height: 317px; */
   /* padding: 0 0 30px 0; */
   letter-spacing: 0;
@@ -71,8 +73,7 @@ button {
   background: #fff;
 }
 .liner {
-  display: block;
-  position: relative;
+  /* position: relative; */
   width: 1240px;
   /* height: 85px; */
   margin: 0 auto;
@@ -92,7 +93,7 @@ button {
 }
 
 .remark {
-  position: relative;
+  /* position: relative; */
   width: 1240px;
   height: 100px;
   margin: 0 auto;

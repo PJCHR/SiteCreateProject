@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import $, { nodeName } from "jquery"
 import axios from 'axios';
+import queryString from "query-string";
 
 import HomeStyle from '../css/HomeStyle.module.css';
 import M from '../css/CartboxStyle.module.css';
@@ -19,6 +20,7 @@ class Cartbox extends Component {
 
   componentDidMount() {
     this.cartApi();
+    this.getMethod();
   }
 
   cartApi = async () => {
@@ -44,36 +46,46 @@ class Cartbox extends Component {
   }
 
   loginAction = () => {
-      document.location.href = "/login?ReturnUrl=" + document.location.href;
+    document.location.href = "/login?ReturnUrl=" + document.location.href;
   }
 
-  all_Checkbox = async (all_Chk) => {
-      var cnt = $('input:checkbox[name=ChkboxSelt]').length;
+  all_Checkbox = async (isChecked) => {
+    const _result = this.state.result;
+    const idxs = [];
+    const price = [];
+    let sum = 0;
+    
+    var cnt = $('input:checkbox[name=ChkboxSelt]').length;
 
-      this.state.result.map((item) => { 
-      if(all_Chk === true){
-        for(var i=0;i<cnt;i++) document.getElementsByName("ChkboxSelt")[i].checked=true;   //name 을 사용하여 배열 형태로 담아 호출
-          // const set = new Set(this.state.checkedNum.concat());
-          // const checkedNum = [...set];
-          // await this.setState({checkedNum: checkedNum});
-          // console.log(this.state.checkedNum);
-          var priceSum = 0;
-          priceSum += item.pdt_price * item.count;
-          console.log(priceSum);
-
-        if(cnt > 0){
-          document.getElementById('checkPrdCnt').innerText = '('+cnt+')';
-        }
+    if(isChecked === true){
+      
+      for(let i = 0; i < _result.length; i++){
+        document.getElementsByName("ChkboxSelt")[i].checked=true;
+        idxs.push(_result[i].idx);
+        price.push(_result[i].pdt_price * _result[i].count);
+        sum += price[i];
       }
-      else if(all_Chk === false){
-        for(var i=0;i<cnt;i++) document.getElementsByName("ChkboxSelt")[i].checked=false;  
-          document.getElementById('checkPrdCnt').innerText = '';
-
-          // const checkedNum = this.state.checkedNum.filter((element) => element !== item.idx);
-          // await this.setState({checkedNum: checkedNum});
-          // console.log(this.state.checkedNum);
+      await this.setState({checkedNum: idxs});
+      await this.setState({setPriceSum: sum});
+      
+      if(cnt > 0){
+        document.getElementById('checkPrdCnt').innerText = '('+cnt+')';
       }
-    });
+    }
+    else if(isChecked === false){
+      document.getElementById('checkPrdCnt').innerText = '';
+      
+      for(let i = 0; i < _result.length; i++){
+        document.getElementsByName("ChkboxSelt")[i].checked=false;
+        idxs.pop(_result[i].idx);
+        price.push(_result[i].pdt_price * _result[i].count);
+        sum += price[i];
+      }
+      let fi_sum = this.state.setPriceSum - sum;
+
+      await this.setState({checkedNum: idxs});
+      await this.setState({setPriceSum: fi_sum});
+    }
   }
 
   checkConfirm = async (isChecked, idx, price) => {
@@ -109,7 +121,7 @@ class Cartbox extends Component {
 
   }
 
-  all_deleteAction = async () => {
+  Selt_deleteAction = async () => {
     if(this.state.checkedNum.length === 0){
       alert('삭제할 상품을 선택해주십시오.');
     }
@@ -138,6 +150,26 @@ class Cartbox extends Component {
     }
   }
 
+  getQueryString = () => {
+    const result = queryString.parse(this.props.location.search);
+    const rst = result.num;
+    const rst2 = result.count;
+    this.setState({itemCount: rst2});
+
+    return rst;
+}
+
+  getMethod = () => {
+    const query = queryString.parse(this.props.location.search);
+    const rst = query.getMethod;
+
+    this.setState({getMethod: rst});
+
+    if(this.state.getMethod === 'cartbox'){}
+    else if(this.state.getMethod === 'orderaction'){}
+
+  }
+
   comma = (price) => {
       var regexp = /\B(?=(\d{3})+(?!\d))/g;
       price = price + ""
@@ -156,17 +188,17 @@ class Cartbox extends Component {
               <div className={M.order_header}>
                 <div className={M.order_header_inner}>
 
-                    <div className={M.order_title}>
-                        <h1>장바구니</h1>
-                    </div>
+                  <div className={M.order_title}>
+                      <h1>장바구니</h1>
+                  </div>
 
-                    <div className={M.order_step}>
-                        <ul className={M.step}>
-                            <li><i className={M.number}>01</i> 장바구니</li>
-                            <li className={M.second}><i className={M.number}>02</i> 주문결제<span className={M.skip}>현재 단계</span></li>
-                            <li><i className={M.number}>03</i> 주문완료</li>
-                        </ul>
-                    </div>
+                  <div className={M.order_step}>
+                      <ul className={M.step}>
+                          <li><i className={M.number}>01</i> 장바구니</li>
+                          <li className={M.second}><i className={M.number}>02</i> 주문결제<span className={M.skip}>현재 단계</span></li>
+                          <li><i className={M.number}>03</i> 주문완료</li>
+                      </ul>
+                  </div>
 
                 </div>
               </div>
@@ -182,7 +214,7 @@ class Cartbox extends Component {
                       </span>
                     </label>
                   </span>
-                  <button onClick={e => this.all_deleteAction()} >선택삭제</button>
+                  <button onClick={this.Selt_deleteAction} >선택삭제</button>
                 </div>
 
                 {this.state.authority.length === 0 ? 
