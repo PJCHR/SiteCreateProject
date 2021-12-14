@@ -19,6 +19,7 @@ class OrderAction extends Component {
         this.getQueryString();
         this.userAddr();
         this.checkAuthority();
+        this.getMethod();
     }
 
     getQueryString = () => {
@@ -28,6 +29,18 @@ class OrderAction extends Component {
         this.setState({itemCount: rst2});
 
         return rst;
+    }
+
+    getMethod = () => {
+        const result = queryString.parse(this.props.location.search);
+        const rst = result.getMethod;
+
+        if(rst === 'orderaction'){
+            var elements = document.getElementById('second');
+            elements.style.fontWeight = 'bold';
+            elements.style.color = '#fff';
+            elements.style.backgroundColor = '#333';
+        }
     }
 
     comma = (price) => {
@@ -156,9 +169,9 @@ class OrderAction extends Component {
                                     </div>
                                     <div className={OrderActionStyle.order_step}>
                                         <ul className={OrderActionStyle.step}>
-                                            <li><i className={OrderActionStyle.number}>01</i> 장바구니</li>
-                                            <li className={OrderActionStyle.second}><i className={OrderActionStyle.number}>02</i> 주문결제<span className={OrderActionStyle.skip}>현재 단계</span></li>
-                                            <li><i className={OrderActionStyle.number}>03</i> 주문완료</li>
+                                            <li id='first'><Link to='/cartbox?getMethod=cartbox'><i className={OrderActionStyle.number}>01</i> 장바구니</Link></li>
+                                            <li id='second' className={OrderActionStyle.second}><i className={OrderActionStyle.number}>02</i> 주문결제<span className={OrderActionStyle.skip}>현재 단계</span></li>
+                                            <li id='third'><i className={OrderActionStyle.number}>03</i> 주문완료</li>
                                         </ul>
                                     </div>
                                 </div>

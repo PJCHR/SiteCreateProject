@@ -152,22 +152,20 @@ class Cartbox extends Component {
 
   getQueryString = () => {
     const result = queryString.parse(this.props.location.search);
-    const rst = result.num;
-    const rst2 = result.count;
-    this.setState({itemCount: rst2});
+    const rst = result.getMethod;
 
     return rst;
-}
+  }
 
   getMethod = () => {
-    const query = queryString.parse(this.props.location.search);
-    const rst = query.getMethod;
+    const method = this.getQueryString();
 
-    this.setState({getMethod: rst});
-
-    if(this.state.getMethod === 'cartbox'){}
-    else if(this.state.getMethod === 'orderaction'){}
-
+    if(method === 'cartbox'){
+      var elements = document.getElementById('first');
+      elements.style.fontWeight = 'bold';
+      elements.style.color = '#fff';
+      elements.style.backgroundColor = '#333';
+    }
   }
 
   comma = (price) => {
@@ -194,9 +192,9 @@ class Cartbox extends Component {
 
                   <div className={M.order_step}>
                       <ul className={M.step}>
-                          <li><i className={M.number}>01</i> 장바구니</li>
+                          <li id='first'><i className={M.number} id='cartbox'>01</i> 장바구니</li>
                           <li className={M.second}><i className={M.number}>02</i> 주문결제<span className={M.skip}>현재 단계</span></li>
-                          <li><i className={M.number}>03</i> 주문완료</li>
+                          <li id='third'><i className={M.number} id='buy_list'>03</i> 주문완료</li>
                       </ul>
                   </div>
 

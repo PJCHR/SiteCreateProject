@@ -127,11 +127,6 @@ div.l_header {
 .step li .number {
   font-weight: bold;
 }
-.step .second:active {
-  font-weight: bold;
-  color: #fff;
-  background-color: #333;
-}
 .step .second {
   min-width: 70px;
   border-left: 1px solid #eee;

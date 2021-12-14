@@ -13,8 +13,7 @@
   width: 1240px;
   min-height: 600px;
   margin: 0 auto;
-  /* margin-bottom: 100px; */
-  /* background: #333; */
+  /* background: #fff; */
 }
 .cart_border {
   position: relative;
@@ -22,7 +21,17 @@
   width: 900px;
   border-top: 1px solid #ccc;
   /* margin-top: 40px; */
-  text-align: center;
+  /* text-align: center; */
+}
+.cart_border::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  display: block;
+  width: 1px;
+  background-color: #f4f4f4;
 }
 
 .skip {
@@ -36,9 +45,9 @@
 .order_header {
   position: relative;
   height: 88px;
-  border-top: 1px solid #eee;
-  -webkit-box-shadow: 0 1px 2px 0 rgb(0 0 0 / 6%), 0 2px 12px 0 rgb(0 0 0 / 3%);
-  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 6%), 0 2px 12px 0 rgb(0 0 0 / 3%);
+  /* border-top: 1px solid #eee; */
+  /* -webkit-box-shadow: 0 1px 2px 0 rgb(0 0 0 / 6%), 0 2px 12px 0 rgb(0 0 0 / 3%);
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 6%), 0 2px 12px 0 rgb(0 0 0 / 3%); */
 }
 .order_header_inner {
   width: 1240px;
@@ -51,6 +60,7 @@
 }
 .order_step {
   float: right;
+  margin-right: 5px;
 }
 .step {
   overflow: hidden;
@@ -58,7 +68,6 @@
   border-radius: 25px;
   border: 1px solid #eee;
 }
-/* 각 페이지가 활성화되면 active 클래스를 추가? 스크립트로 css 추가해줘야함 if문 */
 
 .step li {
   float: left;
@@ -198,6 +207,18 @@
   background-color: #ddd;
   vertical-align: top;
 }
+
+.OrderActionStyle_l_order_content__2uExq:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  display: block;
+  width: 1px;
+  background-color: #f4f4f4;
+}
+
 .c_order_store {
   position: relative;
   padding: 21px 74px 21px 10px;
