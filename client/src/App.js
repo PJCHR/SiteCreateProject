@@ -11,7 +11,7 @@ import PWcheck from './view/PWcheck';
 import ServiceCenter from './view/ServiceCenter';
 import Board_Read from './view/Board_Read';
 import Board_Write from './view/Board_Write';
-import Board_Fix from './view/Board_Fix';
+// import Board_Fix from './view/Board_Fix';
 import Item from './view/Item';
 import Cartbox from './view/Cartbox';
 import OrderAction from './view/OrderAction';
