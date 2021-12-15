@@ -1,15 +1,14 @@
 {
   "name": "node_server",
   "version": "1.0.0",
-  "description": "",
+  "description": "독학으로 사이트 만들어보자",
   "main": "server.js",
   "proxy": "http://localhost:5000",
   "scripts": {
-    "heroku-postbuild": "cd client && npm install && npm run build",
+    "start": "nodemon server.js",
     "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
     "dev:server": "npm start",
-    "dev:client": "cd client && npm start",
-    "start": "nodemon server.js"
+    "dev:client": "cd client && npm start"
   },
   "author": "",
   "license": "ISC",
@@ -24,9 +23,18 @@
     "jquery": "^3.6.0",
     "jsonwebtoken": "^8.5.1",
     "mysql": "^2.18.1",
-    "node-fetch": "^2.6.1",
+    "node-fetch": "^3.1.0",
     "node-html-parser": "^5.1.0",
-    "nodemon": "^2.0.7",
+    "nodemon": "^2.0.15",
     "save": "^2.4.0"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PJCHR/SiteCreateProject.git"
+  },
+  "bugs": {
+    "url": "https://github.com/PJCHR/SiteCreateProject/issues"
+  },
+  "homepage": "https://github.com/PJCHR/SiteCreateProject#readme"
 }
