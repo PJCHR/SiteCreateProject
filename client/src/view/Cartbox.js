@@ -40,8 +40,10 @@ class Cartbox extends Component {
       document.location.href = "/login?ReturnUrl=cartbox";
     }
     else {
-      alert('결제되었습니다.');
+      if(this.state.checkedNum.length !== 0){
+        alert('결제되었습니다.');
       document.location.href = '/';
+      }
     }
   }
 
