@@ -14,7 +14,7 @@ import '../css/Board_WriteStyle.css';
 import { TOP, BOTTOM } from './Home';
 
 
-class Board__Fix extends Component {
+class Board_Fix extends Component {
 
   state = {
     cs_boardinfo: [],
@@ -225,4 +225,4 @@ class Board__Fix extends Component {
   }
 }
 
-  export default Board__Fix;
+  export default Board_Fix;
