@@ -30,7 +30,7 @@ class App extends Component {
         <Route path="/cscenter=board_list" component={ServiceCenter} />
         <Route path="/cscenter=board_list_read" component={Board_Read} />
         <Route path="/cscenter=board_list_write" component={Board_Write} />
-        <Route path="/cscenter=board_list_fix" component={Board_Fix} />
+        {/* <Route path="/cscenter=board_list_fix" component={Board_Fix} /> */}
         {/* <Route path="/cscenter=faq_list" component={ReadBoard} /> */}
         <Route path="/itempage" component={Item}/>
         <Route path="/orderaction" component={OrderAction}/>
