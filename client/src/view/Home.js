@@ -101,6 +101,16 @@ export class TOP extends Component {
     }
   }
 
+  cartboxBlk = () => {
+    if (this.state.authority.status !== 'login') {
+      alert("로그인 후 이용부탁드립니다.")
+      document.location.href = "/login?ReturnUrl="+ document.location.href;
+    }
+    else{
+      document.location.href = "/cartbox?getMethod=cartbox"
+    }
+  }
+
   nonService = () => {
     alert('사용자 주문 상세 미정');
   }
@@ -125,7 +135,7 @@ export class TOP extends Component {
                 <label for="sidebar" className={HeaderStyle.lside_btn}></label>
             </div>
 
-            <h1 className={HeaderStyle.logo}>  <Link to='/'>home</Link> </h1>
+            <h1 className={HeaderStyle.logo}>  <Link to='/'>Ferry</Link> </h1>
 
             <span className={HeaderStyle.search}>
               <input className={HeaderStyle.input_text} id="keyword" type="text" onKeyUp={this.enterCheck} onChange={e => this.setState({ keyword: e.target.value })} autocomplete="off"/>
@@ -142,7 +152,7 @@ export class TOP extends Component {
                   </ul>
                 </li>
               
-                <li className={HeaderStyle.cart}><Link to="/cartbox?getMethod=cartbox" className={HeaderStyle.mycart}></Link></li>
+                <li className={HeaderStyle.cart} onClick={this.cartboxBlk}><Link to="" className={HeaderStyle.mycart}></Link></li>
               </ul>
             </div>
             
@@ -167,10 +177,10 @@ export class TOP extends Component {
                           <div className={HeaderStyle.category_sub_group}>
                             <nav className={HeaderStyle.category_sub_list}>
                               <ul> 
-                                <li><a value="1"></a></li>
-                                <li><a value="2"></a></li>
-                                <li><a value="3"></a></li>
-                                <li><a value="4"></a></li>
+                                <li><a value="1">1</a></li>
+                                <li><a value="2">2</a></li>
+                                <li><a value="3">3</a></li>
+                                <li><a value="4">4</a></li>
                               </ul>
                             </nav>
                           </div>
@@ -228,14 +238,14 @@ export class BOTTOM extends Component {
         <div id="footer">
           <div className={HomeStyle.footer_wrap}>
             <div className={HomeStyle.liner}>
-              <p>NAME - ParkJicheonhoryeong</p>
+              <p>NAME - NULL</p>
               <p>ADRESS - NULL</p>
               <p>H.P - NULL</p>
             </div>
             
             <div className={HomeStyle.remark}>
-              <p>강화도지역마켓</p>
-              <p>GANGHWAFISHMARKET.COM</p>
+              <p>Ferry</p>
+              <p>FERRYMARKET.COM</p>
             </div>
           </div>
         </div>

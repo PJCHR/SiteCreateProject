@@ -61,12 +61,15 @@ button {
   position: absolute;
   width: 255px;
   height: 60px;
-  left: 140px;
+  left: 120px;
   top: 36px;
-  overflow: hidden;
-  line-height: 400px;
-  background-image: url(/src/img/logo.png);
-  background-size: 255px 60px;
+  font-size: 50px;
+  text-align: center;
+  /* background: #666; */
+  /* overflow: hidden;
+  line-height: 400px; */
+  /* background-image: url(/src/img/logo.png);
+  background-size: 255px 60px; */
 }
 .logo a {
   position: relative;
