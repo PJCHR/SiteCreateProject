@@ -146,8 +146,8 @@ export class TOP extends Component {
               <ul className={HeaderStyle.menu}>
                 <li className={HeaderStyle.my}> {authority.status==="login"?<Link className={HeaderStyle.mymenu}/>:<Link to={"/login?ReturnUrl="+this.props.ReturnUrl} className={HeaderStyle.mymenu}/>}
                   <ul className={HeaderStyle.menu_sub}>
-                    <li> <Link >주문/배송조회</Link> </li>
-                    <li> <Link >취소/반품/교환</Link> </li>
+                    <li> <Link>주문/배송조회</Link> </li>
+                    <li> <Link>취소/반품/교환</Link> </li>
                     <li> {authority.status==="login"?<Link to="pwcheck">회원정보</Link>:<Link to={"/login?ReturnUrl="+this.props.ReturnUrl}>회원정보</Link>} </li>
                   </ul>
                 </li>

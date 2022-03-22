@@ -154,7 +154,7 @@ class ServiceCenter extends Component {
                   <col/>
                   <col width="18%"/>
                   <col width="16%"/>
-                  <col width="6%"/>
+                  {/* <col width="6%"/> */}
                 </colgroup>
                 <thead>
                   <tr>
@@ -163,7 +163,7 @@ class ServiceCenter extends Component {
                     <th scope="col">제목</th>
                     <th scope="col">글쓴이</th>
                     <th scope="col">작성일</th>
-                    <th scope="col">조회</th>
+                    {/* <th scope="col">조회</th> */}
                   </tr>
                 </thead>
                 <tbody>
@@ -177,7 +177,7 @@ class ServiceCenter extends Component {
                     </td>
                     <td className="creater">{item.nickname}</td>
                     <td className="date_created">{item.date_created}</td>
-                    <td className="hit">{item.hit}</td>
+                    {/* <td className="hit">{item.hit}</td> */}
                   </tr>
                   )})}
                 </tbody>
